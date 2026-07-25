@@ -1,0 +1,49 @@
+# EleutherAI lm-evaluation-harness task config for DeseretBench (multiple choice).
+#
+# This is a PORTABILITY scaffold so DeseretBench can be run inside the standard
+# Open-LLM-Leaderboard harness. Because the Anthropic API does not expose
+# log-likelihoods, MC is scored *generatively* (the model emits "ANSWER: <letter>"
+# which is extracted by a regex filter) rather than by the log-likelihood
+# multiple_choice path. For log-likelihood-capable backends (HF, vLLM), you may
+# instead set output_type: multiple_choice and doc_to_choice to the letters.
+#
+# Usage:
+#   lm_eval --model anthropic-chat --model_args model=claude-opus-4-8 \
+#           --tasks deseretbench_mc --include_path ./lm_eval
+#
+# NOTE: the in-repo harness (deseretbench.run_benchmark) is the primary,
+# fully-featured path (repeat runs, bootstrap CIs, judge panel). This config
+# covers the MC axis for cross-framework comparison.
+
+task: deseretbench_mc
+dataset_path: json
+dataset_kwargs:
+  data_files:
+    # relative to the CWD you invoke lm_eval from (repo root per the
+    # usage line above) — datasets resolves this against CWD, not this file
+    test: data/questions_mc.jsonl
+test_split: test
+output_type: generate_until
+doc_to_text: !function utils.doc_to_text
+doc_to_target: !function utils.doc_to_target
+generation_kwargs:
+  # no `until`: the Anthropic API rejects whitespace-only stop sequences and
+  # the answer line is terminal anyway; do_sample is not accepted by the
+  # anthropic-chat backend
+  max_gen_toks: 2048
+filter_list:
+  - name: extract-answer
+    filter:
+      - function: regex
+        regex_pattern: "ANSWER:\\s*\\(?([A-H])"
+        group_select: -1
+      - function: take_first
+metric_list:
+  - metric: exact_match
+    aggregation: mean
+    higher_is_better: true
+    ignore_case: true
+    ignore_punctuation: true
+metadata:
+  version: 0.1
+  framing: mainstream-official-correlated  # see DESIGN.md §2

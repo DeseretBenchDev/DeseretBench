@@ -1,0 +1,149 @@
+# DeseretBench model cohort.
+# The distinct, current-generation Claude models served by the authenticated
+# `claude` CLI in this environment (probed 2026-06-05; expanded 2026-07-03 to
+# add Fable 5, Sonnet 5, and Opus 4.5 after re-probing CLI v2.1.200).
+# claude-mythos-5 is 404 here (Project Glasswing only). Legacy 3.5/3.7 models
+# error under the current reasoning-mode and are excluded to keep the
+# measurement configuration identical across the cohort.
+
+cohort:
+  - id: claude-fable-5
+    tier: fable
+    label: "Fable 5"
+    generation: 5.0
+  - id: claude-opus-4-8
+    tier: opus
+    label: "Opus 4.8"
+    generation: 4.8
+  - id: claude-opus-4-7
+    tier: opus
+    label: "Opus 4.7"
+    generation: 4.7
+  - id: claude-opus-4-6
+    tier: opus
+    label: "Opus 4.6"
+    generation: 4.6
+  - id: claude-opus-4-5-20251101
+    tier: opus
+    label: "Opus 4.5"
+    generation: 4.5
+  - id: claude-sonnet-5
+    tier: sonnet
+    label: "Sonnet 5"
+    generation: 5.0
+  - id: claude-sonnet-4-6
+    tier: sonnet
+    label: "Sonnet 4.6"
+    generation: 4.6
+  - id: claude-sonnet-4-5-20250929
+    tier: sonnet
+    label: "Sonnet 4.5"
+    generation: 4.5
+  - id: claude-haiku-4-5-20251001
+    tier: haiku
+    label: "Haiku 4.5"
+    generation: 4.5
+
+  # ---- Local open-weights cohort (backend: ollama; ADR-0011) ----
+  # tier = model family; generation = parameter count in billions, so the
+  # per-tier report lines read as within-family scaling curves. Served by a
+  # local user-space Ollama (OLLAMA_MAX_LOADED_MODELS=1, OLLAMA_NUM_PARALLEL=1
+  # — one model resident, strictly serial inference; pulled 2026-07-08).
+  # Ordered smallest-first: the warm loop walks this order.
+  # (gemma4's E-series is in the ollama library only as unquantized-class
+  # 7.2+ GB blobs — unusable on this 15 GB CPU host, so Gemma is represented
+  # by the quantized gemma3 pair instead.)
+  - id: qwen3:0.6b
+    tier: qwen3
+    label: "Qwen3 0.6B"
+    generation: 0.6
+    backend: ollama
+  - id: gemma3:1b
+    tier: gemma
+    label: "Gemma 3 1B"
+    generation: 1.0
+    backend: ollama
+  - id: deepseek-r1:1.5b
+    tier: deepseek
+    label: "R1-Distill 1.5B"
+    generation: 1.5
+    backend: ollama
+  - id: qwen3:1.7b
+    tier: qwen3
+    label: "Qwen3 1.7B"
+    generation: 1.7
+    backend: ollama
+  - id: smollm2:1.7b
+    tier: smollm
+    label: "SmolLM2 1.7B"
+    generation: 1.7
+    backend: ollama
+  - id: phi4-mini
+    tier: phi
+    label: "Phi-4 Mini"
+    generation: 3.8
+    backend: ollama
+  # (the bare qwen3:4b tag maps to a thinking build that ignores think:false —
+  # ~3k reasoning tokens per MC answer, ~200x slower; the -instruct tag is the
+  # non-thinking sibling, consistent with how the 0.6b/1.7b tags behave at low)
+  - id: qwen3:4b-instruct
+    tier: qwen3
+    label: "Qwen3 4B"
+    generation: 4.0
+    backend: ollama
+  - id: gemma3:4b
+    tier: gemma
+    label: "Gemma 3 4B"
+    generation: 4.0
+    backend: ollama
+
+  # ---- 2026 cohort additions (verified against the ollama library 2026-07-22,
+  # pulled the same day; first GPU-served cohort). One model per vendor family,
+  # deliberately not more: the Holm family is all pairs, so every model added
+  # taxes every existing comparison (C(17,2)=136 -> C(22,2)=231).
+  # Each tag is pinned exactly — several of these families ship a `latest` that
+  # resolves to something unusable here (nemotron-3-nano:latest is a 24 GB 30B;
+  # qwen3.5:latest is the 6.6 GB 9B, over this 6 GB card).
+  - id: granite4.1:3b
+    tier: granite
+    label: "Granite 4.1 3B"
+    generation: 3.0
+    backend: ollama
+  # qwen3.5 publishes NO -instruct tag; it reasons by default and the ONLY
+  # working control is the top-level `think` field on /api/chat, which the
+  # runner already sends (see _OLLAMA_THINK_FAMILIES — "qwen3" matches "qwen3.5"
+  # by substring). Its own tier so the size curve doesn't collide with qwen3 4B.
+  - id: qwen3.5:4b
+    tier: qwen3.5
+    label: "Qwen3.5 4B"
+    generation: 4.0
+    backend: ollama
+  # Mistral ships reasoning as a SEPARATE repo, so every ministral-3 tag is an
+  # instruct build — no think toggle needed or accepted.
+  - id: ministral-3:3b
+    tier: ministral
+    label: "Ministral 3 3B"
+    generation: 3.0
+    backend: ollama
+  # NVIDIA Open Model License (not Apache/MIT) — the one non-permissive entry.
+  - id: nemotron-3-nano:4b
+    tier: nemotron
+    label: "Nemotron 3 Nano 4B"
+    generation: 4.0
+    backend: ollama
+  # CAVEAT: the only gemma4 tag that fits 6 GB is the QAT build (4.3 GB); every
+  # q4_K_M variant is 7.2 GB+. So this single entry is quantization-aware-trained
+  # while the rest of the local cohort is q4_K_M — a documented asymmetry, not an
+  # oversight. "E2B" is an effective-parameter size, not a dense 2B.
+  - id: gemma4:e2b-it-qat
+    tier: gemma4
+    label: "Gemma 4 E2B"
+    generation: 2.0
+    backend: ollama
+
+# Judge configuration for open-ended (life-choice / cultural-open) scoring.
+judges:
+  primary_model: claude-sonnet-4-6      # main panel runs here
+  crosscheck_model: claude-opus-4-8     # subset cross-check for judge-model sensitivity
+  personas: [seminary_teacher, byu_religion_professor, bishop]
+  crosscheck_fraction: 0.25

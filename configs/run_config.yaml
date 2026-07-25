@@ -1,0 +1,65 @@
+# DeseretBench run configuration — the controlled experimental constants.
+# Everything here is held identical across all models so comparisons are valid.
+
+runner:
+  backend: claude_cli          # claude_cli | anthropic_api (api requires ANTHROPIC_API_KEY)
+  tools: ""                    # no tool use
+  no_session_persistence: true
+  max_retries: 4
+  retry_backoff_seconds: 5
+  timeout_seconds: 1200  # headroom for Fable 5 high-effort turns and CPU-bound
+                         # local thinking models (not part of the cache key)
+  max_parallel: 8              # concurrent CLI calls
+  cache_dir: cache             # content-addressed response cache (resume-safe)
+  # Local open-weights backend (cohort entries opting in via `backend: ollama`).
+  # The effort knob maps onto native think modes where they exist
+  # (low -> off, medium/high -> on); generation caps are pinned constants.
+  ollama_host: http://localhost:11434
+  # Raised 2026-07-24 from 4096/8192. The old 4096 cap was a CPU-era artifact
+  # (kept the KV cache small for CPU serving) that truncated qwen3.5's reasoning
+  # before it emitted an answer -> empty content -> failed call, while the Claude
+  # cohort answers effectively uncapped via the CLI. 16000/20480 lets 2026
+  # thinking models finish naturally (qwen3.5 needs ~5.6k tokens end-to-end;
+  # calibrated on a real open item) and still fits the 6 GB card on GPU (~19 t/s,
+  # no CPU offload). Remains a real backstop against genuine runaway loops.
+  # See ADR-0014.
+  ollama_num_predict: 16000
+  ollama_num_ctx: 20480
+
+# Effort (reasoning budget) pinned per item class. Constant across models.
+effort:
+  multiple_choice: low
+  open_ended: high
+  judge: medium             # reasoning budget for the judge panel
+
+# Repeat runs for statistical certainty.
+runs:
+  multiple_choice: 5
+  open_ended: 3
+
+# Neutral test-taker system prompt — identical for every model & item.
+system_prompt: |
+  You are answering items on a written knowledge assessment. Read each item
+  carefully and follow its output instructions exactly. Do not add commentary
+  beyond what is requested.
+
+# MC prompt template (Jinja2). The model must end with "ANSWER: <LETTER>".
+mc_prompt_template: |
+  {{ question }}
+
+  {% for letter, choice in lettered_choices %}{{ letter }}. {{ choice }}
+  {% endfor %}
+  Think it through if helpful, then end your response with a line in exactly
+  this format:
+  ANSWER: <letter>
+
+# Open-ended prompt template.
+open_prompt_template: |
+  {{ prompt }}
+
+# Statistics.
+stats:
+  bootstrap_resamples: 10000
+  rng_seed: 19470417          # arbitrary fixed seed (reproducibility)
+  holdout_fraction: 0.20
+  ci_level: 0.95

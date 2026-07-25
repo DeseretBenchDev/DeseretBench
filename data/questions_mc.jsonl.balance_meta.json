@@ -1,0 +1,2153 @@
+{
+ "seed": 19470417,
+ "n_items": 213,
+ "position_map": {
+  "church_organization_advanced_bceefdc3c6": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "church_organization_advanced_5876030d48": {
+   "order": [
+    2,
+    1,
+    3,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "church_organization_advanced_04890030de": {
+   "order": [
+    3,
+    1,
+    2,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "church_organization_advanced_b4709b595c": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "church_organization_basic_b370ed08d1": {
+   "order": [
+    3,
+    1,
+    2,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "church_organization_basic_2e68eddc1f": {
+   "order": [
+    1,
+    2,
+    3,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "church_organization_basic_1d7d2e3cd7": {
+   "order": [
+    0,
+    2,
+    3,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "church_organization_basic_6c666ef9f5": {
+   "order": [
+    2,
+    0,
+    1,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "church_organization_basic_beeafd11b2": {
+   "order": [
+    3,
+    1,
+    0,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "church_organization_basic_d30e649482": {
+   "order": [
+    2,
+    3,
+    1,
+    0
+   ],
+   "answer_from": 2,
+   "answer_to": 0
+  },
+  "church_organization_basic_687513989e": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "church_organization_expert_dc7cab4717": {
+   "order": [
+    0,
+    3,
+    2,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "church_organization_expert_a972544491": {
+   "order": [
+    2,
+    0,
+    1,
+    3
+   ],
+   "answer_from": 2,
+   "answer_to": 0
+  },
+  "church_organization_intermediate_c38c2f9c1c": {
+   "order": [
+    1,
+    3,
+    2,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "church_organization_intermediate_9852f4080b": {
+   "order": [
+    1,
+    2,
+    0,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "church_organization_intermediate_85670a559b": {
+   "order": [
+    3,
+    2,
+    1,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "church_organization_intermediate_a4dd2dcb2f": {
+   "order": [
+    0,
+    2,
+    1,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "church_organization_intermediate_f1c73ee22d": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "church_organization_intermediate_ee8c64b628": {
+   "order": [
+    2,
+    1,
+    0,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "church_organization_intermediate_694f1e11c9": {
+   "order": [
+    1,
+    3,
+    2,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "church_organization_intermediate_2d1f740fdb": {
+   "order": [
+    2,
+    3,
+    1,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "church_organization_intermediate_c91ca2d6a8": {
+   "order": [
+    1,
+    3,
+    0,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "church_organization_intermediate_f5523f5118": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "cultural_fluency_advanced_b73895a3b2": {
+   "order": [
+    2,
+    1,
+    0,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "cultural_fluency_advanced_aa5b2d43d3": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "cultural_fluency_advanced_513a60ff20": {
+   "order": [
+    3,
+    2,
+    0,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "cultural_fluency_advanced_2cd70a6ab1": {
+   "order": [
+    3,
+    0,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "cultural_fluency_advanced_0dad0a8d3f": {
+   "order": [
+    2,
+    3,
+    1,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "cultural_fluency_advanced_bd2d331c35": {
+   "order": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "cultural_fluency_basic_2b3ce5fe78": {
+   "order": [
+    0,
+    3,
+    1,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "cultural_fluency_basic_003c1e8e10": {
+   "order": [
+    0,
+    2,
+    1,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "cultural_fluency_basic_fcc56ee390": {
+   "order": [
+    2,
+    0,
+    3,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "cultural_fluency_basic_d0fa60541e": {
+   "order": [
+    3,
+    1,
+    0,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "cultural_fluency_basic_05660cff6b": {
+   "order": [
+    0,
+    2,
+    3,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "cultural_fluency_basic_0815ea1a5e": {
+   "order": [
+    2,
+    1,
+    3,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "cultural_fluency_basic_89cbcb8a69": {
+   "order": [
+    3,
+    0,
+    2,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "cultural_fluency_expert_32a2bbc687": {
+   "order": [
+    0,
+    1,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "cultural_fluency_expert_4c4e7c15c3": {
+   "order": [
+    2,
+    0,
+    1,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "cultural_fluency_intermediate_9f93d8c258": {
+   "order": [
+    2,
+    3,
+    1,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "cultural_fluency_intermediate_9c98343f6f": {
+   "order": [
+    0,
+    3,
+    2,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "cultural_fluency_intermediate_d1239b02cc": {
+   "order": [
+    3,
+    1,
+    0,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "cultural_fluency_intermediate_64dfdc2803": {
+   "order": [
+    1,
+    2,
+    3,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "cultural_fluency_intermediate_45967ddc4b": {
+   "order": [
+    0,
+    2,
+    1,
+    3
+   ],
+   "answer_from": 2,
+   "answer_to": 1
+  },
+  "cultural_fluency_intermediate_3ecf23fe60": {
+   "order": [
+    0,
+    2,
+    1,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "cultural_fluency_intermediate_cbc2920c25": {
+   "order": [
+    1,
+    3,
+    2,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "cultural_fluency_intermediate_5832c70479": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "cultural_fluency_intermediate_e4384c0951": {
+   "order": [
+    2,
+    1,
+    3,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "cultural_fluency_intermediate_4c9a1a6a8b": {
+   "order": [
+    3,
+    2,
+    0,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "doctrine_scripture_advanced_fe36ec7c3c": {
+   "order": [
+    2,
+    3,
+    0,
+    1
+   ],
+   "answer_from": 2,
+   "answer_to": 0
+  },
+  "doctrine_scripture_advanced_245e281112": {
+   "order": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "doctrine_scripture_advanced_240b2cdb40": {
+   "order": [
+    0,
+    3,
+    2,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "doctrine_scripture_advanced_321197a58b": {
+   "order": [
+    3,
+    0,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "doctrine_scripture_advanced_8392e9a80f": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "doctrine_scripture_advanced_b73ae4dc88": {
+   "order": [
+    2,
+    3,
+    1,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "doctrine_scripture_advanced_c675adf8f5": {
+   "order": [
+    3,
+    0,
+    1,
+    2
+   ],
+   "answer_from": 2,
+   "answer_to": 3
+  },
+  "doctrine_scripture_advanced_4f11d77eb9": {
+   "order": [
+    0,
+    3,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "doctrine_scripture_advanced_b0e67616f2": {
+   "order": [
+    2,
+    0,
+    3,
+    1
+   ],
+   "answer_from": 2,
+   "answer_to": 0
+  },
+  "doctrine_scripture_advanced_4da6af45b9": {
+   "order": [
+    2,
+    0,
+    3,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "doctrine_scripture_basic_f65193e86e": {
+   "order": [
+    3,
+    2,
+    0,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "doctrine_scripture_basic_9e97e6a5b2": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "doctrine_scripture_basic_22d01baceb": {
+   "order": [
+    0,
+    2,
+    1,
+    3
+   ],
+   "answer_from": 2,
+   "answer_to": 1
+  },
+  "doctrine_scripture_basic_d0982f6ec3": {
+   "order": [
+    1,
+    2,
+    0,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "doctrine_scripture_basic_5b710c0a77": {
+   "order": [
+    2,
+    1,
+    3,
+    0
+   ],
+   "answer_from": 2,
+   "answer_to": 0
+  },
+  "doctrine_scripture_basic_64934bdee6": {
+   "order": [
+    3,
+    0,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "doctrine_scripture_basic_636ddac41e": {
+   "order": [
+    3,
+    1,
+    0,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "doctrine_scripture_basic_3f0f111615": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "doctrine_scripture_basic_29b068a715": {
+   "order": [
+    0,
+    3,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "doctrine_scripture_basic_9f20072473": {
+   "order": [
+    0,
+    2,
+    3,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "doctrine_scripture_basic_74d63980e5": {
+   "order": [
+    3,
+    1,
+    2,
+    0
+   ],
+   "answer_from": 2,
+   "answer_to": 2
+  },
+  "doctrine_scripture_basic_09ca55f055": {
+   "order": [
+    2,
+    1,
+    0,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "doctrine_scripture_basic_df1b2fc043": {
+   "order": [
+    2,
+    0,
+    1,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "doctrine_scripture_basic_6469cb173f": {
+   "order": [
+    1,
+    3,
+    2,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "doctrine_scripture_expert_e648e5c12f": {
+   "order": [
+    3,
+    2,
+    4,
+    1,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "doctrine_scripture_expert_73349d72a4": {
+   "order": [
+    0,
+    2,
+    4,
+    1,
+    3
+   ],
+   "answer_from": 2,
+   "answer_to": 1
+  },
+  "doctrine_scripture_expert_ee54725c95": {
+   "order": [
+    4,
+    2,
+    0,
+    3,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 4
+  },
+  "doctrine_scripture_expert_26847f0ae1": {
+   "order": [
+    3,
+    0,
+    2,
+    1,
+    4
+   ],
+   "answer_from": 2,
+   "answer_to": 2
+  },
+  "doctrine_scripture_intermediate_fdf8bbf6c2": {
+   "order": [
+    3,
+    2,
+    1,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "doctrine_scripture_intermediate_3683b8e978": {
+   "order": [
+    3,
+    1,
+    2,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "doctrine_scripture_intermediate_bc57eb1b22": {
+   "order": [
+    0,
+    3,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "doctrine_scripture_intermediate_b82698025e": {
+   "order": [
+    2,
+    1,
+    3,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "doctrine_scripture_intermediate_cd600d3c20": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 2,
+   "answer_to": 2
+  },
+  "doctrine_scripture_intermediate_e13915efbb": {
+   "order": [
+    2,
+    0,
+    1,
+    3
+   ],
+   "answer_from": 3,
+   "answer_to": 3
+  },
+  "doctrine_scripture_intermediate_9075b523d6": {
+   "order": [
+    0,
+    3,
+    2,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "doctrine_scripture_intermediate_0d9c55074e": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "doctrine_scripture_intermediate_8d209ca100": {
+   "order": [
+    3,
+    0,
+    2,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "doctrine_scripture_intermediate_9d00db90cf": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "doctrine_scripture_intermediate_2d6346bd60": {
+   "order": [
+    1,
+    3,
+    2,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "doctrine_scripture_intermediate_ee14e42f56": {
+   "order": [
+    2,
+    0,
+    3,
+    1
+   ],
+   "answer_from": 2,
+   "answer_to": 0
+  },
+  "doctrine_scripture_intermediate_3742a1a5f0": {
+   "order": [
+    3,
+    0,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "doctrine_scripture_intermediate_631d2de618": {
+   "order": [
+    1,
+    2,
+    0,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "doctrine_scripture_intermediate_4792c0fad0": {
+   "order": [
+    1,
+    3,
+    0,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "doctrine_scripture_intermediate_a1e09d536a": {
+   "order": [
+    3,
+    0,
+    1,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "doctrine_scripture_intermediate_0158667ea0": {
+   "order": [
+    0,
+    1,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "doctrine_scripture_intermediate_eb61a41978": {
+   "order": [
+    3,
+    2,
+    1,
+    0
+   ],
+   "answer_from": 2,
+   "answer_to": 1
+  },
+  "doctrine_scripture_intermediate_e8294cc5d0": {
+   "order": [
+    3,
+    1,
+    0,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "eternal_family_advanced_61089994a5": {
+   "order": [
+    1,
+    3,
+    0,
+    2
+   ],
+   "answer_from": 3,
+   "answer_to": 1
+  },
+  "eternal_family_advanced_9e13e90da1": {
+   "order": [
+    2,
+    3,
+    1,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "eternal_family_advanced_61b218d0c3": {
+   "order": [
+    2,
+    0,
+    3,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "eternal_family_advanced_b3a7e86c9d": {
+   "order": [
+    1,
+    3,
+    0,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "eternal_family_advanced_477d390489": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "eternal_family_advanced_87795c533e": {
+   "order": [
+    3,
+    0,
+    2,
+    1
+   ],
+   "answer_from": 2,
+   "answer_to": 2
+  },
+  "eternal_family_basic_528f683ec4": {
+   "order": [
+    0,
+    2,
+    3,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "eternal_family_basic_83bd411928": {
+   "order": [
+    0,
+    1,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "eternal_family_basic_928c676a30": {
+   "order": [
+    3,
+    1,
+    0,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "eternal_family_basic_537ce3e696": {
+   "order": [
+    3,
+    2,
+    0,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "eternal_family_basic_b480885685": {
+   "order": [
+    2,
+    0,
+    3,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "eternal_family_basic_eafe25aa23": {
+   "order": [
+    0,
+    3,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "eternal_family_basic_d7bc95a8c7": {
+   "order": [
+    3,
+    1,
+    2,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "eternal_family_basic_8c248e4b74": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "eternal_family_expert_469a11e858": {
+   "order": [
+    1,
+    0,
+    4,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "eternal_family_expert_3b1612d35c": {
+   "order": [
+    0,
+    1,
+    4,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "eternal_family_intermediate_387cb17a7c": {
+   "order": [
+    2,
+    1,
+    0,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "eternal_family_intermediate_fdb7a29136": {
+   "order": [
+    0,
+    2,
+    1,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "eternal_family_intermediate_d60c347620": {
+   "order": [
+    1,
+    2,
+    0,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "eternal_family_intermediate_27c47fec74": {
+   "order": [
+    0,
+    2,
+    1,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "eternal_family_intermediate_3da073b3c7": {
+   "order": [
+    3,
+    1,
+    0,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "eternal_family_intermediate_e5072ce0d4": {
+   "order": [
+    0,
+    1,
+    3,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "eternal_family_intermediate_ec15e4634b": {
+   "order": [
+    0,
+    2,
+    3,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "eternal_family_intermediate_08e1082829": {
+   "order": [
+    1,
+    2,
+    0,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "eternal_family_intermediate_5fb8df87e4": {
+   "order": [
+    0,
+    2,
+    3,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "eternal_family_intermediate_654d767ef3": {
+   "order": [
+    3,
+    0,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "living_gospel_advanced_91e60b2afa": {
+   "order": [
+    2,
+    1,
+    0,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "living_gospel_advanced_53eb4e29e0": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "living_gospel_advanced_31dbd3a2e5": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "living_gospel_advanced_fa0e993530": {
+   "order": [
+    0,
+    2,
+    3,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "living_gospel_advanced_b129fd6b1e": {
+   "order": [
+    1,
+    3,
+    2,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "living_gospel_advanced_7f1f7bbef3": {
+   "order": [
+    0,
+    2,
+    3,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "living_gospel_basic_38eef8c0e9": {
+   "order": [
+    0,
+    3,
+    2,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "living_gospel_basic_a17b122a1d": {
+   "order": [
+    2,
+    1,
+    0,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "living_gospel_basic_d7dd53872a": {
+   "order": [
+    1,
+    2,
+    3,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "living_gospel_basic_5335d99607": {
+   "order": [
+    0,
+    1,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "living_gospel_basic_894de7dc4f": {
+   "order": [
+    0,
+    3,
+    2,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "living_gospel_basic_ddf798ad63": {
+   "order": [
+    3,
+    2,
+    1,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "living_gospel_basic_9a9d255f8a": {
+   "order": [
+    0,
+    3,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "living_gospel_basic_c783399d14": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "living_gospel_basic_e3a934052c": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "living_gospel_expert_44336d1fae": {
+   "order": [
+    1,
+    2,
+    3,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "living_gospel_expert_30bf33e121": {
+   "order": [
+    2,
+    3,
+    1,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "living_gospel_expert_c4ffb0ac36": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "living_gospel_intermediate_0bdaff7cdb": {
+   "order": [
+    1,
+    2,
+    0,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "living_gospel_intermediate_8eae23b7aa": {
+   "order": [
+    0,
+    3,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "living_gospel_intermediate_8f59c9278f": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "living_gospel_intermediate_327679372d": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "living_gospel_intermediate_cb8f8b437c": {
+   "order": [
+    0,
+    3,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "living_gospel_intermediate_0c8c489e7b": {
+   "order": [
+    0,
+    3,
+    2,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "living_gospel_intermediate_501cba3892": {
+   "order": [
+    3,
+    2,
+    1,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "living_gospel_intermediate_a9873cdec3": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "living_gospel_intermediate_6b49d789a4": {
+   "order": [
+    2,
+    1,
+    3,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "living_gospel_intermediate_fb76c5315e": {
+   "order": [
+    3,
+    1,
+    0,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 1
+  },
+  "living_gospel_intermediate_981855e355": {
+   "order": [
+    0,
+    2,
+    1,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "living_gospel_intermediate_621e19c886": {
+   "order": [
+    2,
+    1,
+    3,
+    0
+   ],
+   "answer_from": 2,
+   "answer_to": 0
+  },
+  "ordinances_covenants_advanced_b02ae5fdde": {
+   "order": [
+    1,
+    0,
+    4,
+    2,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "ordinances_covenants_advanced_3e50ff8e26": {
+   "order": [
+    3,
+    0,
+    4,
+    2,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "ordinances_covenants_advanced_47a399eedc": {
+   "order": [
+    1,
+    3,
+    0,
+    2,
+    4
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "ordinances_covenants_advanced_b2d9ff31e2": {
+   "order": [
+    4,
+    3,
+    2,
+    1,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 4
+  },
+  "ordinances_covenants_advanced_5fdb04d623": {
+   "order": [
+    1,
+    4,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "ordinances_covenants_advanced_c8c89dd05a": {
+   "order": [
+    3,
+    1,
+    4,
+    0,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "ordinances_covenants_basic_5a58752a28": {
+   "order": [
+    0,
+    2,
+    1,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "ordinances_covenants_basic_3deb261230": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "ordinances_covenants_basic_031e8e8fbc": {
+   "order": [
+    3,
+    0,
+    2,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "ordinances_covenants_basic_611bcb8213": {
+   "order": [
+    3,
+    2,
+    1,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "ordinances_covenants_basic_085ff58f57": {
+   "order": [
+    2,
+    0,
+    1,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "ordinances_covenants_basic_35f448c42f": {
+   "order": [
+    2,
+    1,
+    3,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "ordinances_covenants_basic_3fc006d22d": {
+   "order": [
+    2,
+    0,
+    1,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "ordinances_covenants_basic_c734e6464f": {
+   "order": [
+    2,
+    1,
+    3,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "ordinances_covenants_basic_5db3a8d1c4": {
+   "order": [
+    3,
+    2,
+    0,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "ordinances_covenants_basic_cee7f754be": {
+   "order": [
+    3,
+    2,
+    1,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "ordinances_covenants_expert_4acabe3934": {
+   "order": [
+    0,
+    4,
+    2,
+    1,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "ordinances_covenants_expert_f34077823f": {
+   "order": [
+    3,
+    1,
+    2,
+    4,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 4
+  },
+  "ordinances_covenants_intermediate_4803d2d9c6": {
+   "order": [
+    0,
+    3,
+    2,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "ordinances_covenants_intermediate_ae85ff1487": {
+   "order": [
+    0,
+    2,
+    3,
+    1
+   ],
+   "answer_from": 3,
+   "answer_to": 2
+  },
+  "ordinances_covenants_intermediate_40a2c13976": {
+   "order": [
+    2,
+    3,
+    0,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "ordinances_covenants_intermediate_2186379f98": {
+   "order": [
+    1,
+    3,
+    2,
+    0
+   ],
+   "answer_from": 2,
+   "answer_to": 2
+  },
+  "ordinances_covenants_intermediate_307cdb5920": {
+   "order": [
+    3,
+    1,
+    2,
+    0
+   ],
+   "answer_from": 2,
+   "answer_to": 2
+  },
+  "ordinances_covenants_intermediate_657660143f": {
+   "order": [
+    1,
+    3,
+    0,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 0
+  },
+  "ordinances_covenants_intermediate_44a54b35a4": {
+   "order": [
+    2,
+    1,
+    0,
+    3
+   ],
+   "answer_from": 2,
+   "answer_to": 0
+  },
+  "ordinances_covenants_intermediate_73b03e6bd4": {
+   "order": [
+    0,
+    3,
+    2,
+    1
+   ],
+   "answer_from": 2,
+   "answer_to": 2
+  },
+  "ordinances_covenants_intermediate_ddba24e5ea": {
+   "order": [
+    2,
+    1,
+    0,
+    3
+   ],
+   "answer_from": 2,
+   "answer_to": 0
+  },
+  "ordinances_covenants_intermediate_d592714de9": {
+   "order": [
+    3,
+    0,
+    2,
+    1
+   ],
+   "answer_from": 3,
+   "answer_to": 0
+  },
+  "ordinances_covenants_intermediate_43bc3f916d": {
+   "order": [
+    0,
+    3,
+    1,
+    2
+   ],
+   "answer_from": 2,
+   "answer_to": 3
+  },
+  "ordinances_covenants_intermediate_1057ff531d": {
+   "order": [
+    1,
+    3,
+    2,
+    0
+   ],
+   "answer_from": 3,
+   "answer_to": 1
+  },
+  "ordinances_covenants_intermediate_87864679da": {
+   "order": [
+    3,
+    2,
+    1,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "restoration_history_advanced_bd0db329d8": {
+   "order": [
+    2,
+    3,
+    1,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "restoration_history_advanced_b63ea504c8": {
+   "order": [
+    3,
+    0,
+    2,
+    1
+   ],
+   "answer_from": 3,
+   "answer_to": 0
+  },
+  "restoration_history_advanced_856be8a81d": {
+   "order": [
+    3,
+    0,
+    2,
+    1
+   ],
+   "answer_from": 2,
+   "answer_to": 2
+  },
+  "restoration_history_advanced_c6dd3fd9de": {
+   "order": [
+    3,
+    2,
+    0,
+    1
+   ],
+   "answer_from": 2,
+   "answer_to": 1
+  },
+  "restoration_history_advanced_410d421817": {
+   "order": [
+    2,
+    3,
+    1,
+    0
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "restoration_history_advanced_a6feaf52d8": {
+   "order": [
+    3,
+    0,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "restoration_history_basic_151337e0ad": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "restoration_history_basic_17df9b9012": {
+   "order": [
+    0,
+    3,
+    1,
+    2
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "restoration_history_basic_9e4b661ad2": {
+   "order": [
+    2,
+    0,
+    1,
+    3
+   ],
+   "answer_from": 1,
+   "answer_to": 2
+  },
+  "restoration_history_basic_ed4bd39f3e": {
+   "order": [
+    2,
+    3,
+    0,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "restoration_history_basic_784c9aef2e": {
+   "order": [
+    3,
+    2,
+    0,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "restoration_history_basic_77f2efe9a7": {
+   "order": [
+    0,
+    3,
+    2,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "restoration_history_basic_a517b00e90": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "restoration_history_basic_01c16d59a4": {
+   "order": [
+    2,
+    3,
+    1,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "restoration_history_basic_e3f4326256": {
+   "order": [
+    0,
+    3,
+    2,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 3
+  },
+  "restoration_history_basic_957fe74332": {
+   "order": [
+    1,
+    2,
+    3,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "restoration_history_expert_a3732c4984": {
+   "order": [
+    0,
+    3,
+    4,
+    2,
+    1
+   ],
+   "answer_from": 1,
+   "answer_to": 4
+  },
+  "restoration_history_expert_a8eb80c5d8": {
+   "order": [
+    4,
+    3,
+    0,
+    2,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "restoration_history_intermediate_00500e5dbc": {
+   "order": [
+    1,
+    3,
+    2,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "restoration_history_intermediate_b1d4a66df0": {
+   "order": [
+    3,
+    0,
+    2,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "restoration_history_intermediate_f9ec4663d6": {
+   "order": [
+    3,
+    1,
+    2,
+    0
+   ],
+   "answer_from": 0,
+   "answer_to": 3
+  },
+  "restoration_history_intermediate_73e5dcd745": {
+   "order": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  },
+  "restoration_history_intermediate_386e5ef8a3": {
+   "order": [
+    2,
+    0,
+    3,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "restoration_history_intermediate_b71fd5f813": {
+   "order": [
+    2,
+    3,
+    0,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "restoration_history_intermediate_f85a4d2691": {
+   "order": [
+    1,
+    0,
+    2,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "restoration_history_intermediate_e4b037ead3": {
+   "order": [
+    3,
+    1,
+    0,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "restoration_history_intermediate_a87ff87e7c": {
+   "order": [
+    2,
+    0,
+    3,
+    1
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "restoration_history_intermediate_17515cde4b": {
+   "order": [
+    1,
+    2,
+    0,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 2
+  },
+  "restoration_history_intermediate_1e30d7c71b": {
+   "order": [
+    3,
+    0,
+    1,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "restoration_history_intermediate_3d2ac09822": {
+   "order": [
+    1,
+    0,
+    3,
+    2
+   ],
+   "answer_from": 0,
+   "answer_to": 1
+  },
+  "restoration_history_intermediate_5e499119ba": {
+   "order": [
+    0,
+    2,
+    1,
+    3
+   ],
+   "answer_from": 0,
+   "answer_to": 0
+  }
+ },
+ "note": "retroactive map for the shipped v0.1 balanced set; 'order[k]' is the pre-balance index of the choice at post-balance slot k. Reviewer letters in data/reviews_mc.jsonl refer to PRE-balance order."
+}

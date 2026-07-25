@@ -1,0 +1,45 @@
+DeseretBench Dataset License
+============================
+
+SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
+The DeseretBench dataset — the benchmark questions, answer keys, typed
+distractors, scoring rubrics, and recorded model-response/judging data under
+`data/`, `runs/`, and `results/` — is licensed under the Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International License (CC-BY-NC-SA-4.0).
+
+You are free to:
+
+  * Share — copy and redistribute the material in any medium or format.
+  * Adapt — remix, transform, and build upon the material.
+
+Under the following terms:
+
+  * Attribution — You must give appropriate credit to "DeseretBench
+    contributors," provide a link to this license, and indicate if changes
+    were made.
+  * NonCommercial — You may not use the material for commercial purposes.
+  * ShareAlike — If you remix, transform, or build upon the material, you must
+    distribute your contributions under the same license as the original.
+  * No additional restrictions — You may not apply legal terms or technological
+    measures that legally restrict others from doing anything the license
+    permits.
+
+The full legal text of CC-BY-NC-SA-4.0 is canonical and is available at:
+
+    https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
+A human-readable summary (which is not a substitute for the license) is at:
+
+    https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+---
+
+NOTE ON SCOPE: This data license does NOT cover the repository's code, which is
+licensed under the MIT License (see LICENSE).
+
+NOTE ON CONTENT: The benchmark questions concern the doctrine, history, and
+culture of The Church of Jesus Christ of Latter-day Saints. They aim to
+represent the official, correlated position of the Church accurately. This is a
+research and evaluation artifact; it is not published by, endorsed by, or
+affiliated with the Church.

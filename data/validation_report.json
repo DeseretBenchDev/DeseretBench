@@ -1,0 +1,95 @@
+{
+  "mc_candidates": 267,
+  "mc_kept": 266,
+  "mc_dropped": 1,
+  "open_candidates": 57,
+  "open_kept": 50,
+  "open_dropped": 7,
+  "mc_fleiss_kappa_answers": 1.0,
+  "mc_public": 213,
+  "mc_holdout": 53,
+  "open_public": 40,
+  "open_holdout": 10,
+  "drop_reasons_mc": [
+    {
+      "id": "cultural_fluency_intermediate_e1a1912a1d",
+      "key_agreement": 1.0,
+      "mean_clarity": 3.2,
+      "mean_n_defensible": 1.0,
+      "n_reviewers": 5,
+      "bad_flags": 4,
+      "flags": [
+        "factually_wrong",
+        "factually_wrong",
+        "factually_wrong",
+        "factually_wrong"
+      ]
+    }
+  ],
+  "drop_reasons_open": [
+    {
+      "id": "life_choice_advanced_4ce45a229d",
+      "mean_realistic": 0,
+      "mean_rubric_fair": 0,
+      "mean_clarity": 0,
+      "n_reviewers": 0,
+      "bad_flags": 0,
+      "flags": []
+    },
+    {
+      "id": "life_choice_expert_0ad13bb04f",
+      "mean_realistic": 0,
+      "mean_rubric_fair": 0,
+      "mean_clarity": 0,
+      "n_reviewers": 0,
+      "bad_flags": 0,
+      "flags": []
+    },
+    {
+      "id": "life_choice_expert_a780e61cfc",
+      "mean_realistic": 0,
+      "mean_rubric_fair": 0,
+      "mean_clarity": 0,
+      "n_reviewers": 0,
+      "bad_flags": 0,
+      "flags": []
+    },
+    {
+      "id": "life_choice_expert_1974cb14a9",
+      "mean_realistic": 0,
+      "mean_rubric_fair": 0,
+      "mean_clarity": 0,
+      "n_reviewers": 0,
+      "bad_flags": 0,
+      "flags": []
+    },
+    {
+      "id": "life_choice_expert_6d14e256d9",
+      "mean_realistic": 0,
+      "mean_rubric_fair": 0,
+      "mean_clarity": 0,
+      "n_reviewers": 0,
+      "bad_flags": 0,
+      "flags": []
+    },
+    {
+      "id": "life_choice_expert_e6365e222a",
+      "mean_realistic": 0,
+      "mean_rubric_fair": 0,
+      "mean_clarity": 0,
+      "n_reviewers": 0,
+      "bad_flags": 0,
+      "flags": []
+    },
+    {
+      "id": "life_choice_expert_e91299a7d0",
+      "mean_realistic": 0,
+      "mean_rubric_fair": 0,
+      "mean_clarity": 0,
+      "n_reviewers": 0,
+      "bad_flags": 0,
+      "flags": []
+    }
+  ],
+  "live_spend_usd": 35.21
+}

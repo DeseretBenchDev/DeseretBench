@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# DeseretBench runtime artifacts
+cache/
+runs/raw/
+runs/pilot/
+runs/*.log
+*.prebalance.jsonl
+*.tmp
+
+# Private holdout set — NEVER commit (contamination management, runbook §6.2)
+data/private_holdout/
+
+# OS / editor / local tooling
+.DS_Store
+.claude/
+
+# Working artifacts that should not be committed per portfolio convention.
+# The shipped, contributor-facing agent guide is AGENTS.md (tracked, vendor-neutral);
+# CLAUDE.md is a local-only working artifact and stays ignored.
+docs/superpowers/
+CLAUDE.md
+
+# Personal outreach drafts — strategy/correspondence, kept local only
+outreach/
+
+# Scratch output dir for per-model cache-warm runs (scripts/expand_local.sh);
+# only the content-addressed cache matters, these files are disposable
+runs/warm_local/

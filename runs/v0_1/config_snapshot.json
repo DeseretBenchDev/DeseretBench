@@ -1,0 +1,132 @@
+{
+ "mc": {
+  "written_at": "2026-07-25T05:02:24Z",
+  "cohort": [
+   "claude-fable-5",
+   "claude-opus-4-8",
+   "claude-opus-4-7",
+   "claude-opus-4-6",
+   "claude-opus-4-5-20251101",
+   "claude-sonnet-5",
+   "claude-sonnet-4-6",
+   "claude-sonnet-4-5-20250929",
+   "claude-haiku-4-5-20251001",
+   "qwen3:0.6b",
+   "gemma3:1b",
+   "deepseek-r1:1.5b",
+   "qwen3:1.7b",
+   "smollm2:1.7b",
+   "phi4-mini",
+   "qwen3:4b-instruct",
+   "gemma3:4b",
+   "granite4.1:3b",
+   "qwen3.5:4b",
+   "ministral-3:3b",
+   "nemotron-3-nano:4b",
+   "gemma4:e2b-it-qat"
+  ],
+  "run_config": {
+   "runner": {
+    "backend": "claude_cli",
+    "tools": "",
+    "no_session_persistence": true,
+    "max_retries": 4,
+    "retry_backoff_seconds": 5,
+    "timeout_seconds": 1200,
+    "max_parallel": 8,
+    "cache_dir": "cache",
+    "ollama_host": "http://localhost:11434",
+    "ollama_num_predict": 16000,
+    "ollama_num_ctx": 20480
+   },
+   "effort": {
+    "multiple_choice": "low",
+    "open_ended": "high",
+    "judge": "medium"
+   },
+   "runs": {
+    "multiple_choice": 5,
+    "open_ended": 3
+   },
+   "system_prompt": "You are answering items on a written knowledge assessment. Read each item\ncarefully and follow its output instructions exactly. Do not add commentary\nbeyond what is requested.\n",
+   "mc_prompt_template": "{{ question }}\n\n{% for letter, choice in lettered_choices %}{{ letter }}. {{ choice }}\n{% endfor %}\nThink it through if helpful, then end your response with a line in exactly\nthis format:\nANSWER: <letter>\n",
+   "open_prompt_template": "{{ prompt }}\n",
+   "stats": {
+    "bootstrap_resamples": 10000,
+    "rng_seed": 19470417,
+    "holdout_fraction": 0.2,
+    "ci_level": 0.95
+   }
+  },
+  "n_items": 213,
+  "n_runs": 5
+ },
+ "open": {
+  "written_at": "2026-07-25T08:08:42Z",
+  "cohort": [
+   "claude-fable-5",
+   "claude-opus-4-8",
+   "claude-opus-4-7",
+   "claude-opus-4-6",
+   "claude-opus-4-5-20251101",
+   "claude-sonnet-5",
+   "claude-sonnet-4-6",
+   "claude-sonnet-4-5-20250929",
+   "claude-haiku-4-5-20251001",
+   "qwen3:0.6b",
+   "gemma3:1b",
+   "deepseek-r1:1.5b",
+   "qwen3:1.7b",
+   "smollm2:1.7b",
+   "phi4-mini",
+   "qwen3:4b-instruct",
+   "gemma3:4b",
+   "granite4.1:3b",
+   "qwen3.5:4b",
+   "ministral-3:3b",
+   "nemotron-3-nano:4b",
+   "gemma4:e2b-it-qat"
+  ],
+  "run_config": {
+   "runner": {
+    "backend": "claude_cli",
+    "tools": "",
+    "no_session_persistence": true,
+    "max_retries": 4,
+    "retry_backoff_seconds": 5,
+    "timeout_seconds": 1200,
+    "max_parallel": 8,
+    "cache_dir": "cache",
+    "ollama_host": "http://localhost:11434",
+    "ollama_num_predict": 16000,
+    "ollama_num_ctx": 20480
+   },
+   "effort": {
+    "multiple_choice": "low",
+    "open_ended": "high",
+    "judge": "medium"
+   },
+   "runs": {
+    "multiple_choice": 5,
+    "open_ended": 3
+   },
+   "system_prompt": "You are answering items on a written knowledge assessment. Read each item\ncarefully and follow its output instructions exactly. Do not add commentary\nbeyond what is requested.\n",
+   "mc_prompt_template": "{{ question }}\n\n{% for letter, choice in lettered_choices %}{{ letter }}. {{ choice }}\n{% endfor %}\nThink it through if helpful, then end your response with a line in exactly\nthis format:\nANSWER: <letter>\n",
+   "open_prompt_template": "{{ prompt }}\n",
+   "stats": {
+    "bootstrap_resamples": 10000,
+    "rng_seed": 19470417,
+    "holdout_fraction": 0.2,
+    "ci_level": 0.95
+   }
+  },
+  "n_items": 40,
+  "n_runs": 3,
+  "judge_model": "claude-sonnet-4-6",
+  "personas": [
+   "seminary_teacher",
+   "byu_religion_professor",
+   "bishop"
+  ]
+ }
+}
