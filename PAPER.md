@@ -13,26 +13,29 @@ doctrine is highly specific, well-documented, and sufficiently distinct from mai
 Christianity that models cannot rely on generic religious training signal. The benchmark
 combines auto-scored multiple-choice items with typed, discriminative distractors and
 judge-panel-scored open-ended scenarios, validated by a five-persona blind review. We
-evaluate twenty-two models — nine current-generation Claude models (Fable 5, Opus
-4.5/4.6/4.7/4.8, Sonnet 4.5/4.6/5, Haiku 4.5) and thirteen local open-weights models from
+evaluate twenty-three models — ten current-generation Claude models (Fable 5, Opus
+4.5/4.6/4.7/4.8/5, Sonnet 4.5/4.6/5, Haiku 4.5) and thirteen local open-weights models from
 0.6B to 4B (Qwen3, Gemma 3, SmolLM2, Phi-4 Mini, DeepSeek-R1-Distill, Granite 4.1, Qwen3.5,
 Ministral 3, Nemotron 3 Nano, Gemma 4) — with repeat runs,
 and report bootstrap confidence intervals, pairwise significance, classical item analysis,
 and judge inter-rater reliability. Multiple-choice doctrinal recall **saturates at the
-frontier while discriminating sharply below it**: all 36 Claude-vs-Claude comparisons are
-non-significant after correction, yet 173 of the 231 comparisons across the full cohort are
+frontier while discriminating sharply below it**: all 45 Claude-vs-Claude comparisons are
+non-significant after correction, yet 186 of the 253 comparisons across the full cohort are
 significant, and MC accuracy rises from 0.521 (R1-Distill 1.5B) to 0.932 (Qwen3.5 4B) before
 reaching Claude's 0.986–1.000. The open-ended axis separates the cohort reliably (judge
-Krippendorff's α = 0.9924, 2,640 scored units), with composite scores from 98.2 (Opus 4.7)
+Krippendorff's α = 0.9929, 2,760 scored units), with composite scores from 98.2 (Opus 4.7)
 down to 0.3 (R1-Distill 1.5B). Comparing the two axes exposes a **capability gap that MC
 alone conceals**: the best local model on MC (Qwen3.5 4B, 0.932) sits inside Claude's range,
 yet scores only 17.6 open-ended, well under half of the weakest Claude (Haiku 4.5, 48.5). Within the 1.7–3.8B band,
 parameter count does not predict open-ended score. We also find a **non-monotonic
-generational trend**: within Opus, scores rise across 4.5, 4.6 and 4.7, then fall at 4.8
-(91.4), significantly below Opus 4.7 (98.2); and Sonnet 5 (86.6) does not improve on Sonnet
-4.6 (89.6). The one newest-generation model that reaches the top is **Fable 5 (97.9)**, a
-higher tier, statistically tied with Opus 4.7 for first. Newer is not automatically more
-culturally aligned; for two of the three newest models here, it is measurably less so.
+generational trend**: within Opus, scores rise across 4.5, 4.6 and 4.7, fall at 4.8
+(91.4, significantly below Opus 4.7's 98.2), then recover at Opus 5 (97.6); and Sonnet 5
+(86.6) does not improve on Sonnet 4.6 (89.6). Two newest-generation models reach the top —
+**Fable 5 (97.9)**, a higher tier, and **Opus 5 (97.6)** — each statistically tied with Opus
+4.7 for first, yet neither numerically exceeds the older Opus 4.7, which still holds the
+single highest score. Newer is not automatically more culturally aligned: an intervening
+Opus release (4.8) measurably regressed before Opus 5 recovered, and the newest Sonnet does
+not advance on its predecessor.
 
 ## 1. Motivation
 
@@ -104,15 +107,15 @@ dimensions plus rubric coverage, with a Krippendorff's-α reliability check. We 
 differences with McNemar cross-checks, and classical item difficulty/discrimination.
 
 ### 3.5 Cohort
-Twenty-two models over nine vendors and two serving paths, all measured under one
+Twenty-three models over nine vendors and two serving paths, all measured under one
 configuration.
 
-**Nine current-generation Claude models** served by the local `claude` CLI: Fable 5 (the
-Mythos-class tier above Opus), Opus 4.5/4.6/4.7/4.8, Sonnet 4.5/4.6/5, and Haiku 4.5 —
+**Ten current-generation Claude models** served by the local `claude` CLI: Fable 5 (the
+Mythos-class tier above Opus), Opus 4.5/4.6/4.7/4.8/5, Sonnet 4.5/4.6/5, and Haiku 4.5 —
 within-tier generational progressions plus a cross-tier capability spread. The initial
 six-model run predates the availability of Fable 5, Sonnet 5, and Opus 4.5 in this
-environment; the expanded cohort reuses those cached calls unchanged and adds the three new
-models under the identical configuration. (Measurement runs through the Claude Code CLI
+environment; the expanded cohort reuses those cached calls unchanged and adds the newer
+models under the identical configuration, most recently Opus 5 (released 2026-07-24). (Measurement runs through the Claude Code CLI
 harness; absolute scores are not directly comparable to a bare-API run, but within-run
 comparisons are internally valid.)
 
@@ -136,31 +139,31 @@ power becomes visible.
 
 ## 4. Results
 
-All numbers are from `runs/v0_1` (seed 19470417, 10,000 bootstrap resamples; MC = 5 runs,
-open = 3 runs; 22 models × 213 public MC items and × 40 public open items — 23,430 MC
-responses and 2,640 open responses scored by a 3-persona judge panel). Full tables and
+All numbers are from `runs/v0_1` (seed 19470417, 100,000 bootstrap resamples; MC = 5 runs,
+open = 3 runs; 23 models × 213 public MC items and × 40 public open items — 24,495 MC
+responses and 2,760 open responses scored by a 3-persona judge panel). Full tables and
 figures are in `reports/RESULTS.md` and `reports/leaderboard.html`.
 
 ### 4.1 Multiple choice saturates at the frontier and discriminates below it
-Among Claude models the set is saturated: Opus 4.5/4.6/4.7/4.8 and Sonnet 4.5/4.6 all score a
+Among Claude models the set is saturated: Opus 4.5/4.6/4.7/4.8/5 and Sonnet 4.5/4.6 all score a
 perfect **1.000**; Fable 5 **0.999** [0.997, 1.000]; Haiku 4.5 **0.994** [0.987, 1.000]; and
 the lowest, Sonnet 5, **0.986** [0.971, 0.998]. Saturation holds at every difficulty tier
 including **expert**, and across all seven dimensions. After Holm–Bonferroni correction,
-**none** of the 36 Claude-vs-Claude comparisons is significant. Run-to-run variance is
-essentially zero (within-item SD = 0.000 for the six ceiling models, 0.002–0.007 for the
+**none** of the 45 Claude-vs-Claude comparisons is significant. Run-to-run variance is
+essentially zero (within-item SD = 0.000 for the seven ceiling models, 0.002–0.007 for the
 rest): MC behavior is near-deterministic at low effort.
 
 Below the frontier the same items separate models cleanly, tracing a capability ladder:
 R1-Distill 1.5B **0.521**, Qwen3 0.6B **0.536**, Gemma 3 1B **0.548** → SmolLM2 1.7B
 **0.703** → Phi-4 Mini **0.811**, Qwen3 1.7B **0.811**, Gemma 3 4B / Gemma 4 E2B **0.813**,
 Nemotron 3 Nano 4B **0.820** → Ministral 3 3B **0.892**, Granite 4.1 3B **0.905**, Qwen3 4B
-**0.922**, Qwen3.5 4B **0.932**. Across the full 231-comparison family, **173** comparisons
+**0.922**, Qwen3.5 4B **0.932**. Across the full 253-comparison family, **186** comparisons
 are significant after correction.
 
 Classical item analysis makes the point quantitatively. Against the nine-model Claude cohort
 the item set looked like a ceiling: mean difficulty *p* = 0.998, discrimination defined for
-only 7 of 213 items. Against twenty-two models the same 213 items report mean difficulty
-*p* = **0.864**, mean discrimination **0.4789**, defined for **204** items, with 43 at
+only 7 of 213 items. Against twenty-three models the same 213 items report mean difficulty
+*p* = **0.870**, mean discrimination **0.4834**, defined for **204** items, with 43 at
 ceiling (*p* > 0.95), **none** at floor, and only **3** low-discrimination items.
 
 **Interpretation:** frontier Claude models have effectively solved factual multiple-choice
@@ -176,37 +179,39 @@ The judge-panel composite (0–100) separates the cohort into clear, statistical
 |---|---|---|---|---|---|
 | 1 | Opus 4.7 | **98.2** | [96.8, 99.3] | 0.97 | 0.03 |
 | 2 | Fable 5 | **97.9** | [96.6, 99.0] | 0.96 | 0.00 |
-| 3 | Opus 4.6 | **95.0** | [92.7, 97.0] | 0.94 | 0.03 |
-| 4 | Opus 4.8 | **91.4** | [87.9, 94.4] | 0.94 | 0.03 |
-| 5 | Sonnet 4.6 | **89.6** | [86.0, 92.8] | 0.91 | 0.08 |
-| 6 | Sonnet 5 | **86.6** | [82.0, 90.6] | 0.87 | 0.10 |
-| 7 | Opus 4.5 | **83.5** | [79.7, 86.9] | 0.86 | 0.07 |
-| 8 | Sonnet 4.5 | **69.7** | [64.9, 74.2] | 0.78 | 0.17 |
-| 9 | Haiku 4.5 | **48.5** | [44.2, 52.7] | 0.65 | 0.42 |
-| 10 | Qwen3 4B | **21.8** | [18.8, 24.5] | 0.42 | 0.78 |
-| 11 | Gemma 4 E2B | **18.7** | [16.0, 21.4] | 0.38 | 0.74 |
-| 12 | Granite 4.1 3B | **18.4** | [16.2, 20.6] | 0.33 | 0.98 |
-| 13 | Ministral 3 3B | **17.7** | [15.1, 20.1] | 0.35 | 1.17 |
-| 14 | Gemma 3 4B | **17.7** | [14.9, 20.5] | 0.33 | 0.62 |
-| 15 | Qwen3.5 4B | **17.6** | [15.5, 19.5] | 0.32 | 0.70 |
-| 16 | SmolLM2 1.7B | **11.7** | [10.0, 13.3] | 0.21 | 1.01 |
-| 17 | Qwen3 1.7B | **9.9** | [8.3, 11.5] | 0.22 | 1.25 |
-| 18 | Nemotron 3 Nano 4B | **8.4** | [6.5, 10.4] | 0.19 | 0.97 |
-| 19 | Phi-4 Mini | **7.6** | [5.9, 9.3] | 0.20 | 0.97 |
-| 20 | Gemma 3 1B | **4.5** | [3.2, 5.9] | 0.12 | 0.75 |
-| 21 | Qwen3 0.6B | **2.0** | [1.2, 2.8] | 0.08 | 0.98 |
-| 22 | R1-Distill 1.5B | **0.3** | [0.1, 0.6] | 0.02 | 1.00 |
+| 3 | Opus 5 | **97.6** | [96.2, 98.8] | 0.97 | 0.00 |
+| 4 | Opus 4.6 | **95.0** | [92.7, 97.0] | 0.94 | 0.03 |
+| 5 | Opus 4.8 | **91.4** | [87.9, 94.4] | 0.94 | 0.03 |
+| 6 | Sonnet 4.6 | **89.6** | [86.0, 92.8] | 0.91 | 0.08 |
+| 7 | Sonnet 5 | **86.6** | [82.0, 90.6] | 0.87 | 0.10 |
+| 8 | Opus 4.5 | **83.5** | [79.7, 86.9] | 0.86 | 0.07 |
+| 9 | Sonnet 4.5 | **69.7** | [64.9, 74.2] | 0.78 | 0.17 |
+| 10 | Haiku 4.5 | **48.5** | [44.2, 52.7] | 0.65 | 0.42 |
+| 11 | Qwen3 4B | **21.8** | [18.8, 24.5] | 0.42 | 0.78 |
+| 12 | Gemma 4 E2B | **18.7** | [16.0, 21.4] | 0.38 | 0.74 |
+| 13 | Granite 4.1 3B | **18.4** | [16.2, 20.6] | 0.33 | 0.98 |
+| 14 | Ministral 3 3B | **17.7** | [15.1, 20.1] | 0.35 | 1.17 |
+| 15 | Gemma 3 4B | **17.7** | [14.9, 20.5] | 0.33 | 0.62 |
+| 16 | Qwen3.5 4B | **17.6** | [15.5, 19.5] | 0.32 | 0.70 |
+| 17 | SmolLM2 1.7B | **11.7** | [10.0, 13.3] | 0.21 | 1.01 |
+| 18 | Qwen3 1.7B | **9.9** | [8.3, 11.5] | 0.22 | 1.25 |
+| 19 | Nemotron 3 Nano 4B | **8.4** | [6.5, 10.4] | 0.19 | 0.97 |
+| 20 | Phi-4 Mini | **7.6** | [5.9, 9.3] | 0.20 | 0.97 |
+| 21 | Gemma 3 1B | **4.5** | [3.2, 5.9] | 0.12 | 0.75 |
+| 22 | Qwen3 0.6B | **2.0** | [1.2, 2.8] | 0.08 | 0.98 |
+| 23 | R1-Distill 1.5B | **0.3** | [0.1, 0.6] | 0.02 | 1.00 |
 
-**209** of the 231 pairwise comparisons remain significant after Holm–Bonferroni correction
-over the full family. The 22 exceptions are all near-neighbors, and fall in two groups: four
-Claude near-ties — Fable 5 vs Opus 4.7 at the very top (Δ = −0.3, raw *p* = 0.66 — a
-statistical tie for first), Sonnet 5 vs Sonnet 4.6 (Δ = −2.9), Opus 4.8 vs Sonnet 4.6
-(Δ = +1.8), and Opus 4.5 vs Sonnet 5 (Δ = −3.1) — and near-neighbor pairs among the tightly
-packed local mid-cohort, where Gemma 3 4B, Gemma 4 E2B, Granite 4.1 3B, Ministral 3 3B and
-Qwen3.5 4B cluster within ~1 point of one another (17.6–18.7) and are mutually
-indistinguishable. The judge panel is highly reliable: **Krippendorff's α = 0.9924** on the
-composite across three personas over 2,640 scored units, and no lower than **0.9758** on any
-single judged dimension.
+**228** of the 253 pairwise comparisons remain significant after Holm–Bonferroni correction
+over the full family. The 25 exceptions are all near-neighbors, and fall in two groups: eight
+Claude near-ties — chief among them a three-way statistical tie for first, in which Fable 5,
+Opus 5 and Opus 4.7 are mutually indistinguishable (|Δ| ≤ 0.6, raw *p* ≥ 0.34), plus Opus 5
+vs Opus 4.6 (Δ = +2.6), Opus 4.8 vs Opus 4.6 (Δ = −3.6), Opus 4.8 vs Sonnet 4.6 (Δ = +1.8),
+Opus 4.5 vs Sonnet 5 (Δ = −3.1), and Sonnet 5 vs Sonnet 4.6 (Δ = −2.9) — and near-neighbor
+pairs among the tightly packed local mid-cohort, where Gemma 3 4B, Gemma 4 E2B, Granite 4.1
+3B, Ministral 3 3B and Qwen3.5 4B cluster within ~1 point of one another (17.6–18.7) and are
+mutually indistinguishable. The judge panel is highly reliable: **Krippendorff's α = 0.9929**
+on the composite across three personas over 2,760 scored units, and no lower than **0.9771**
+on any single judged dimension.
 
 Rubric coverage falls off faster than the composite suggests: the Claude cohort spans
 0.65–0.97, while every local model sits at 0.42 or below, and R1-Distill at 0.02. The
@@ -215,35 +220,41 @@ to around or above 1.0 per response for most of the local cohort. Small models a
 only giving thinner answers; they are giving answers that contradict the tradition.
 
 ### 4.3 A non-monotonic generational trend
-Within Opus, scores rise then fall: **4.5 (83.5) < 4.6 (95.0) < 4.7 (98.2) > 4.8 (91.4)**. The
-decline at 4.8 is significant against its immediate predecessor after Holm correction —
-4.7 − 4.8 = +6.8 [+4.3, +9.7] (Holm *p* = 0.0462) — as is every step of the earlier rise
-(4.6 − 4.5 = +11.5, 4.7 − 4.6 = +3.2, both Holm *p* = 0.0462). (Bootstrap *p*-values use
-(r+1)/(B+1) smoothing, so the smallest reportable value at 10,000 resamples is ≈ 0.0002, and
-the smallest surviving Holm value in this 231-comparison family is ≈ 0.0462.)
+Within Opus, scores rise, dip, then recover: **4.5 (83.5) < 4.6 (95.0) < 4.7 (98.2) > 4.8
+(91.4) < 5 (97.6)**. The decline at 4.8 is significant against its immediate predecessor after
+Holm correction — 4.7 − 4.8 = +6.8 [+4.3, +9.7] (Holm *p* = 0.0051) — as is every step of the
+earlier rise (4.6 − 4.5 = +11.5, 4.7 − 4.6 = +3.2, both Holm *p* = 0.0051), and the recovery
+at Opus 5, which scores significantly above 4.8 (5 − 4.8 = +6.2, Holm *p* = 0.0051) and
+rejoins Opus 4.7 and Fable 5 in a statistical three-way tie for first (all three pairwise
+differences non-significant). (Bootstrap *p*-values use (r+1)/(B+1) smoothing, so the smallest
+reportable value at 100,000 resamples is ≈ 0.00002, and the smallest surviving Holm value in
+this 253-comparison family is ≈ 0.0051.)
 
-The 4.6 − 4.8 gap is where widening the cohort changed an inference rather than a number.
-The estimate is unmoved (Δ = +3.6 [+0.8, +6.6], raw *p* = 0.008, CI excluding zero), but
-Holm-corrected over the 22-model family's 231 comparisons it no longer clears 0.05
-(*p* = 0.164), where over the nine-model family's 36 it did (*p* = 0.041). Nothing about
-Opus 4.6 or 4.8 changed; the correction family grew more than sixfold. Multiple-comparison control is a
-cost paid for cohort breadth. A claim this close to threshold should be read as suggestive
-rather than established, which is why we report Δ and CI rather than a significance verdict
-alone. The
-Sonnet line shows the same ceiling effect one generation earlier: 4.5 (69.7) → 4.6 (89.6) is a
-large, significant gain (Δ = +19.9 [+15.7, +24.1]), but **Sonnet 5 (86.6) does not improve on
-Sonnet 4.6** (Δ = −2.9, raw *p* = 0.13, not significant). So the pattern is not "newer is worse"
-as a law — **Fable 5, the newest and highest-tier model, ties for first** — but neither is
-"newer is better" automatic: of the three newest-generation models, one (Fable 5) leads, one
-(Opus 4.8) significantly regresses, and one (Sonnet 5) plateaus.
+Raising the bootstrap from 10,000 to 100,000 resamples was forced by the cohort's growth, and
+it matters here. With (r+1)/(B+1) smoothing over a two-sided test, the *p*-value floor at
+10,000 resamples is ≈ 0.0002; multiplied by the 253-comparison Holm family that floor is
+0.0506 — just over 0.05 — so *every* pairwise difference would be nulled, including a 98-point
+gap, as an artifact of resampling resolution rather than of the data. Adding the twenty-third
+model is what pushed the family size past that cliff; raising to 100,000 resamples drops the
+floor to ≈ 0.00002 and the smallest surviving Holm value to ≈ 0.005, so genuine differences
+survive again. The one Opus step that still does not clear correction is 4.6 − 4.8 (Δ = +3.6
+[+0.8, +6.7], raw *p* = 0.008, CI excluding zero, Holm *p* = 0.184): we report it as
+suggestive rather than established, giving Δ and CI rather than a significance verdict alone.
+The Sonnet line shows the same ceiling effect one generation earlier: 4.5 (69.7) → 4.6 (89.6)
+is a large, significant gain (Δ = +19.9 [+15.7, +24.2]), but **Sonnet 5 (86.6) does not
+improve on Sonnet 4.6** (Δ = −2.9, raw *p* = 0.13, not significant). So the pattern is not
+"newer is worse" as a law — of the three newest-generation models, two (**Fable 5, 97.9**, and
+**Opus 5, 97.6**) tie for first and only Sonnet 5 plateaus — but neither is "newer is better"
+automatic: the lone significant regression, Opus 4.8 against Opus 4.7, sits in the prior
+generation and was itself reversed by Opus 5.
 
 ### 4.4 Failure modes scale with capability
 Rubric coverage and `should_not` violations degrade monotonically down the leaderboard.
-The top models (Opus 4.7, Fable 5, Opus 4.6) engage 94–97% of each rubric's required points and
-average ≤ 0.03 panel-flagged violations per answer — Fable 5 records **zero** across the set;
+The top models (Opus 4.7, Fable 5, Opus 5, Opus 4.6) engage 94–97% of each rubric's required points and
+average ≤ 0.03 panel-flagged violations per answer — Fable 5 and Opus 5 record **zero** across the set;
 Haiku covers only 65% and averages **0.42 violations per answer**. The judged sub-dimensions make
 the signature explicit: `distinctiveness` is the lowest-scoring judge dimension for **all
-twenty-two models, without exception** — every Claude model, every local model, across a
+twenty-three models, without exception** — every Claude model, every local model, across a
 97-point spread in composite (Haiku 2.49/5 vs. its practical-wisdom 3.48; even Opus 4.8
 bottoms out on distinctiveness at 4.38/5, and the leader, Opus 4.7, at 4.88/5; among local
 models Qwen3 4B reaches 2.15 on practical wisdom but only 1.57 on distinctiveness). The
@@ -300,20 +311,22 @@ deserves.
 **Separating the constructs was the right call.** Had DeseretBench been a multiple-choice
 benchmark alone, it would have reported a near-uniform ~99–100% ceiling and concluded — wrongly —
 that these models are interchangeable on Latter-day Saint competence. The open-ended axis tells a
-completely different story, with a ~50-point spread and 32 of 36 pairwise differences
+completely different story, with a ~50-point spread and 37 of 45 pairwise differences
 significant. Factual recall (knowing *what* the Church teaches) and applied alignment (giving
 counsel a faithful member would recognize as their own) are empirically distinct capabilities,
 and only the latter still discriminates frontier models.
 
-**Capability and alignment can move in opposite directions.** The headline finding is that the
-newest Opus (4.8) is *significantly worse* than its two predecessors at faithful within-tradition
-reasoning, even though it ties them at the MC ceiling. We are cautious about over-reading a
-single benchmark on a single tradition measured through one harness, but the effect is robust to
-repeat runs, position-balancing, multiple-comparison correction, and a highly reliable judge
-panel (α = 0.9924 composite, ≥ 0.9758 per dimension). Nor is it isolated to Opus: Sonnet 5 likewise
-fails to advance on Sonnet 4.6. It is not, however, a universal "newer-is-worse" law — Fable 5,
-the newest and highest-tier model, ties for first — which makes the two regressions look like
-model-specific tuning outcomes rather than an inevitability. A plausible reading is that
+**Capability and alignment can move in opposite directions.** A robust finding is that Opus 4.8
+is *significantly worse* than its immediate predecessor, Opus 4.7, at faithful within-tradition
+reasoning (Δ = +6.8, Holm *p* = 0.0051), even though the two tie at the MC ceiling. We are
+cautious about over-reading a single benchmark on a single tradition measured through one
+harness, but the effect is robust to repeat runs, position-balancing, multiple-comparison
+correction, and a highly reliable judge panel (α = 0.9929 composite, ≥ 0.9771 per dimension).
+Nor is it isolated to Opus: Sonnet 5 likewise fails to advance on Sonnet 4.6. It is not, however,
+a universal "newer-is-worse" law — the newest generation supplies two of the three models tied
+for first (Fable 5 and Opus 5), and Opus 5 in particular reverses the 4.8 dip — which makes the
+4.8 regression and the Sonnet 5 plateau look like model-specific tuning outcomes rather than an
+inevitability. A plausible reading is that
 general-purpose tuning which improves breadth or "neutrality" can erode the willingness to give a
 *distinctively* committed answer — precisely the `distinctiveness` and `should_not` behavior this
 benchmark rewards. That is a measurable, monitorable regression, and exactly the kind of thing a
@@ -327,7 +340,7 @@ differentiate the cohort: the models' knowledge cutoffs post-date those events, 
 answered correctly. Currency items will regain diagnostic value against models with earlier
 cutoffs and in future editions.
 
-**Reliability and validity.** Judge inter-rater agreement (Krippendorff's α = 0.9924) is high
+**Reliability and validity.** Judge inter-rater agreement (Krippendorff's α = 0.9929) is high
 enough that the open-ended ranking is not an artifact of judge noise; MC parse-failure and
 call-failure rates are both zero in the final data; a provenance audit found zero genuine
 served-model fallbacks, zero multi-key usage-extraction artifacts, and zero failed calls in the
@@ -344,7 +357,7 @@ is by automated personas rather than a credentialed human panel** — and those 
 are a single model (`claude-opus-4-8`) wearing five system-prompt personas, so their unanimous
 key agreement (Fleiss' κ = 1.0) evidences item clarity, not independent validation; questions
 authored by models in the same family as the evaluated cohort (mitigated by source-anchoring
-and blind review); six of the nine Claude cohort ids are undated aliases, so the
+and blind review); seven of the ten Claude cohort ids are undated aliases, so the
 served snapshot is pinned only by the run's serving window; and measurement of the Claude
 slice through the CLI harness rather than the bare Messages API. The cohort is no longer
 single-provider, but it is still narrow in a specific way: the Claude models are frontier

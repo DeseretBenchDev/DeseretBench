@@ -42,13 +42,13 @@ power, and the limitations.
 
 ## Cohort evaluated (v0.1)
 
-Twenty-two models across nine vendors and two serving paths.
+Twenty-three models across nine vendors and two serving paths.
 
-**Nine current-generation Claude models** served by the local `claude` CLI (probed
-2026-06-05, expanded 2026-07-03): `claude-fable-5`, `claude-opus-4-8`,
+**Ten current-generation Claude models** served by the local `claude` CLI (probed
+2026-06-05, expanded 2026-07-03 and 2026-07-24): `claude-fable-5`, `claude-opus-5`, `claude-opus-4-8`,
 `claude-opus-4-7`, `claude-opus-4-6`, `claude-opus-4-5-20251101`, `claude-sonnet-5`,
 `claude-sonnet-4-6`, `claude-sonnet-4-5-20250929`, `claude-haiku-4-5-20251001` —
-within-tier generational progressions (Opus 4.5→4.8, Sonnet 4.5→5) plus the Fable
+within-tier generational progressions (Opus 4.5→5, Sonnet 4.5→5) plus the Fable
 tier above Opus, and a cross-tier spread. The cohort is *whatever the authenticated
 CLI actually serves*, discovered by probe — see
 [ADR-0010](docs/adr/0010-cohort-selection-by-cli-probe.md).
@@ -92,45 +92,46 @@ and `reports/RESULTS.md`.
 
 ## Headline results (v0.1)
 
-Twenty-two models, balanced MC + judge-panel open-ended, 5/3 repeat runs, seed
+Twenty-three models, balanced MC + judge-panel open-ended, 5/3 repeat runs, seed
 19470417. Numbers regenerated from `reports/RESULTS.md` — never hand-typed.
 
-- **Multiple choice saturates at the frontier and discriminates below it.** All 36
+- **Multiple choice saturates at the frontier and discriminates below it.** All 45
   Claude-vs-Claude MC comparisons are non-significant after correction. Across the full
-  cohort, 173 of 231 are significant. Accuracy runs from 0.521 (R1-Distill 1.5B) through
+  cohort, 186 of 253 are significant. Accuracy runs from 0.521 (R1-Distill 1.5B) through
   0.703 (SmolLM2 1.7B) and 0.811–0.813 (Phi-4 Mini, Qwen3 1.7B, Gemma 3 4B) to 0.922
   (Qwen3 4B) and 0.932 (Qwen3.5 4B), then 0.986–1.000 across the Claude cohort. The items
-  discriminate; the nine-model cohort was too narrow to show it.
+  discriminate; the ten-model cohort was too narrow to show it.
 - **The MC-to-open collapse.** Qwen3 4B scores 0.922 on MC, close to Claude's range, and
   **21.8** on open-ended, under half of Haiku 4.5 (48.5), the weakest Claude. MC asks a
   model to recognize an answer among four options; the open track asks it to write counsel
   with no options in view.
-- **Open-ended discriminates sharply** (judge Krippendorff's α = 0.9924, 2,640 scored
-  units; 209 of 231 pairwise comparisons significant), composite 0–100:
+- **Open-ended discriminates sharply** (judge Krippendorff's α = 0.9929, 2,760 scored
+  units; 228 of 253 pairwise comparisons significant), composite 0–100:
 
   | Model | Composite (95% CI) | MC accuracy |
   |---|---|---|
   | Opus 4.7 | **98.2** [96.8, 99.3] | 1.000 |
   | Fable 5 | **97.9** [96.6, 99.0] | 0.999 |
-  | Opus 4.6 | **95.0** [92.7, 97.0] | 1.000 |
-  | Opus 4.8 | **91.4** [87.9, 94.4] | 1.000 |
+  | Opus 5 | **97.6** [96.2, 98.8] | 1.000 |
+  | Opus 4.6 | **95.0** [92.6, 97.0] | 1.000 |
+  | Opus 4.8 | **91.4** [87.9, 94.5] | 1.000 |
   | Sonnet 4.6 | **89.6** [86.0, 92.8] | 1.000 |
-  | Sonnet 5 | **86.6** [82.0, 90.6] | 0.986 |
-  | Opus 4.5 | **83.5** [79.7, 86.9] | 1.000 |
+  | Sonnet 5 | **86.6** [82.1, 90.6] | 0.986 |
+  | Opus 4.5 | **83.5** [79.7, 87.0] | 1.000 |
   | Sonnet 4.5 | **69.7** [64.9, 74.2] | 1.000 |
   | Haiku 4.5 | **48.5** [44.2, 52.7] | 0.994 |
   | Qwen3 4B | **21.8** [18.8, 24.5] | 0.922 |
-  | Gemma 4 E2B | **18.7** [16.0, 21.4] | 0.813 |
+  | Gemma 4 E2B | **18.7** [15.9, 21.4] | 0.813 |
   | Granite 4.1 3B | **18.4** [16.2, 20.6] | 0.905 |
-  | Ministral 3 3B | **17.7** [15.1, 20.1] | 0.892 |
-  | Gemma 3 4B | **17.7** [14.9, 20.5] | 0.813 |
+  | Ministral 3 3B | **17.7** [15.2, 20.1] | 0.892 |
+  | Gemma 3 4B | **17.7** [14.8, 20.5] | 0.813 |
   | Qwen3.5 4B | **17.6** [15.5, 19.5] | 0.932 |
   | SmolLM2 1.7B | **11.7** [10.0, 13.3] | 0.703 |
   | Qwen3 1.7B | **9.9** [8.3, 11.5] | 0.811 |
   | Nemotron 3 Nano 4B | **8.4** [6.5, 10.4] | 0.820 |
   | Phi-4 Mini | **7.6** [5.9, 9.3] | 0.811 |
   | Gemma 3 1B | **4.5** [3.2, 5.9] | 0.548 |
-  | Qwen3 0.6B | **2.0** [1.2, 2.8] | 0.536 |
+  | Qwen3 0.6B | **2.0** [1.2, 2.9] | 0.536 |
   | R1-Distill 1.5B | **0.3** [0.1, 0.6] | 0.521 |
 
 - **Parameter count does not predict open score in the mid band.** Phi-4 Mini (3.8B)
@@ -147,13 +148,15 @@ Twenty-two models, balanced MC + judge-panel open-ended, 5/3 repeat runs, seed
   score 0.02 on rubric coverage.
 - **Fable 5 debuts at the top,** statistically tied with Opus 4.7 for first (Δ = −0.3, not
   significant), and significantly ahead of Opus 4.8.
-- **Newer ≠ more aligned.** Opus 4.8 scores significantly below Opus 4.7 on faithful
-  within-tradition reasoning (Δ = −6.8, Holm-corrected over 231 pairwise comparisons), and
-  Sonnet 5 does not improve on Sonnet 4.6. Two of the three newest-generation models
-  regress or plateau, while Fable 5 (a higher tier) reaches the top.
+- **Newer is not automatically more faithful.** Within Anthropic's Opus line the ordering
+  zig-zags rather than climbing. Opus 4.8 scores significantly below Opus 4.7 (Δ = −6.8,
+  Holm-corrected over 253 pairwise comparisons), and then the newest model, Opus 5, recovers:
+  significantly above 4.8 (Δ = +6.2) and statistically tied with 4.7 at the top. Sonnet 5, for
+  its part, does not improve on Sonnet 4.6, and Fable 5 reaches the top of the board. A model's
+  generation number does not predict its within-tradition fidelity.
 - **A wider cohort costs statistical power.** The Opus 4.8 vs 4.6 gap (Δ = −3.6) was
   significant when Holm-corrected over the nine-model family's 36 comparisons
-  (*p* = 0.041) and is not over the 22-model family's 231 (*p* = 0.164, raw *p* = 0.008).
+  (*p* = 0.041) and is not over the 23-model family's 253 (*p* = 0.184, raw *p* = 0.008).
   The estimate is unchanged; only the size of the correction family grew.
 
 ## Repository layout

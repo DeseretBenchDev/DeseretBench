@@ -64,12 +64,14 @@ adjudicating truth claims.
 
 Models are invoked through the authenticated `claude` CLI (no raw API key is available in this
 environment). Probing the installed CLI (v2.1.165 at v0.1; re-probed on v2.1.200 for the
-expanded run) confirmed the following **nine distinct, current-generation models** are served:
+expanded run; Opus 5 added on its 2026-07-24 release) confirmed the following **ten distinct,
+current-generation models** are served:
 
 | id | tier | role in analysis |
 |---|---|---|
 | `claude-fable-5`             | Fable  | frontier flagship (Mythos-class tier above Opus) |
-| `claude-opus-4-8`            | Opus   | newest Opus |
+| `claude-opus-5`              | Opus   | newest Opus (generation 5) |
+| `claude-opus-4-8`            | Opus   | newest 4.x Opus |
 | `claude-opus-4-7`            | Opus   | prior Opus |
 | `claude-opus-4-6`            | Opus   | older Opus |
 | `claude-opus-4-5-20251101`   | Opus   | oldest served Opus |
@@ -80,7 +82,7 @@ expanded run) confirmed the following **nine distinct, current-generation models
 
 (The first six-model run predates the availability of Fable 5, Sonnet 5, and Opus 4.5 in this
 environment; the expanded cohort reuses the cached v0.1 calls unchanged.) This cohort gives
-**within-tier generational progressions** (Opus 4.5 → 4.6 → 4.7 → 4.8; Sonnet 4.5 → 4.6 → 5)
+**within-tier generational progressions** (Opus 4.5 → 4.6 → 4.7 → 4.8 → 5; Sonnet 4.5 → 4.6 → 5)
 and a **cross-tier capability spread** (Fable → Opus → Sonnet → Haiku), which is ideal for
 discrimination and face-validity analysis. `claude-mythos-5` returns 404 here (Project
 Glasswing only). Legacy 3.5/3.7 models error under the current reasoning ("effort") mode and
@@ -120,8 +122,8 @@ count turns out not to predict open-ended score at all. `tier` is the family and
 scaling curve.
 
 The slice earns its place by answering a question the Claude cohort cannot: what the
-instrument looks like when it is not measuring the frontier. Against nine frontier models
-the MC item set reported a ceiling; against twenty-two it reports mean difficulty 0.864 and
+instrument looks like when it is not measuring the frontier. Against ten frontier models
+the MC item set reported a ceiling; against twenty-three it reports mean difficulty 0.870 and
 discrimination for 204 of 213 items. The items did not change.
 
 ---

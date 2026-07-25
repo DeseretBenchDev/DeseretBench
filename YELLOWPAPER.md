@@ -240,8 +240,8 @@ Defined in `deseretbench/runner.py` and orchestrated by
 
 ### 3.1 Cohort and constants
 
-The v0.1 cohort is the **twenty-two** models listed in `configs/models.yaml`: nine
-Claude models reached through the `claude` CLI (tiers: 1 fable, 4 opus, 3 sonnet,
+The v0.1 cohort is the **twenty-three** models listed in `configs/models.yaml`: ten
+Claude models reached through the `claude` CLI (tiers: 1 fable, 5 opus, 3 sonnet,
 1 haiku) and thirteen local open-weights models pinned to the `ollama` backend (tiers:
 3 qwen3, 2 gemma, 1 smollm, 1 phi, 1 deepseek, 1 granite, 1 qwen3.5, 1 ministral, 1 nemotron,
 1 gemma4). Everything in `run_config.yaml` is held
@@ -364,7 +364,7 @@ On read (`use_cache=True`, default), an entry is served **only if**:
    instead of laundered.
 
 *Empirically checked during the 17-model run, 2026-07-15* (the guards are held-constant
-across the later 22-model cohort). This pair of guards is not theoretical: that run hit a
+across the later 23-model cohort). This pair of guards is not theoretical: that run hit a
 live case where the CLI attributed a call to a model that was never requested
 (operator-settings inheritance — [ADR-0012](docs/adr/0012-operator-settings-isolation-and-judge-quorum.md)).
 The guards behaved exactly as specified. Across all **34,210** cached entries,
@@ -580,7 +580,8 @@ reproducible.
 
 ### 5.2 Per-item bootstrap mean CI
 
-`bootstrap_mean_ci(per_item, n_resamples=10000, seed, ci=0.95)`: drop None values;
+`bootstrap_mean_ci(per_item, n_resamples, seed, ci=0.95)`, called with `n_resamples = 100000`
+(`stats.bootstrap_resamples`): drop None values;
 with `n` surviving items, draw an `(B × n)` index matrix from
 `np.random.default_rng(seed).integers(0, n, …)`, take row means, and report the
 `(1−ci)/2` and `1−(1−ci)/2` quantiles as `[lo, hi]` around the plain mean.
@@ -591,7 +592,7 @@ uncertainty and repeat runs of one item are never treated as independent.
 
 ### 5.3 Paired bootstrap with smoothed p
 
-`paired_bootstrap_diff(a_per_item, b_per_item, n_resamples=10000, seed, ci)`: arrays must align by item
+`paired_bootstrap_diff(a_per_item, b_per_item, n_resamples, seed, ci)`, again with `n_resamples = 100000`: arrays must align by item
 (asserted); `d = a − b`; resample `d`; CI from quantiles of resampled means. Two-sided
 p with add-one smoothing:
 

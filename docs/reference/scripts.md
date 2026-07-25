@@ -243,7 +243,7 @@ are `reports/RESULTS.md`, `reports/leaderboard.html`, and `reports/figures/` —
 ### Cosmetic staleness
 
 The step banners read the cohort size from `configs/models.yaml` at run time
-(`NMODELS=$(grep -c '^  - id:' ...)`, twenty-two models at time of writing); run counts
+(`NMODELS=$(grep -c '^  - id:' ...)`, twenty-three models at time of writing); run counts
 come from `configs/run_config.yaml`. Both are read by `run_benchmark` and by
 `deseretbench.audit`, so the banners follow the config rather than restating it.
 

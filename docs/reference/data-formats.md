@@ -371,7 +371,7 @@ The panel is **one judge model** (`configs/models.yaml` →
 | `scores` | object or null | Parsed judge JSON; null when the call failed or output was unparseable |
 
 These fields are present on every record in the shipped
-`runs/v0_1/open_judge_raw.jsonl` (7,920 lines = 22 models × 40 items × 3 runs ×
+`runs/v0_1/open_judge_raw.jsonl` (8,280 lines = 23 models × 40 items × 3 runs ×
 3 personas); the `(newer)` tag marks fields that older, pre-audit cache/run files
 may lack, not the current v0.1 data.
 
@@ -405,7 +405,7 @@ before averaging.
 | `model`, `tier`, `label` | string | Scored model |
 | `question_id`, `dimension`, `difficulty` | string | Item metadata |
 | `run_index` | int | Repeat index |
-| `judge_model` | string | Primary judge model ID; present on all 2,640 shipped v0.1 records (`claude-sonnet-4-6`) |
+| `judge_model` | string | Primary judge model ID; present on all 2,760 shipped v0.1 records (`claude-sonnet-4-6`) |
 | `composite_100` | float or null | `(composite_5 − 1) / 4 × 100`, where `composite_5` is the mean of the *present* per-dimension means; null if no dimension had a valid value |
 | `dim_means` | object | Per-judge-dimension mean (1–5) across personas, or null per dimension |
 | `must_include_coverage` | float or null | Pooled `sum(hits)/sum(totals)` across personas (hits capped at each judge's total); 0–1 |

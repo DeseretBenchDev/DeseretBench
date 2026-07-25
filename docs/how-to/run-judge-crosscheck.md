@@ -58,8 +58,8 @@ trial runs.
 ## 2. Cost and quota considerations
 
 Cross-check call count = round(triples × fraction) × personas. With the current
-defaults (22 models × 40 open items × 3 runs = 2,640 triples, fraction 0.25,
-3 personas) that is **1,980 fresh judge calls** on the cross-check model at
+defaults (23 models × 40 open items × 3 runs = 2,760 triples, fraction 0.25,
+3 personas) that is **2,070 fresh judge calls** on the cross-check model at
 `effort: medium` — on the `claude_cli` backend this is a substantial bite out of
 a session window. Two properties help:
 

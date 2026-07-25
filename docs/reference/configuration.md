@@ -34,14 +34,15 @@ A list of model entries. Each entry has four required keys plus one optional:
 | `generation` | number | Model generation (e.g. `4.6`, `5.0`), used to order models within a tier. For local families this is the parameter count in billions, so per-tier report lines read as scaling curves. |
 | `backend` *(optional)* | string | Pins this entry to a specific backend (e.g. `ollama`). Entries without it use `runner.backend` from `run_config.yaml`. The effective backend is part of the cache key ([ADR-0011](../adr/0011-local-open-weights-backend.md)). |
 
-The current cohort is twenty-two models over two serving paths.
+The current cohort is twenty-three models over two serving paths.
 
-Nine are Claude models reached through the authenticated `claude` CLI: one `fable`,
-four `opus`, three `sonnet`, one `haiku`, spanning generations 4.5–5.0. Per the
+Ten are Claude models reached through the authenticated `claude` CLI: one `fable`,
+five `opus`, three `sonnet`, one `haiku`, spanning generations 4.5–5.0. Per the
 file's header comment, that set is whatever the CLI genuinely serves in this
-environment (probed 2026-06-05, expanded 2026-07-03 under CLI v2.1.200);
-`claude-mythos-5` is unavailable here, and legacy 3.5/3.7 models are excluded
-because they error under the current reasoning-mode configuration.
+environment (probed 2026-06-05, expanded 2026-07-03 under CLI v2.1.200, then
+again 2026-07-25 to add Opus 5); `claude-mythos-5` is unavailable here, and
+legacy 3.5/3.7 models are excluded because they error under the current
+reasoning-mode configuration.
 
 Thirteen are local open-weights models (0.6B–4B) pinned with `backend: ollama` and
 served by a user-space Ollama (CPU for the original cohort; a single consumer GPU for the
@@ -146,7 +147,7 @@ Read by `analyze.py:307-311` and `validate_questions.py:279-281`.
 
 | Key | Current value | Default if absent | Read by |
 |---|---|---|---|
-| `bootstrap_resamples` | `10000` | required | `analyze.py:311` |
+| `bootstrap_resamples` | `100000` | required | `analyze.py:311` |
 | `rng_seed` | `19470417` | required in `analyze.py`/`validate_questions.py`; `0` on the judge-crosscheck path (`run_benchmark.py:335` uses `.get`) | `analyze.py:311`, `validate_questions.py:280`, `run_benchmark.py:335` |
 | `holdout_fraction` | `0.20` | required | `validate_questions.py:281` (public/holdout split of the validated pool; see [holdout stance](../explanation/holdout-stance.md)) |
 | `ci_level` | `0.95` | required | `analyze.py:311` |

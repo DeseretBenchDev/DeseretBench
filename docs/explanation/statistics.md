@@ -67,7 +67,7 @@ Davison & Hinkley.)
 
 ## Holm, not Bonferroni
 
-With a cohort of twenty-two models, one phase produces $\binom{22}{2} = 231$
+With a cohort of twenty-three models, one phase produces $\binom{23}{2} = 253$
 pairwise comparisons — a genuine multiplicity problem, and one that grows
 quadratically: the nine-model v0.1 cohort produced 36. We correct with the Holm
 step-down procedure, applied over all pairwise comparisons within one phase
@@ -80,8 +80,8 @@ $$
 where $p_{(1)} \le \dots \le p_{(m)}$ are the sorted raw p-values. Holm
 controls the family-wise error rate at the same level as Bonferroni, under the
 same (i.e. no) independence assumptions — it is valid for arbitrary dependence
-among the tests, which matters here because 231 comparisons among 22 models are
-heavily entangled (every model appears in 21 of them). And it is uniformly more
+among the tests, which matters here because 253 comparisons among 23 models are
+heavily entangled (every model appears in 22 of them). And it is uniformly more
 powerful: every hypothesis Bonferroni rejects, Holm also rejects, and
 sometimes more. Given that strict dominance, there is no reason to prefer
 Bonferroni. Sharper procedures (Hochberg, Benjamini–Hochberg FDR) buy power by
@@ -90,6 +90,15 @@ conservative FWER guarantee is worth keeping.
 
 Each pairwise entry carries both the raw bootstrap p and the Holm-adjusted
 `p_holm`, plus a `significant_holm` flag at $\alpha = 0.05$.
+
+That resolution floor interacts with the correction, and it is why $B$ was
+raised from 10,000 to 100,000. The two-sided smoothed p bottoms out at
+$2/(B+1)$, so at $B = 10{,}000$ even a maximally separated pair can report no
+p-value below $\approx 2\times10^{-4}$. Holm scales the smallest raw p by the
+full family size ($m = 253$), and $2\times10^{-4}\times 253 \approx 0.0506 >
+0.05$ — so *every* pair fails the $\alpha = 0.05$ flag for want of Monte-Carlo
+resolution, not for want of separation. Raising $B$ to 100,000 drops the floor
+to $\approx 2\times10^{-5}$ and restores ample headroom below the threshold.
 
 ## Clopper–Pearson at the ceiling
 
@@ -233,7 +242,7 @@ model with item and model random effects. We approximate its key insight —
 that runs within an item are correlated — by aggregating to per-item means
 before resampling, which removes the dominant pseudo-replication at the cost
 of ignoring finer structure (e.g. differing run counts per item after
-failures, item-by-model interaction variance). At v0.1 scale — a twenty-two-model
+failures, item-by-model interaction variance). At v0.1 scale — a twenty-three-model
 cohort over 213 MC and 40 open items, with five and three runs respectively —
 the per-item aggregation captures nearly all of what a mixed model would, and
 the simple estimator's behavior is easy to verify. This is fine for now, and

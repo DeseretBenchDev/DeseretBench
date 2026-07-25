@@ -199,7 +199,7 @@ Flags common to both subcommands:
 |---|---|---|---|
 | `--questions` | str | *(required)* | Question JSONL file (cwd-relative) |
 | `--out` | str | *(required)* | Run directory for output JSONL files (cwd-relative) |
-| `--models` | str | `""` | Comma-separated model ids; empty = the full 22-model cohort from `configs/models.yaml` |
+| `--models` | str | `""` | Comma-separated model ids; empty = the full 23-model cohort from `configs/models.yaml` |
 | `--runs` | int | `0` | Runs per item per model; `0` = config default (`runs.multiple_choice` for `mc`, `runs.open_ended` for `open`) |
 | `--limit` | int | `0` | `0` = all items; otherwise truncate the question list to the first K |
 | `--max-parallel` | int | `0` | `0` = config default (`runner.max_parallel`); a nonzero value overrides it |
