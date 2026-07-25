@@ -32,3 +32,4 @@ outreach/
 # Scratch output dir for per-model cache-warm runs (scripts/expand_local.sh);
 # only the content-addressed cache matters, these files are disposable
 runs/warm_local/
+runs/**/*.log

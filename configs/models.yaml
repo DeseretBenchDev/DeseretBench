@@ -1,7 +1,8 @@
 # DeseretBench model cohort.
 # The distinct, current-generation Claude models served by the authenticated
 # `claude` CLI in this environment (probed 2026-06-05; expanded 2026-07-03 to
-# add Fable 5, Sonnet 5, and Opus 4.5 after re-probing CLI v2.1.200).
+# add Fable 5, Sonnet 5, and Opus 4.5 after re-probing CLI v2.1.200; Opus 5
+# added 2026-07-25 on release, alias `claude-opus-5` confirmed served).
 # claude-mythos-5 is 404 here (Project Glasswing only). Legacy 3.5/3.7 models
 # error under the current reasoning-mode and are excluded to keep the
 # measurement configuration identical across the cohort.
@@ -10,6 +11,10 @@ cohort:
   - id: claude-fable-5
     tier: fable
     label: "Fable 5"
+    generation: 5.0
+  - id: claude-opus-5
+    tier: opus
+    label: "Opus 5"
     generation: 5.0
   - id: claude-opus-4-8
     tier: opus
