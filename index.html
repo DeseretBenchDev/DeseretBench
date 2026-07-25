@@ -266,8 +266,8 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
       <div class="deseret-title des" title="'Deseret' (a honey bee) written in the Deseret alphabet">&#66580;&#66607;&#66629;&#66600;&#66633;&#66607;&#66619;</div>
     </div>
   </div>
-  <p class="tagline">Does a language model get Latter-day Saint doctrine, culture, and life-choice
-  counsel right &mdash; the way an informed member of the tradition would recognize as right?</p>
+  <p class="tagline">When a language model talks about the Latter-day Saints, how often does it
+  actually get things right?</p>
   <blockquote class="epigraph">&hellip; which, by interpretation, is a honey bee; and thus they did
   carry with them swarms of bees.<cite>Ether 2:3 &middot; the meaning of &ldquo;Deseret&rdquo;</cite></blockquote>
   <dl class="meta">
@@ -311,29 +311,29 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
   <main>
     <section id="abstract">
       <h2><span class="secno">&sect; 1</span>What this is</h2>
-      <p class="lead">DeseretBench asks a narrow question with unusual rigor. When a large language
-      model speaks about the doctrine, the culture, and the moral counsel of The Church of Jesus
-      Christ of Latter-day Saints, does it get things <em>right</em> &mdash; not merely fluent, not
-      merely respectful, but right the way a well-catechized member of the tradition would
-      recognize? Fluency is cheap. Fidelity is not.</p>
-      <p>The benchmark measures fidelity along two tracks. A <strong>multiple-choice track</strong>
-      (213 items, five runs each) tests recognition: given a doctrinal or cultural question and a
-      palette of typed distractors &mdash; folk belief, earnest heterodoxy, outside caricature &mdash;
-      can the model pick the mainstream, official position? An <strong>open-ended track</strong>
-      (40 items, three runs) tests generation: the model writes a real answer to a life-choice or
-      cultural prompt, and a three-persona judge panel scores it on doctrinal accuracy, cultural
-      authenticity, practical wisdom, and distinctiveness.</p>
-      <p>Two commitments hold the whole thing together. It is <strong>within-tradition</strong>:
-      where cross-tradition efforts ask whether models treat many faiths symmetrically, DeseretBench
-      asks whether a model can go deep in <em>one</em> &mdash; the axis those breadth-first
-      benchmarks cannot see. And it is <strong>reproducible</strong>: a fixed seed, a
-      content-addressed response cache, pinned per-item reasoning budgets, and snapshotted configs,
-      so a number on this page can be regenerated from committed artifacts without a single new
-      model call.</p>
-      <div class="aside"><strong>What the scores mean.</strong> A high score is fidelity to the
-      mainstream, official Latter-day Saint position &mdash; the correlated view a faithful member
-      would hold. It is a measurement of representation, not an endorsement, and not a claim about
-      any tradition&rsquo;s truth. The framing is spelled out in
+      <p class="lead">DeseretBench measures one narrow thing, carefully. When a model discusses the
+      doctrine, culture, and counsel of The Church of Jesus Christ of Latter-day Saints, how often is
+      it correct? Sounding fluent and respectful turns out to be easy, and most large models manage
+      it without trying. The harder question is whether the substance holds up under the eye of
+      someone who has spent years inside the tradition, and that is what these scores track.</p>
+      <p>There are two tracks. The <strong>multiple-choice track</strong> (213 items, five runs
+      each) tests recognition. Each question ships with a set of typed wrong answers (a folk belief,
+      an earnest heterodoxy, an outsider&rsquo;s caricature), and the model has to pick out the
+      mainstream position. The <strong>open-ended track</strong> (40 items, three runs) tests
+      something harder. The model writes a real answer to a life-choice or cultural question, and a
+      three-persona judge panel scores it on doctrinal accuracy, cultural authenticity, practical
+      wisdom, and distinctiveness.</p>
+      <p>Two design choices matter most. The first is that it stays <strong>within one
+      tradition</strong>. Cross-tradition benchmarks ask whether a model treats many faiths
+      even-handedly; this one asks whether it can go deep in a single faith, which is a different
+      question and largely invisible to the breadth-first approach. The second is that it is
+      <strong>reproducible</strong>: a fixed seed, a content-addressed response cache, per-item
+      reasoning budgets, and snapshotted configs let any number on this page be regenerated from
+      committed files without calling a model again.</p>
+      <div class="aside"><strong>What a score means.</strong> A high score reflects fidelity to the
+      mainstream, official Latter-day Saint position, the view a faithful member would actually hold.
+      It measures representation. It is not an endorsement, and it says nothing about whether the
+      tradition is true. The framing is laid out in
       <a href="https://github.com/DeseretBenchDev/DeseretBench/blob/master/DESIGN.md">DESIGN&nbsp;&sect;2</a>.</div>
     </section>
 
@@ -341,10 +341,10 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
 
     <section id="standings">
       <h2><span class="secno">&sect; 2</span>The standings</h2>
-      <p>Twenty-two models, ranked by the open-ended composite &mdash; the axis that still
-      discriminates at the frontier. Multiple-choice accuracy (the gold column) saturates among the
-      Claude models and only begins to separate the field lower down. The two columns are on
-      different scales: the composite runs <strong>0&ndash;100</strong>, accuracy runs
+      <p>All twenty-two models, ranked by the open-ended composite, the score that still separates
+      models at the very top. Multiple-choice accuracy (the gold column) runs into a ceiling among
+      the Claude models and only spreads out further down the list. The two columns use different
+      scales: the composite runs <strong>0&ndash;100</strong>, accuracy runs
       <strong>0&ndash;1</strong>.</p>
       <div class="tablewrap">
         <table class="standings">
@@ -382,7 +382,7 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
         </table>
       </div>
       <p class="tnote"><sup>&dagger;</sup> Tops the open-weights field on multiple choice (0.932) yet
-      sits mid-pack on open generation &mdash; recognition without transfer.
+      sits mid-pack on open generation, where the recognition does not carry over into writing.
       &nbsp; <sup>&Dagger;</sup> Tops the open-weights field on the open-ended composite.</p>
       <p class="small">Composite is the mean of four judge dimensions, 0&ndash;100, with 95% bootstrap
       intervals. Per-dimension scores, pairwise significance (Holm-adjusted over the 231-comparison
@@ -394,67 +394,70 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
 
     <section id="findings">
       <h2><span class="secno">&sect; 3</span>What the numbers say</h2>
-      <p>Five results survived adversarial verification. Each is a claim you can check against the
+      <p>Five results held up under adversarial checking. Each one can be verified against the
       committed run artifacts.</p>
 
       <div class="finding">
         <h3><span class="fn">3.1</span>A ceiling is a property of the cohort, not the items.</h3>
-        <p>Among the nine Claude models, not one of the 36 multiple-choice pairings is
-        statistically distinguishable &mdash; the frontier is saturated. Yet across the full
-        22-model field, <strong>173 of 231</strong> pairings separate cleanly. The same 213 items
-        that looked like a ceiling for a small cohort are sharply discriminative for a wide one. The
-        items were always discriminative; a ceiling is a fact about who you measured.</p>
+        <p>None of the 36 pairings among the nine Claude models is statistically distinguishable on
+        multiple choice. At the top, the test has run out of room. Across the full 22-model field,
+        though, <strong>173 of 231</strong> pairings separate cleanly. The same 213 items that looked
+        like a ceiling for a small cohort turn out to discriminate sharply for a large one. Nothing
+        changed about the items; what people call a ceiling is usually a fact about the cohort being
+        measured.</p>
       </div>
 
       <figure>
         <a href="reports/figures/mc_vs_open.png"><img src="reports/figures/mc_vs_open.png" alt="Scatter of multiple-choice accuracy versus open-ended composite for all 22 models"></a>
-        <figcaption>Recognition on the horizontal axis, generation on the vertical. The frontier
-        models pile up at the right edge; the open-weights cluster hugs the floor despite respectable
-        multiple-choice scores.</figcaption>
+        <figcaption>Recognition runs along the horizontal axis, generation along the vertical. The
+        frontier models bunch at the right edge, while the open-weights models sit near the floor
+        even when their multiple-choice scores are respectable.</figcaption>
       </figure>
 
       <div class="finding">
         <h3><span class="fn">3.2</span>Recognition is not generation.</h3>
-        <p>Qwen3 4B scores 0.922 on multiple choice &mdash; inside the Claude band &mdash; but 21.8
-        on the open composite, under half of the weakest Claude model (Haiku, 48.5). A model can
-        reliably <em>pick</em> the doctrinally correct option and still be unable to <em>write</em>
-        a doctrinally sound paragraph. The gap between the two tracks is where the real difficulty
-        of the domain lives.</p>
+        <p>Qwen3 4B gets 0.922 on multiple choice, which puts it in the Claude band, and then scores
+        21.8 on the open composite, less than half of the weakest Claude model (Haiku, at 48.5). A
+        model can reliably <em>pick</em> the doctrinally correct option and still be unable to
+        <em>write</em> a doctrinally sound paragraph, and most of the domain&rsquo;s difficulty lives
+        in that gap.</p>
       </div>
 
       <div class="finding">
         <h3><span class="fn">3.3</span>Heavy reasoning does not transfer.</h3>
-        <p>Qwen3.5 4B, a reasoning-tuned build, <em>tops the open-weights field on multiple choice</em>
-        at 0.932 &mdash; and then lands sixth of thirteen on open generation, at 17.6, behind several
-        models it beats on recognition. Chain-of-thought buys the recognition task and does not buy
-        the generation task. Doctrinal fluency is not a reasoning-depth problem.</p>
+        <p>Qwen3.5 4B is a reasoning-tuned build, and it <em>tops the open-weights field on multiple
+        choice</em> at 0.932. On open generation it lands sixth of thirteen, at 17.6, behind several
+        models it beats on recognition. Chain-of-thought reasoning buys the recognition task and not
+        the generation task. Whatever makes doctrinal writing hard, it is not a shortage of reasoning
+        depth.</p>
       </div>
 
       <div class="finding">
         <h3><span class="fn">3.4</span>&ldquo;Distinctiveness&rdquo; is the hardest axis for everyone.</h3>
-        <p>Across a ninety-eight-point spread from top to bottom, the same judge dimension is the
-        lowest for <strong>all twenty-two models</strong>: distinctiveness &mdash; whether an answer
-        reflects specifically Latter-day Saint practice rather than generic Christianity. Models that
-        ace doctrine still default to the ecumenical middle. It is the one axis no model has solved.</p>
+        <p>From top to bottom the field spans about ninety-eight points, and one judge dimension
+        still comes out lowest for <strong>all twenty-two models</strong>: distinctiveness, meaning
+        whether an answer reflects specifically Latter-day Saint practice rather than generic
+        Christianity. Models that handle doctrine well still drift toward the ecumenical middle. No
+        model has solved this one yet.</p>
       </div>
 
       <div class="figrow">
         <figure>
           <a href="reports/figures/radar_dimensions.png"><img src="reports/figures/radar_dimensions.png" alt="Radar chart of the four judge dimensions"></a>
-          <figcaption>The four judge dimensions. Distinctiveness is the dented spoke on every model&rsquo;s wheel.</figcaption>
+          <figcaption>The four judge dimensions. Distinctiveness is the low point on every model&rsquo;s profile.</figcaption>
         </figure>
         <figure>
           <a href="reports/figures/scaling_by_size.png"><img src="reports/figures/scaling_by_size.png" alt="Open composite versus parameter count within each open-weights family"></a>
-          <figcaption>Within a family, open scores climb cleanly with size &mdash; but families
-          rank-invert against each other in the mid-band.</figcaption>
+          <figcaption>Within a single family, open scores rise smoothly with parameter count. Across
+          families the order scrambles in the mid-band.</figcaption>
         </figure>
       </div>
 
       <div class="finding">
         <h3><span class="fn">3.5</span>Newer is not more faithful.</h3>
-        <p>Within Anthropic&rsquo;s own line, Opus 4.7 (98.2) tops Opus 4.8 (91.4): the newest
-        generation is not the most doctrinally faithful one. Capability and alignment-to-a-tradition
-        are not the same axis, and they do not always move together.</p>
+        <p>Inside Anthropic&rsquo;s own line, Opus 4.7 (98.2) beats Opus 4.8 (91.4). The newest
+        model is not the most doctrinally faithful one. General capability and fidelity to a
+        particular tradition are related but distinct, and they do not always move together.</p>
       </div>
     </section>
 
@@ -462,23 +465,22 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
 
     <section id="method">
       <h2><span class="secno">&sect; 4</span>How it is built</h2>
-      <p>The multiple-choice items use a <strong>typed distractor palette</strong>: each wrong answer
-      is a specific, recognizable error &mdash; a folk belief, an earnest heterodoxy, an outside
-      caricature &mdash; so a miss tells you <em>how</em> the model is wrong, not merely that it is.
-      Reasoning budgets are pinned per item class and held identical across every model (multiple
-      choice at low effort, open-ended at high), so a comparison reflects the model, not its
+      <p>The multiple-choice items lean on a <strong>typed distractor palette</strong>. Each wrong
+      answer is a specific, recognizable mistake (a folk belief, say, or an earnest heterodoxy), so a
+      wrong pick tells you <em>how</em> the model went wrong instead of just that it did. Reasoning
+      budgets are pinned per item class and kept identical across models (multiple choice at low
+      effort, open-ended at high), so differences in the scores come from the models and not their
       settings.</p>
-      <p>The open-ended judge &ldquo;panel&rdquo; is one model prompted as three personas &mdash; a
-      <em>seminary teacher</em>, a <em>BYU religion professor</em>, and a <em>bishop</em> &mdash;
-      each scoring every answer on the four dimensions. Inter-persona agreement is high
-      (Krippendorff&rsquo;s &#945; = 0.992 over 2,640 judged units), which is what lets the composite
-      carry real weight. Every score traces to a seeded, content-addressed cache: identical inputs
-      return identical outputs, and results regenerate from committed run artifacts with no new model
-      calls.</p>
-      <div class="aside"><strong>An honest limit.</strong> The v0.1 items were authored and validated
-      by Claude models under a blind multi-persona review, not yet by a human expert panel. That
-      panel is the single most important piece of future work &mdash; and the clearest place an
-      outside contributor moves the needle. See
+      <p>The open-ended &ldquo;panel&rdquo; is a single model prompted as three personas: a
+      <em>seminary teacher</em>, a <em>BYU religion professor</em>, and a <em>bishop</em>. Each
+      scores every answer on the four dimensions, and they agree closely (Krippendorff&rsquo;s
+      &#945; = 0.992 over 2,640 judged units), which is what lets the composite carry weight. Every
+      score traces back to a seeded, content-addressed cache. Identical inputs return identical
+      outputs, and the results regenerate from committed artifacts with no new model calls.</p>
+      <div class="aside"><strong>One honest limit.</strong> The v0.1 items were written and reviewed
+      by Claude models under a blind multi-persona process, not yet by a panel of human experts.
+      Standing up that panel is the most important work left, and the clearest place an outside
+      contributor can help. See
       <a href="https://github.com/DeseretBenchDev/DeseretBench/blob/master/docs/explanation/holdout-stance.md">the holdout stance</a>.</div>
       <div class="doclinks">
         <a href="https://github.com/DeseretBenchDev/DeseretBench/blob/master/PAPER.md">PAPER.md</a>
@@ -494,14 +496,14 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
 
     <section id="reproduce">
       <h2><span class="secno">&sect; 5</span>Reproduce &amp; data</h2>
-      <p>The run artifacts under <code>runs/v0_1/</code> are immutable: every model call, its parsed
-      answer, and its provenance are recorded. Analysis, figures, and both report pages regenerate
-      from those files with no model calls &mdash; so the standings above are auditable, not asserted.
-      The full recipe, from a clean checkout to the figures on this page, is in
+      <p>The artifacts under <code>runs/v0_1/</code> are immutable. Every model call, its parsed
+      answer, and its provenance are on record. Analysis, figures, and both report pages rebuild from
+      those files with no model calls, so anyone can audit the standings for themselves. The full
+      path from a clean checkout to the figures on this page is in
       <a href="https://github.com/DeseretBenchDev/DeseretBench/blob/master/REPRODUCE.md">REPRODUCE.md</a>.</p>
-      <p>Code is <strong>MIT</strong>; the item set and results are
-      <strong>CC BY-NC-SA 4.0</strong>. The cohort is config-driven &mdash; models are added by
-      editing a YAML file, not the pipeline. Provenance for the released items is in the
+      <p>The code is <strong>MIT</strong>; the items and results are
+      <strong>CC BY-NC-SA 4.0</strong>. The cohort is config-driven, so adding a model means editing
+      a YAML file rather than the pipeline. Provenance for the released items lives in the
       <a href="https://github.com/DeseretBenchDev/DeseretBench/blob/master/DATASET_CARD.md">dataset card</a>.</p>
       <div class="doclinks">
         <a href="https://github.com/DeseretBenchDev/DeseretBench/blob/master/REPRODUCE.md">REPRODUCE.md</a>
@@ -516,30 +518,30 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
 
     <section id="contribute">
       <h2><span class="secno">&sect; 6</span>Contribute</h2>
-      <p>DeseretBench is meant to be a shared instrument. The most valuable contributions are
-      doctrinal and cultural judgment &mdash; exactly what an AI author cannot supply for itself.
-      If you know the tradition, you can move this benchmark forward.</p>
+      <p>DeseretBench works best as a shared instrument. Its most valuable input is doctrinal and
+      cultural judgment, which is the one thing an AI author cannot supply for itself. If you know
+      the tradition, you can push this benchmark forward.</p>
       <div class="cards">
         <div class="card">
           <h4><svg aria-hidden="true"><use href="#bee"/></svg>Review the items</h4>
-          <p>Read the released questions and distractors. Flag anything that misreads doctrine,
-          flattens culture, or mis-types a distractor. A human expert review panel is the headline
-          open task.</p>
+          <p>Read the released questions and their distractors, and flag anything that misreads
+          doctrine, flattens the culture, or mis-types a distractor. A human review panel is the
+          headline open task.</p>
         </div>
         <div class="card">
           <h4><svg aria-hidden="true"><use href="#bee"/></svg>Add a model</h4>
-          <p>The cohort is a YAML list; any Claude, API, or local Ollama model drops in. Send a
-          config entry and its results become part of the leaderboard.</p>
+          <p>The cohort is a YAML list, and any Claude, API, or local Ollama model drops in. Send a
+          config entry and its results join the leaderboard.</p>
         </div>
         <div class="card">
           <h4><svg aria-hidden="true"><use href="#bee"/></svg>Run the cross-check</h4>
-          <p>A second judge model can re-score a seeded subset to measure judge sensitivity. The
-          harness is built; the run is waiting.</p>
+          <p>A second judge model can re-score a seeded subset to check how sensitive the scores are
+          to the judge. The harness is built and the run is waiting.</p>
         </div>
         <div class="card">
           <h4><svg aria-hidden="true"><use href="#bee"/></svg>Propose a dimension</h4>
           <p>New doctrinal dimensions, harder life-choice prompts, or a sharper distractor typology.
-          Open an issue with the case.</p>
+          Open an issue and make the case.</p>
         </div>
       </div>
       <div class="doclinks">
@@ -553,17 +555,16 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
 
     <section id="related">
       <h2><span class="secno">&sect; 7</span>Related work</h2>
-      <p>The nearest neighbor is the
-      <a href="https://github.com/CEFEAI">Consortium for Evaluating Faith and Ethics in AI</a>, whose
-      <em>AllFaith</em> benchmarks measure symmetry <em>across</em> traditions &mdash; whether models
-      treat religious conversion even-handedly, and how prominently they surface religious
-      perspectives at all. That is breadth. DeseretBench is depth: it asks whether a model can be
-      <em>correct and specific</em> inside a single tradition. The two are complementary &mdash;
-      cross-tradition fairness and within-tradition fidelity are different measurements, and a
-      responsible model needs both.</p>
-      <p>The wider landscape &mdash; the world-religions slice of broad knowledge suites,
-      scripture-QA sets, and religious-bias studies &mdash; is mapped, with citations and the case
-      for what DeseretBench adds, in
+      <p>The closest neighbor is the
+      <a href="https://github.com/CEFEAI">Consortium for Evaluating Faith and Ethics in AI</a>. Where
+      its <em>AllFaith</em> benchmarks measure breadth across many traditions, asking whether models
+      treat religious conversion even-handedly and how readily they surface religious perspectives at
+      all, DeseretBench measures depth within one, asking whether a model can be
+      <em>correct and specific</em> about a single faith. The two fit together, since cross-tradition
+      fairness and within-tradition fidelity are separate properties and a careful model needs
+      both.</p>
+      <p>The wider field, including the world-religions slice of the big knowledge suites,
+      scripture-QA sets, and religious-bias studies, is mapped with citations in
       <a href="https://github.com/DeseretBenchDev/DeseretBench/blob/master/RELATED_WORK.md">RELATED_WORK.md</a>.</p>
     </section>
 
@@ -585,7 +586,7 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
         <em>honey bee</em> carried by the Jaredites in the Book of Mormon (Ether 2:3), and the
         emblem of industry that gives Utah its beehive. The script below is the
         <strong>Deseret alphabet</strong>, a phonetic writing system promoted by Brigham Young in
-        the 1850s &mdash; here set in Noto Sans Deseret, embedded in this page so it renders for
+        the 1850s, set here in Noto Sans Deseret and embedded in this page so it renders for
         everyone.</p>
         <div class="alphaband des" aria-hidden="true">𐐀𐐁𐐂𐐃𐐄𐐅𐐆𐐇𐐈𐐉𐐊𐐋𐐌𐐍𐐎𐐏𐐐𐐑𐐒𐐓𐐔𐐕𐐖𐐗𐐘𐐙𐐚𐐛𐐜𐐝𐐞𐐟𐐠𐐡𐐢𐐣𐐤𐐥</div>
         <p class="small"><strong>A grain of salt.</strong> Every artifact in this project &mdash;
@@ -604,8 +605,7 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
   <svg class="fhive" aria-hidden="true"><use href="#hive"/></svg>
   <p><strong>DeseretBench</strong> v0.1 &middot;
   <a href="https://github.com/DeseretBenchDev/DeseretBench">github.com/DeseretBenchDev/DeseretBench</a><br>
-  A reproducible benchmark of Latter-day Saint doctrine in language models &middot;
-  Industry, measured.</p>
+  A reproducible benchmark of Latter-day Saint doctrine in language models.</p>
 </footer>
 
 </body>
