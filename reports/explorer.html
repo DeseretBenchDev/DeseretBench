@@ -80,7 +80,22 @@ label.chk{font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;color:va
 .idrow button{font-family:var(--mono);font-size:.64rem;letter-spacing:.04em;text-transform:uppercase;padding:.25rem .5rem;border-radius:3px;border:1px solid var(--rule2);background:var(--paper2);color:var(--ink2);cursor:pointer}
 .empty{color:var(--ink3);font-style:italic;padding:2rem 0;text-align:center}
 .loading{color:var(--ink3);font-style:italic;padding:.5rem 0}
-@media(max-width:560px){body{font-size:16px}.metric{width:3rem}.bar h1{font-size:1rem}}
+/* dashboard / charts */
+.dash{background:var(--paper2);border:1px solid var(--rule2);border-radius:6px;padding:.75rem .85rem;margin-bottom:.8rem}
+.dstats{font-family:var(--mono);font-size:.74rem;color:var(--ink2);margin-bottom:.65rem;display:flex;gap:.9rem;flex-wrap:wrap;align-items:center}
+.dstats b{color:var(--oxblood);font-size:1rem}
+.charts{display:grid;gap:1.1rem;grid-template-columns:1fr}
+@media(min-width:600px){.charts{grid-template-columns:1fr 1fr}}
+.ctitle{font-family:var(--mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;color:var(--oxblood);margin-bottom:.45rem}
+.barlist{display:flex;flex-direction:column;gap:.3rem}
+.brow{display:flex;align-items:center;gap:.5rem;cursor:pointer}
+.brow:hover .blabel{color:var(--oxblood)}.brow:hover .bfill{filter:brightness(1.08)}
+.blabel{flex:none;width:6.6rem;font-size:.75rem;color:var(--ink2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btrack{flex:1;height:15px;background:#e6d7b7;border-radius:3px;overflow:hidden}
+.bfill{height:100%;border-radius:3px;transition:width .25s}
+.bval{flex:none;width:2.7rem;font-family:var(--mono);font-size:.71rem;color:var(--ink3);text-align:right}
+.bandchip{display:inline-flex;gap:.3rem;font-family:var(--mono);font-size:.68rem;background:#f3ddd6;color:var(--oxblood);border:1px solid #d9a08e;border-radius:3px;padding:.15rem .45rem;cursor:pointer}
+@media(max-width:560px){body{font-size:16px}.metric{width:3rem}.bar h1{font-size:1rem}.blabel{width:5.4rem;font-size:.72rem}}
 </style></head><body>
 <header><div class="bar">
   <svg class="hive" viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="60" cy="107" rx="44" ry="5" fill="rgba(111,36,22,.14)"/><g fill="#c1852a" stroke="#2a2018" stroke-width="2.2" stroke-linejoin="round"><rect x="20" y="88" width="80" height="18" rx="9"/><rect x="24.5" y="73" width="71" height="17" rx="8.5"/><rect x="29.5" y="59" width="61" height="16" rx="8"/><rect x="35" y="46" width="50" height="15" rx="7.5"/><rect x="41" y="35" width="38" height="13" rx="6.5"/><rect x="47" y="25.5" width="26" height="12" rx="6"/><ellipse cx="60" cy="23" rx="8" ry="6"/></g><path d="M53 106 Q60 92 67 106 Z" fill="#2a2018"/></svg>
@@ -116,6 +131,7 @@ label.chk{font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;color:va
       <label class="chk"><input type="checkbox" id="fmiss"> ⚠ frontier missed</label>
     </div>
   </div>
+  <div class="dash" id="dash"></div>
   <div class="count" id="count"></div>
   <div id="list"></div>
 </main>
@@ -138,7 +154,7 @@ dims.forEach(d=>dim.appendChild(new Option(dimLabel(d),d)));
 diffs.forEach(d=>diff.appendChild(new Option(titl(d),d)));
 MODELS.forEach(m=>model.appendChild(new Option(m.label,m.id)));
 
-const state={track:'all',dim:'',diff:'',model:'',q:'',sort:'def',fmiss:false};
+const state={track:'all',dim:'',diff:'',model:'',q:'',sort:'def',fmiss:false,band:null};
 document.querySelectorAll('#track button').forEach(b=>b.onclick=()=>{state.track=b.dataset.v;document.querySelectorAll('#track button').forEach(x=>x.classList.toggle('on',x===b));render();});
 dim.onchange=e=>{state.dim=e.target.value;render();};
 diff.onchange=e=>{state.diff=e.target.value;render();};
@@ -181,10 +197,53 @@ function card(it){
     <div class="detail" id="d-${it.id}"></div></div>`;
 }
 function render(){
-  const items=sortItems(ALL.filter(match));
+  const base=sortItems(ALL.filter(match));   // dashboard reflects everything except the band pick
+  renderDash(base);
+  let items=base;
+  if(state.band){const[lo,hi]=state.band;items=items.filter(i=>{const v=itemMetric(i);return v>=lo&&v<hi;});}
   count.textContent=`${items.length} item${items.length===1?'':'s'}`+(state.model?` · focus: ${MID2LABEL[state.model]}`:'');
   list.innerHTML=items.length?items.map(card).join(''):'<div class="empty">No items match these filters.</div>';
 }
+function itemMetric(it){return it.track==='mc'?it.p*100:it.cavg;}
+function modelMetric(it,mid){
+  if(it.track==='mc')return (it.missed&&mid in it.missed)?it.missed[mid]*100:100;
+  return it.models&&it.models[mid]?it.models[mid].mean:null;
+}
+function colorFor(pct){return pct<55?'var(--oxblood)':pct<78?'var(--honey)':'var(--sage)';}
+function unit(){return state.track==='open'?'':'%';}
+function renderDash(items){
+  const dash=document.getElementById('dash');
+  if(!items.length){dash.innerHTML='';return;}
+  const vals=items.map(itemMetric).filter(v=>v!=null).sort((a,b)=>a-b);
+  const median=vals.length?Math.round(vals[Math.floor(vals.length/2)]):0;
+  const fmissN=items.filter(i=>i.track==='mc'&&i.fmiss).length;
+  let stats=`<span><b>${items.length}</b> items</span><span>median <b>${median}</b>${state.track==='open'?'/100':'%'} ${state.track==='open'?'score':'correct'}</span>`;
+  if(state.track!=='open'&&fmissN)stats+=`<span><b>${fmissN}</b> frontier-missed</span>`;
+  if(state.band)stats+=`<span class="bandchip" onclick="clearBand()">${state.band[0]}–${state.band[1]===101?100:state.band[1]}${unit()} only ✕</span>`;
+  // difficulty spread (counts per band)
+  const bands=[[0,50],[50,70],[70,85],[85,95],[95,101]];
+  const brows=bands.map(([lo,hi])=>({lo,hi,c:items.filter(i=>{const v=itemMetric(i);return v>=lo&&v<hi;}).length,label:(hi===101?'95–100':`${lo}–${hi}`)}));
+  const maxC=Math.max(1,...brows.map(r=>r.c));
+  const diffChart=brows.map(r=>`<div class="brow" onclick="setBand(${r.lo},${r.hi})">
+    <div class="blabel" title="${r.label}${unit()} correct">${r.label}${unit()}</div>
+    <div class="btrack"><div class="bfill" style="width:${Math.max(r.c?4:0,r.c/maxC*100)}%;background:${colorFor((r.lo+Math.min(r.hi,100))/2)}"></div></div>
+    <div class="bval">${r.c}</div></div>`).join('');
+  // by subject (cohort, or the focus model's own metric)
+  const useModel=!!state.model, dm={};
+  items.forEach(i=>{const v=useModel?modelMetric(i,state.model):itemMetric(i);if(v==null)return;(dm[i.dim]=dm[i.dim]||[]).push(v);});
+  const srows=Object.entries(dm).map(([d,vs])=>({d,avg:vs.reduce((a,b)=>a+b,0)/vs.length,n:vs.length})).sort((a,b)=>a.avg-b.avg);
+  const subjChart=srows.map(r=>`<div class="brow" onclick="setDim('${r.d}')">
+    <div class="blabel" title="${dimLabel(r.d)} (${r.n} items)">${dimLabel(r.d)}</div>
+    <div class="btrack"><div class="bfill" style="width:${Math.max(2,r.avg)}%;background:${colorFor(r.avg)}"></div></div>
+    <div class="bval">${Math.round(r.avg)}${unit()}</div></div>`).join('');
+  const subjTitle=useModel?`${MID2LABEL[state.model]} — weakest subject first`:'By subject — weakest first';
+  dash.innerHTML=`<div class="dstats">${stats}</div><div class="charts">
+    <div class="chart"><div class="ctitle">Difficulty spread — tap a band to filter</div><div class="barlist">${diffChart}</div></div>
+    <div class="chart"><div class="ctitle">${subjTitle} — tap to drill in</div><div class="barlist">${subjChart}</div></div></div>`;
+}
+function setBand(lo,hi){state.band=(state.band&&state.band[0]===lo&&state.band[1]===hi)?null:[lo,hi];render();}
+function clearBand(){state.band=null;render();}
+function setDim(d){state.dim=(state.dim===d)?'':d;document.getElementById('dim').value=state.dim;render();}
 function toggle(id){
   const c=document.getElementById('c-'+id);
   if(c.classList.contains('open-d')){c.classList.remove('open-d');return;}
