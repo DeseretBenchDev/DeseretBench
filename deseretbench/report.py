@@ -24,7 +24,38 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
 import numpy as np  # noqa: E402
+
+# Sequential colormap for the many-model figures (radar, difficulty bars), where
+# each model needs a distinct hue along the rank order. Spans the territorial
+# palette — deep oxblood through honey and sage to navy — so a 23-line chart
+# stays on-brand instead of dropping matplotlib's purple-anchored viridis onto
+# the warm home-page canvas.
+SEQ_CMAP = LinearSegmentedColormap.from_list(
+    "territorial", ["#6f2416", "#a83e2b", "#bd8228", "#c9a24a", "#6c7a53", "#33456b"])
+
+# Territorial canvas — the figures are embedded both here and on the home page,
+# whose background is warm paper (--paper #f4ead6). Matching the matplotlib
+# facecolor lets each PNG sit *in* the page instead of floating on a white card.
+# Cosmetic only; nothing in the data or stats path reads these.
+plt.rcParams.update({
+    "figure.facecolor": "#f4ead6",
+    "figure.edgecolor": "#f4ead6",
+    "axes.facecolor": "#faf3e4",
+    "savefig.facecolor": "#f4ead6",
+    "savefig.edgecolor": "#f4ead6",
+    "text.color": "#2a2018",
+    "axes.labelcolor": "#2a2018",
+    "axes.titlecolor": "#2a2018",
+    "axes.edgecolor": "#8a7455",
+    "xtick.color": "#5b4a37",
+    "ytick.color": "#5b4a37",
+    "grid.color": "#d9c49b",
+    "legend.facecolor": "#faf3e4",
+    "legend.edgecolor": "#caae7c",
+    "font.family": "serif",
+})
 
 ROOT = Path(__file__).resolve().parent.parent
 FIG = ROOT / "reports" / "figures"
@@ -36,16 +67,18 @@ DIM_SHORT = {"doctrine_scripture": "Doctrine", "ordinances_covenants": "Ordinanc
              "restoration_history": "Rest. History", "living_gospel": "Living Gospel",
              "cultural_fluency": "Cultural"}
 DIFF_ORDER = ["basic", "intermediate", "advanced", "expert"]
-TIER_COLOR = {"fable": "#b8860b", "opus": "#7b2d8e", "sonnet": "#1f77b4",
-              "haiku": "#2ca02c",
+TIER_COLOR = {"fable": "#7a4e6d", "opus": "#9a681c", "sonnet": "#33456b",
+              "haiku": "#8a2f1e",
               # local open-weights tiers (one per model family; generation =
-              # parameter count in B, so per-tier lines read as scaling curves)
-              "qwen3": "#d62728", "gemma": "#17becf", "phi": "#8c564b",
-              "smollm": "#e377c2", "deepseek": "#7f7f7f",
+              # parameter count in B, so per-tier lines read as scaling curves).
+              # Warm, earthy hues that stay legible on the paper canvas.
+              "qwen3": "#a83e2b", "gemma": "#2f6f6a", "phi": "#6b4a34",
+              "smollm": "#a35d7a", "deepseek": "#55606b",
               # 2026 additions (ADR-0013). Newer generations keep a hue close to
-              # their predecessor so qwen3/qwen3.5 and gemma/gemma4 read as kin.
-              "qwen3.5": "#ff9896", "gemma4": "#9edae5", "granite": "#bcbd22",
-              "ministral": "#ff7f0e", "nemotron": "#76b900"}
+              # their predecessor so qwen3/qwen3.5 (terracottas) and gemma/gemma4
+              # (teals) read as kin.
+              "qwen3.5": "#c9663f", "gemma4": "#5a9e97", "granite": "#7d7a2c",
+              "ministral": "#c07a1e", "nemotron": "#5f7d1f"}
 TIER_ORDER = ("fable", "opus", "sonnet", "haiku",
               "qwen3", "qwen3.5", "gemma", "gemma4", "phi", "smollm",
               "deepseek", "granite", "ministral", "nemotron")
@@ -75,7 +108,7 @@ def radar(summary):
     angles += angles[:1]
     fig = plt.figure(figsize=(8, 8))
     ax = plt.subplot(111, polar=True)
-    cmap = plt.cm.viridis(np.linspace(0, 0.95, len(models)))
+    cmap = SEQ_CMAP(np.linspace(0, 0.95, len(models)))
     for mid, col in zip(models, cmap):
         vals = []
         for d in DIM_ORDER:
@@ -102,7 +135,7 @@ def difficulty_bars(summary):
     x = np.arange(len(DIFF_ORDER))
     w = 0.8 / max(1, len(models))
     fig, ax = plt.subplots(figsize=(10, 5))
-    cmap = plt.cm.viridis(np.linspace(0, 0.95, len(models)))
+    cmap = SEQ_CMAP(np.linspace(0, 0.95, len(models)))
     for k, (mid, col) in enumerate(zip(models, cmap)):
         vals = [(mc["by_difficulty"].get(mid, {}).get(d) or {}).get("mean") for d in DIFF_ORDER]
         vals = [v if v is not None else np.nan for v in vals]  # gap, not zero
@@ -495,16 +528,25 @@ def html(summary, figs: list[str] | None = None) -> str:
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DeseretBench Leaderboard</title>
 <style>
-body{{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:980px;
-margin:2rem auto;padding:0 1rem;color:#1a1a1a;line-height:1.5}}
-h1{{border-bottom:3px solid #7b2d8e;padding-bottom:.3rem}}
-h2{{margin-top:2rem;color:#7b2d8e}} h3{{color:#444}}
+:root{{
+  --paper:#f4ead6; --paper-2:#faf3e4; --paper-3:#efe1c6;
+  --ink:#2a2018; --ink-2:#5b4a37; --oxblood:#8a2f1e; --honey:#bd8228;
+  --rule:#d9c49b;
+  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,"URW Palladio L",Charter,Georgia,Cambria,serif;
+  --mono:"SF Mono",ui-monospace,"DejaVu Sans Mono",Menlo,Consolas,monospace;
+}}
+body{{font-family:var(--serif);max-width:62rem;margin:2.5rem auto;padding:0 1.2rem;
+color:var(--ink);background:var(--paper);line-height:1.6}}
+h1{{font-weight:700;border-bottom:3px double var(--oxblood);padding-bottom:.3rem}}
+h2{{margin-top:2.4rem;color:var(--oxblood);font-weight:700}} h3{{color:var(--ink-2)}}
+a{{color:var(--oxblood)}}
 table{{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.92rem}}
-th,td{{border:1px solid #ddd;padding:.4rem .6rem;text-align:left}}
-th{{background:#7b2d8e;color:#fff}} tr:nth-child(even){{background:#f7f4f9}}
-figure{{margin:1.5rem 0;text-align:center}} img{{max-width:100%;border:1px solid #eee;border-radius:8px}}
-code{{background:#f0eef2;padding:.1rem .3rem;border-radius:4px}}
-.banner{{background:#f7f4f9;border-left:4px solid #7b2d8e;padding:.8rem 1rem;border-radius:0 8px 8px 0}}
+th,td{{border:1px solid var(--rule);padding:.4rem .6rem;text-align:left}}
+th{{background:var(--oxblood);color:var(--paper-2)}} tr:nth-child(even){{background:var(--paper-3)}}
+figure{{margin:1.5rem 0;text-align:center}} img{{max-width:100%;border:1px solid var(--rule);border-radius:6px}}
+code{{background:var(--paper-3);padding:.1rem .3rem;border-radius:4px;font-family:var(--mono);font-size:.86em}}
+.banner{{background:var(--paper-2);border-left:4px solid var(--honey);padding:.8rem 1rem;border-radius:0 6px 6px 0}}
+hr{{border:0;border-top:1px solid var(--rule)}}
 </style></head><body>
 <div class="banner"><b>DeseretBench</b> — a reproducible benchmark for LDS doctrinal accuracy,
 cultural fluency, and life-choice alignment in large language models. Scores measure

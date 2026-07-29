@@ -2,16 +2,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DeseretBench Leaderboard</title>
 <style>
-body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:980px;
-margin:2rem auto;padding:0 1rem;color:#1a1a1a;line-height:1.5}
-h1{border-bottom:3px solid #7b2d8e;padding-bottom:.3rem}
-h2{margin-top:2rem;color:#7b2d8e} h3{color:#444}
+:root{
+  --paper:#f4ead6; --paper-2:#faf3e4; --paper-3:#efe1c6;
+  --ink:#2a2018; --ink-2:#5b4a37; --oxblood:#8a2f1e; --honey:#bd8228;
+  --rule:#d9c49b;
+  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,"URW Palladio L",Charter,Georgia,Cambria,serif;
+  --mono:"SF Mono",ui-monospace,"DejaVu Sans Mono",Menlo,Consolas,monospace;
+}
+body{font-family:var(--serif);max-width:62rem;margin:2.5rem auto;padding:0 1.2rem;
+color:var(--ink);background:var(--paper);line-height:1.6}
+h1{font-weight:700;border-bottom:3px double var(--oxblood);padding-bottom:.3rem}
+h2{margin-top:2.4rem;color:var(--oxblood);font-weight:700} h3{color:var(--ink-2)}
+a{color:var(--oxblood)}
 table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.92rem}
-th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left}
-th{background:#7b2d8e;color:#fff} tr:nth-child(even){background:#f7f4f9}
-figure{margin:1.5rem 0;text-align:center} img{max-width:100%;border:1px solid #eee;border-radius:8px}
-code{background:#f0eef2;padding:.1rem .3rem;border-radius:4px}
-.banner{background:#f7f4f9;border-left:4px solid #7b2d8e;padding:.8rem 1rem;border-radius:0 8px 8px 0}
+th,td{border:1px solid var(--rule);padding:.4rem .6rem;text-align:left}
+th{background:var(--oxblood);color:var(--paper-2)} tr:nth-child(even){background:var(--paper-3)}
+figure{margin:1.5rem 0;text-align:center} img{max-width:100%;border:1px solid var(--rule);border-radius:6px}
+code{background:var(--paper-3);padding:.1rem .3rem;border-radius:4px;font-family:var(--mono);font-size:.86em}
+.banner{background:var(--paper-2);border-left:4px solid var(--honey);padding:.8rem 1rem;border-radius:0 6px 6px 0}
+hr{border:0;border-top:1px solid var(--rule)}
 </style></head><body>
 <div class="banner"><b>DeseretBench</b> — a reproducible benchmark for LDS doctrinal accuracy,
 cultural fluency, and life-choice alignment in large language models. Scores measure
