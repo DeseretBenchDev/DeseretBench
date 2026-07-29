@@ -71,6 +71,31 @@ class Pack:
     judge_dimensions: tuple
     build_judge_prompt: Callable[[dict, str, str], str]   # (item, response, persona_key)
 
+    # ---- authoring (optional) ---------------------------------------------- #
+    # Generating a fresh question set for this tradition. A pack that only needs
+    # to be *scored* (running models against a set someone else authored) can
+    # leave these None; deseretbench.author raises a clear error if asked to
+    # author without them. The grounding brief is the factual anchor embedded in
+    # the authoring prompts (for LDS it stays at data/grounding_brief.md).
+    grounding: Optional[str] = None
+    authoring_stance: Optional[str] = None
+    distractor_guide: Optional[str] = None
+    authoring_rules: Optional[str] = None
+    mc_example: Optional[str] = None
+    open_example: Optional[str] = None
+    diff_desc: Optional[Mapping[str, str]] = None
+    mc_dims: Optional[tuple] = None       # (dimension, target_count, description, subtopics)
+    open_cells: Optional[tuple] = None    # (dimension, difficulty, count, themes)
+    mc_authoring_prompt: Optional[Callable[[dict], str]] = None
+    open_authoring_prompt: Optional[Callable[[dict], str]] = None
+
+    # ---- reviewer validation (optional) ------------------------------------ #
+    # The automated expert panel that vets authored candidates. Same rule:
+    # required to *validate* a fresh set, not to score an existing one.
+    reviewers: Optional[Mapping[str, str]] = None
+    mc_review_prompt: Optional[Callable[[dict], str]] = None
+    open_review_prompt: Optional[Callable[[dict], str]] = None
+
 
 def _packs_dir() -> Path:
     return Path(__file__).resolve().parent

@@ -1,3 +1,11 @@
+// NOTE: This workflow is LDS-SPECIFIC. Its stance, distractor palette, grounding
+// facts, and example items are hardcoded for the Latter-day Saint tradition; it
+// predates the faith-pack abstraction and is NOT tradition-neutral. To author a
+// different tradition, use the pack-based Python path — `python -m
+// deseretbench.author` with the pack selected (DESERETBENCH_PACK / run_config
+// `pack:`), which reads its taxonomy and prompts from the active pack. See
+// docs/how-to/add-a-faith-pack.md. This script is kept as the record of how the
+// LDS v0.1 set was authored.
 export const meta = {
   name: 'deseretbench-author',
   description: 'Author DeseretBench LDS question set across dimensions/difficulties via domain-expert agents; each writes its cell to data/raw as JSONL.',

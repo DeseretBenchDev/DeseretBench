@@ -29,67 +29,25 @@ import yaml
 from .runner import Runner
 from .schema import LETTERS, load_jsonl, dump_jsonl
 from .judge import extract_last_json as parse_review_json  # generic JSON extractor
+from .packs import active_pack
 from . import stats as stx
 
 ROOT = Path(__file__).resolve().parent.parent
 
-REVIEWERS = {
-    "orthodox_member":
-        "You are a devout, doctrinally orthodox Latter-day Saint who has served as a bishop "
-        "and stake president. You know the standard works and the General Handbook well.",
-    "byu_religion_instructor":
-        "You are a BYU religion/institute instructor with deep knowledge of doctrine, Church "
-        "history, the Gospel Topics Essays, and where genuine doctrinal ambiguity exists.",
-    "church_historian":
-        "You are a Latter-day Saint church historian (Rough Stone Rolling / Saints level) who "
-        "is precise about dates, sources, and the development of doctrine and practice.",
-    "adult_convert":
-        "You are an adult convert to the Church of Jesus Christ of Latter-day Saints. You catch "
-        "assumptions that only lifelong members would know, and you value clarity for outsiders.",
-    "international_returned_missionary":
-        "You are a returned missionary who served outside the United States. You catch "
-        "Anglo-centric or US-cultural assumptions that don't generalize to the global Church.",
-}
+# Reviewer personas and the two review prompts are tradition-specific and come
+# from the active faith pack. Bound at import (one pack per validation run).
+_PACK = active_pack()
+REVIEWERS = _PACK.reviewers or {}
 
 REVIEW_SYSTEM = "You are an expert reviewer validating questions for a research benchmark. Output only the requested JSON."
 
 
 def mc_review_prompt(item: dict) -> str:
-    opts = "\n".join(f"{LETTERS[i]}. {c}" for i, c in enumerate(item["choices"]))
-    return f"""Review this multiple-choice item for a Latter-day Saint knowledge benchmark.
-Do NOT assume any option is the intended key; judge it yourself.
-
-ITEM ({item['dimension']} / {item['difficulty']}):
-{item['question']}
-{opts}
-
-Decide, as an expert, the single BEST answer per the MAINSTREAM, OFFICIAL position of
-The Church of Jesus Christ of Latter-day Saints. Then evaluate the item.
-
-Respond with ONLY this JSON:
-{{"best_answer": "<letter>", "n_defensible_options": <int how many options could be defended as correct>, "clarity": <1-5>, "tests_understanding": <true|false, false if it is mere trivia>, "flags": [<any of: "ambiguous","multiple_correct","unfair","trivia","anglocentric","factually_wrong","none">], "comment": "<one sentence>"}}"""
+    return active_pack().mc_review_prompt(item)
 
 
 def open_review_prompt(item: dict) -> str:
-    r = item["rubric"]
-    must = "; ".join(r["must_include"])
-    snot = "; ".join(r["should_not"])
-    return f"""Review this OPEN-ENDED scenario item and its scoring rubric for a Latter-day Saint
-life-counsel benchmark.
-
-SCENARIO ({item['dimension']} / {item['difficulty']}):
-{item['prompt']}
-
-RUBRIC must_include: {must}
-RUBRIC should_not: {snot}
-RUBRIC ideal_reasoning: {r['ideal_reasoning_pattern']}
-
-Evaluate whether the scenario is realistic and whether the rubric fairly and accurately
-captures how a faithful, thoughtful Latter-day Saint (bishop-level pastoral wisdom) would
-actually reason — neither too rigid/legalistic nor heterodox.
-
-Respond with ONLY this JSON:
-{{"realistic": <1-5>, "rubric_fair": <1-5>, "clarity": <1-5>, "flags": [<any of: "rubric_too_rigid","rubric_heterodox","unrealistic","anglocentric","factually_wrong","none">], "comment": "<one sentence>"}}"""
+    return active_pack().open_review_prompt(item)
 
 
 def _runner(max_parallel: int) -> Runner:
@@ -275,6 +233,13 @@ def main():
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--no-holdout", action="store_true")
     args = ap.parse_args()
+
+    p = active_pack()
+    if not p.reviewers or p.mc_review_prompt is None or p.open_review_prompt is None:
+        raise SystemExit(
+            f"faith pack {p.key!r} has no reviewer panel — fill reviewers and the "
+            f"review prompts in its pack.py before validating a candidate set "
+            f"(see docs/how-to/add-a-faith-pack.md).")
 
     run_cfg = yaml.safe_load((ROOT / "configs" / "run_config.yaml").read_text())
     seed = run_cfg["stats"]["rng_seed"]

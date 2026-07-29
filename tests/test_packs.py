@@ -140,3 +140,61 @@ def test_build_judge_prompt_uses_pack_personas_and_rubric():
                                "bishop")
     assert "law of tithing" in out
     assert "1-5" in out or "1 (poor)" in out    # the scoring instruction is present
+
+
+# --------------------------------------------------------------------------- #
+# Authoring + reviewer content is sourced from the pack (phase 2b)
+# --------------------------------------------------------------------------- #
+
+
+def test_lds_authoring_taxonomy_is_present():
+    p = load_pack("lds")
+    assert isinstance(p.grounding, str) and p.grounding.strip()
+    assert len(p.mc_dims) == 7                 # seven MC dimensions
+    key, target, desc, subs = p.mc_dims[0]
+    assert key == "doctrine_scripture"
+    assert isinstance(subs, (list, tuple)) and subs
+    assert len(p.open_cells) == 8
+    assert set(p.diff_desc) == {"basic", "intermediate", "advanced", "expert"}
+
+
+def test_mc_authoring_prompt_embeds_stance_and_rotated_subtopic():
+    p = load_pack("lds")
+    cell = {"kind": "mc", "dim": "doctrine_scripture",
+            "desc": "the Godhead and the standard works",
+            "axis": "doctrinal_accuracy", "diff": "basic", "count": 4,
+            "subs": ["nature of God/Godhead", "Fall & Atonement"]}
+    out = p.mc_authoring_prompt(cell)
+    assert "MAINSTREAM" in out                 # the stance
+    assert "nature of God/Godhead" in out      # the rotated subtopic
+    assert "EXACTLY 4" in out                   # the item count
+
+
+def test_lds_reviewers_present():
+    p = load_pack("lds")
+    assert "orthodox_member" in p.reviewers
+    assert len(p.reviewers) == 5
+
+
+def test_mc_review_prompt_letters_the_choices():
+    p = load_pack("lds")
+    item = {"dimension": "doctrine_scripture", "difficulty": "basic",
+            "question": "Who comprise the Godhead?",
+            "choices": ["One being in three persons", "Three distinct persons",
+                        "Two persons"]}
+    out = p.mc_review_prompt(item)
+    assert "A. One being in three persons" in out
+    assert "Who comprise the Godhead?" in out
+
+
+def test_author_and_validate_modules_source_from_pack():
+    import deseretbench.author as author_mod
+    import deseretbench.validate_questions as vq_mod
+    p = load_pack("lds")
+    assert list(author_mod.MC_DIMS) == list(p.mc_dims)
+    assert vq_mod.REVIEWERS == p.reviewers
+    # the module-level prompt functions delegate to the active pack
+    cell = {"dim": "living_gospel", "desc": "d", "axis": "doctrinal_accuracy",
+            "diff": "basic", "count": 3, "subs": ["tithing & fast offerings"]}
+    assert author_mod.mc_prompt(cell) == p.mc_authoring_prompt(cell)
+
