@@ -56,14 +56,27 @@ export XAI_API_KEY=...        # never commit this
 
 Common providers (all OpenAI-compatible):
 
-| Provider   | `openai_base_url`                       | key env (your choice) |
-|------------|-----------------------------------------|-----------------------|
-| OpenAI     | `https://api.openai.com/v1`             | `OPENAI_API_KEY`      |
-| xAI Grok   | `https://api.x.ai/v1`                   | `XAI_API_KEY`         |
-| DeepSeek   | `https://api.deepseek.com`              | `DEEPSEEK_API_KEY`    |
-| Zhipu GLM  | `https://open.bigmodel.cn/api/paas/v4`  | `ZHIPU_API_KEY`       |
-| Moonshot   | `https://api.moonshot.cn/v1`            | `MOONSHOT_API_KEY`    |
-| OpenRouter | `https://openrouter.ai/api/v1`          | `OPENROUTER_API_KEY`  |
+| Provider       | `openai_base_url`                          | key env (your choice) |
+|----------------|--------------------------------------------|-----------------------|
+| OpenAI         | `https://api.openai.com/v1`                | `OPENAI_API_KEY`      |
+| xAI Grok       | `https://api.x.ai/v1`                      | `XAI_API_KEY`         |
+| DeepSeek       | `https://api.deepseek.com`                 | `DEEPSEEK_API_KEY`    |
+| Zhipu GLM      | `https://open.bigmodel.cn/api/paas/v4`     | `ZHIPU_API_KEY`       |
+| Moonshot Kimi  | `https://api.moonshot.cn/v1`               | `MOONSHOT_API_KEY`    |
+| OpenRouter     | `https://openrouter.ai/api/v1`             | `OPENROUTER_API_KEY`  |
+| Nous Research  | `https://inference-api.nousresearch.com/v1`| `NOUS_API_KEY`        |
+
+> **OpenRouter and Nous (the two you're eyeing) both work as-is.** Both are
+> OpenAI-compatible `/chat/completions` gateways, so `openai_compat` drives them
+> with nothing more than the base URL + key above. Two specifics:
+> - **OpenRouter** — key from `openrouter.ai/keys` (email/GitHub, no card). Free
+>   models use ids ending in `:free`, e.g. `deepseek/deepseek-v3:free`; they get
+>   rate-limited hard at peak and rotate out without notice, so pin an exact id
+>   and expect the occasional transient (the runner retries 429/5xx). Attribution
+>   headers are optional; the backend's bearer auth is enough.
+> - **Nous Research / Hermes** — the Nous Portal gives tiered/free credits and
+>   serves Hermes plus ~80 open models at ~40 req/min. Use its model ids verbatim
+>   (e.g. `NousResearch/Hermes-3-Llama-3.1-70B`).
 
 > **Subscription vs API key.** This backend needs a **key**. A consumer chat
 > subscription (ChatGPT Plus, X Premium) is not a key. To drive a subscription

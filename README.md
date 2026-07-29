@@ -196,7 +196,8 @@ AGENTS.md            # working agreement for contributors, AI and human
 | Look up a flag, config key, or record format | [docs/reference/](docs/reference/) |
 | Understand a design choice | [docs/explanation/](docs/explanation/) · [docs/adr/](docs/adr/) |
 | Place this among other faith-AI work | [RELATED_WORK.md](RELATED_WORK.md) |
-| Contribute (as a human or an AI agent) | [AGENTS.md](AGENTS.md) |
+| Contribute — fix questions, add a model, or benchmark another tradition | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Build the internals (map for humans and AI agents) | [AGENTS.md](AGENTS.md) |
 
 ## Status & licensing
 
