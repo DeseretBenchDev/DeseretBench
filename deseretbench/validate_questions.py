@@ -38,6 +38,10 @@ ROOT = Path(__file__).resolve().parent.parent
 # from the active faith pack. Bound at import (one pack per validation run).
 _PACK = active_pack()
 REVIEWERS = _PACK.reviewers or {}
+# Candidates in, public/holdout sets out — all under the pack's data_dir (data/
+# for LDS, data/<key> otherwise) so validating a second tradition never
+# overwrites the shipped set.
+DATA = ROOT / _PACK.data_dir
 
 REVIEW_SYSTEM = "You are an expert reviewer validating questions for a research benchmark. Output only the requested JSON."
 
@@ -246,15 +250,15 @@ def main():
     frac = run_cfg["stats"]["holdout_fraction"]
     runner = _runner(args.max_parallel)
 
-    mc = load_jsonl(ROOT / "data" / "candidates_mc.jsonl")
-    op = load_jsonl(ROOT / "data" / "candidates_open.jsonl")
+    mc = load_jsonl(DATA / "candidates_mc.jsonl")
+    op = load_jsonl(DATA / "candidates_open.jsonl")
     if args.limit:
         mc, op = mc[: args.limit], op[: args.limit]
 
     mc_by, mc_raw = review_mc(mc, runner, args.effort)
     op_by, op_raw = review_open(op, runner, args.effort)
-    dump_jsonl(mc_raw, ROOT / "data" / "reviews_mc.jsonl")
-    dump_jsonl(op_raw, ROOT / "data" / "reviews_open.jsonl")
+    dump_jsonl(mc_raw, DATA / "reviews_mc.jsonl")
+    dump_jsonl(op_raw, DATA / "reviews_open.jsonl")
 
     mc_keep, mc_drop, kappa = finalize_mc(mc, mc_by)
     op_keep, op_drop = finalize_open(op, op_by)
@@ -268,11 +272,11 @@ def main():
         mc_pub, mc_hold = stratified_holdout(mc_keep, frac, seed)
         op_pub, op_hold = stratified_holdout(op_keep, frac, seed + 1)
 
-    dump_jsonl(mc_pub, ROOT / "data" / "questions_mc.jsonl")
-    dump_jsonl(op_pub, ROOT / "data" / "questions_open.jsonl")
-    (ROOT / "data" / "private_holdout").mkdir(exist_ok=True)
-    dump_jsonl(mc_hold, ROOT / "data" / "private_holdout" / "mc.jsonl")
-    dump_jsonl(op_hold, ROOT / "data" / "private_holdout" / "open.jsonl")
+    dump_jsonl(mc_pub, DATA / "questions_mc.jsonl")
+    dump_jsonl(op_pub, DATA / "questions_open.jsonl")
+    (DATA / "private_holdout").mkdir(exist_ok=True)
+    dump_jsonl(mc_hold, DATA / "private_holdout" / "mc.jsonl")
+    dump_jsonl(op_hold, DATA / "private_holdout" / "open.jsonl")
 
     def _split_drop(drops):
         rejected = [d for d in drops if not d.get("_review", {}).get("unreviewed")]
@@ -297,7 +301,7 @@ def main():
         "unreviewed_open": [d["question_id"] for d in op_unrev],
         "live_spend_usd": round(runner.total_spend_usd, 2),
     }
-    (ROOT / "data" / "validation_report.json").write_text(json.dumps(report, indent=2))
+    (DATA / "validation_report.json").write_text(json.dumps(report, indent=2))
     print("\n=== VALIDATION REPORT ===")
     print(f"MC:   {report['mc_candidates']} cand -> kept {report['mc_kept']} "
           f"(public {report['mc_public']} / holdout {report['mc_holdout']}), rejected {report['mc_rejected']}, unreviewed {report['mc_unreviewed']}")

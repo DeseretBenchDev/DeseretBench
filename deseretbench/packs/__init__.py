@@ -48,9 +48,11 @@ class Pack:
     report_title: str             # wordmark used in report titles, e.g. "DeseretBench"
     report_blurb: str             # one-line description for the report banner
 
-    # output routing — the LDS pack keeps the legacy reports/ + results/ paths
-    # (the live site links them directly); other packs namespace by key so a
-    # second run never clobbers the first.
+    # output + data routing — the LDS pack keeps the legacy data/ + reports/ +
+    # results/ paths (the live site and the shipped question set live there);
+    # other packs namespace by key (data/<key>, reports/<key>, results/<key>) so
+    # authoring or reporting a second tradition never overwrites the first.
+    data_dir: str
     results_dir: str
     reports_dir: str
 

@@ -76,9 +76,11 @@ def test_lds_taxonomy_matches_shipped_values():
 
 
 def test_lds_keeps_the_legacy_output_dirs():
-    """The live site links reports/ and results/ directly — the LDS pack must
-    not relocate them; only other packs get namespaced subdirs."""
+    """The live site links reports/ and results/ directly, and the shipped
+    question set lives in data/ — the LDS pack must not relocate any of them;
+    only other packs get namespaced subdirs so a second run can't clobber them."""
     p = load_pack("lds")
+    assert p.data_dir == "data"
     assert p.results_dir == "results"
     assert p.reports_dir == "reports"
 

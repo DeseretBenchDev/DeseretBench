@@ -23,7 +23,6 @@ from .schema import validate_item
 from .packs import active_pack
 
 ROOT = Path(__file__).resolve().parent.parent
-RAW = ROOT / "data" / "raw"
 
 # The tradition surface — grounding brief, stance, distractor guide, rules, the
 # authoring taxonomy (MC_DIMS / OPEN_CELLS), and the two prompt builders — comes
@@ -34,6 +33,9 @@ _PACK = active_pack()
 MC_DIMS = _PACK.mc_dims
 OPEN_CELLS = _PACK.open_cells
 AXIS_OF = _PACK.axis_for_dimension
+# Data lives under the pack's data_dir (data/ for LDS, data/<key> otherwise), so
+# authoring a second tradition never mixes into or overwrites the first's set.
+RAW = ROOT / _PACK.data_dir / "raw"
 
 
 def split_counts(target: int) -> dict:

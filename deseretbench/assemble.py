@@ -16,9 +16,11 @@ from pathlib import Path
 
 from .schema import validate_item, content_hash_id  # noqa
 from . import schema as _schema
+from .packs import active_pack
 
 ROOT = Path(__file__).resolve().parent.parent
-RAW = ROOT / "data" / "raw"
+DATA = ROOT / active_pack().data_dir   # data/ for LDS, data/<key> otherwise
+RAW = DATA / "raw"
 
 
 def _tolerant_lines(path: Path):
@@ -79,8 +81,8 @@ def assemble() -> dict:
         seen_stem.add(stem)
         (mc if it["format"] == "mc" else open_).append(it)
 
-    _schema.dump_jsonl(mc, ROOT / "data" / "candidates_mc.jsonl")
-    _schema.dump_jsonl(open_, ROOT / "data" / "candidates_open.jsonl")
+    _schema.dump_jsonl(mc, DATA / "candidates_mc.jsonl")
+    _schema.dump_jsonl(open_, DATA / "candidates_open.jsonl")
 
     # breakdowns
     def breakdown(items):

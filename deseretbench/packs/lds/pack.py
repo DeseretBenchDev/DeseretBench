@@ -339,6 +339,7 @@ PACK = Pack(
     report_title="DeseretBench",
     report_blurb=("a reproducible benchmark for LDS doctrinal accuracy, cultural "
                   "fluency, and life-choice alignment in large language models"),
+    data_dir="data",
     results_dir="results",
     reports_dir="reports",
     axes=AXES,
