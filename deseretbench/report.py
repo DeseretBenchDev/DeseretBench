@@ -27,6 +27,8 @@ import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
 import numpy as np  # noqa: E402
 
+from .packs import active_pack  # noqa: E402
+
 # Sequential colormap for the many-model figures (radar, difficulty bars), where
 # each model needs a distinct hue along the rank order. Spans the territorial
 # palette — deep oxblood through honey and sage to navy — so a 23-line chart
@@ -58,14 +60,19 @@ plt.rcParams.update({
 })
 
 ROOT = Path(__file__).resolve().parent.parent
-FIG = ROOT / "reports" / "figures"
 
-DIM_ORDER = ["doctrine_scripture", "ordinances_covenants", "church_organization",
-             "eternal_family", "restoration_history", "living_gospel", "cultural_fluency"]
-DIM_SHORT = {"doctrine_scripture": "Doctrine", "ordinances_covenants": "Ordinances",
-             "church_organization": "Church Org", "eternal_family": "Eternal Family",
-             "restoration_history": "Rest. History", "living_gospel": "Living Gospel",
-             "cultural_fluency": "Cultural"}
+# Tradition-specific report framing comes from the active faith pack: the
+# wordmark and banner blurb, the radar's dimension order + short labels, and the
+# output directory (the LDS pack keeps the legacy reports/, other packs get
+# reports/<key>/ so a second run never overwrites the first).
+_PACK = active_pack()
+TITLE = _PACK.report_title
+BLURB = _PACK.report_blurb
+REPORTS = ROOT / _PACK.reports_dir
+FIG = REPORTS / "figures"
+
+DIM_ORDER = list(_PACK.dim_order)
+DIM_SHORT = dict(_PACK.dim_short)
 DIFF_ORDER = ["basic", "intermediate", "advanced", "expert"]
 TIER_COLOR = {"fable": "#7a4e6d", "opus": "#9a681c", "sonnet": "#33456b",
               "haiku": "#8a2f1e",
@@ -121,7 +128,7 @@ def radar(summary):
     ax.set_xticks(angles[:-1])
     ax.set_xticklabels([DIM_SHORT[d] for d in DIM_ORDER], fontsize=10)
     ax.set_ylim(0, 1)
-    ax.set_title("DeseretBench — MC accuracy by dimension", fontsize=13, pad=20)
+    ax.set_title(f"{TITLE} — MC accuracy by dimension", fontsize=13, pad=20)
     ax.legend(loc="upper right", bbox_to_anchor=(1.28, 1.10), fontsize=9)
     fig.tight_layout()
     fig.savefig(FIG / "radar_dimensions.png", dpi=120, bbox_inches="tight")
@@ -144,7 +151,7 @@ def difficulty_bars(summary):
     ax.set_xticklabels([d.capitalize() for d in DIFF_ORDER])
     ax.set_ylabel("Accuracy")
     ax.set_ylim(0, 1)
-    ax.set_title("DeseretBench — MC accuracy by difficulty tier")
+    ax.set_title(f"{TITLE} — MC accuracy by difficulty tier")
     ax.legend(fontsize=8, ncol=3)
     ax.grid(axis="y", alpha=0.3)
     fig.tight_layout()
@@ -171,7 +178,7 @@ def overall_ci(summary):
     ax.set_yticklabels(labels)
     ax.set_xlim(0, 1.05)
     ax.set_xlabel("Overall MC accuracy (95% bootstrap CI)")
-    ax.set_title("DeseretBench — overall MC leaderboard")
+    ax.set_title(f"{TITLE} — overall MC leaderboard")
     ax.grid(axis="x", alpha=0.3)
     fig.tight_layout()
     fig.savefig(FIG / "overall_ci.png", dpi=120)
@@ -341,7 +348,7 @@ def open_overall_ci(summary):
     ax.set_yticklabels(labels)
     ax.set_xlim(0, 105)
     ax.set_xlabel("Open-ended judge-panel composite, 0–100 (95% bootstrap CI)")
-    ax.set_title("DeseretBench — open-ended leaderboard")
+    ax.set_title(f"{TITLE} — open-ended leaderboard")
     ax.grid(axis="x", alpha=0.3)
     fig.tight_layout()
     fig.savefig(FIG / "open_overall_ci.png", dpi=120)
@@ -383,7 +390,7 @@ def results_md(summary) -> str:
     eff_s = f"MC={eff.get('multiple_choice')}, open={eff.get('open_ended')}, judge={eff.get('judge')}"
     rns_s = f"MC×{rns.get('multiple_choice')}, open×{rns.get('open_ended')}"
     prov = cfg.get("provenance", "")
-    L = ["# DeseretBench Results\n",
+    L = [f"# {TITLE} Results\n",
          f"_Run: `{summary['run']}` · effort ({eff_s}) · runs ({rns_s}) · "
          f"{cfg['bootstrap_resamples']:,} bootstrap resamples · seed {cfg.get('seed')}"
          + (f" · config provenance: {prov}" if prov else "") + "_\n"]
@@ -526,7 +533,7 @@ def html(summary, figs: list[str] | None = None) -> str:
     body = "\n".join(body_lines)
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DeseretBench Leaderboard</title>
+<title>{TITLE} Leaderboard</title>
 <style>
 :root{{
   --paper:#f4ead6; --paper-2:#faf3e4; --paper-3:#efe1c6;
@@ -548,8 +555,7 @@ code{{background:var(--paper-3);padding:.1rem .3rem;border-radius:4px;font-famil
 .banner{{background:var(--paper-2);border-left:4px solid var(--honey);padding:.8rem 1rem;border-radius:0 6px 6px 0}}
 hr{{border:0;border-top:1px solid var(--rule)}}
 </style></head><body>
-<div class="banner"><b>DeseretBench</b> — a reproducible benchmark for LDS doctrinal accuracy,
-cultural fluency, and life-choice alignment in large language models. Scores measure
+<div class="banner"><b>{TITLE}</b> — {BLURB}. Scores measure
 representation of the mainstream, official position (see DESIGN.md §2 for framing).</div>
 {fig_html}
 {body}
@@ -579,8 +585,8 @@ def main():
             if sized:
                 lead.append(sized)
             figs = lead + figs
-    (ROOT / "reports" / "RESULTS.md").write_text(results_md(summary), encoding="utf-8")
-    (ROOT / "reports" / "leaderboard.html").write_text(html(summary, figs), encoding="utf-8")
+    (REPORTS / "RESULTS.md").write_text(results_md(summary), encoding="utf-8")
+    (REPORTS / "leaderboard.html").write_text(html(summary, figs), encoding="utf-8")
     print(f"wrote reports/RESULTS.md, reports/leaderboard.html, and "
           f"{len(figs)} figure(s): {', '.join(figs)}")
 

@@ -23,6 +23,7 @@ from .schema import load_jsonl
 from .runner import _served_matches
 from . import stats as stx
 from .judge import DIMENSIONS as JUDGE_DIMS
+from .packs import active_pack
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -311,8 +312,11 @@ def analyze_open(scores_path: Path, judge_raw_path: Path, cohort, seed, n_boot, 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", required=True, help="run dir, e.g. runs/v0_1")
-    ap.add_argument("--out", default="results/summary.json")
+    ap.add_argument("--out", default=None,
+                    help="output summary path; default <pack.results_dir>/summary.json "
+                         "(results/summary.json for the LDS pack)")
     args = ap.parse_args()
+    out_rel = args.out or f"{active_pack().results_dir}/summary.json"
 
     run_cfg = yaml.safe_load((ROOT / "configs" / "run_config.yaml").read_text())
     models = yaml.safe_load((ROOT / "configs" / "models.yaml").read_text())
@@ -359,7 +363,7 @@ def main():
     summary["open"] = analyze_open(run / "open_scores.jsonl", run / "open_judge_raw.jsonl",
                                    cohort, seed, n_boot, ci)
 
-    outp = ROOT / args.out
+    outp = ROOT / out_rel
     outp.parent.mkdir(parents=True, exist_ok=True)
     outp.write_text(json.dumps(summary, indent=2))
     print(f"wrote {outp}")

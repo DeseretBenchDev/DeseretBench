@@ -8,42 +8,16 @@ import re
 from pathlib import Path
 from typing import Iterable
 
-AXES = {"doctrinal_accuracy", "cultural_fluency", "life_choice_alignment"}
+from .packs import active_pack
 
-MC_DIMENSIONS = {
-    "doctrine_scripture", "ordinances_covenants", "church_organization",
-    "eternal_family", "restoration_history", "living_gospel", "cultural_fluency",
-}
-OPEN_DIMENSIONS = {"life_choice", "cultural_open"}
-DIMENSIONS = MC_DIMENSIONS | OPEN_DIMENSIONS
-
+# Tradition-agnostic constants stay here. The tradition-specific taxonomy —
+# axes, MC/open dimensions, distractor types, and the dimension->axis map —
+# lives in the active faith pack (deseretbench.packs) and is resolved at
+# validation time, so the same process can validate items against more than one
+# tradition by passing an explicit `pack=`.
 DIFFICULTIES = {"basic", "intermediate", "advanced", "expert"}
 
-DISTRACTOR_TYPES = {
-    "correct",                       # the keyed answer
-    "protestant_trap",
-    "folk_doctrine_trap",
-    "anti_mormon_trap",
-    "progressive_trap",
-    "correlation_oversimplification",
-    "plausible_near_miss",
-}
-
 LETTERS = "ABCDEFGH"
-
-# Every dimension belongs to exactly one axis; a mismatch would silently
-# pollute per-axis scoring downstream.
-AXIS_FOR_DIMENSION = {
-    "doctrine_scripture": "doctrinal_accuracy",
-    "ordinances_covenants": "doctrinal_accuracy",
-    "church_organization": "doctrinal_accuracy",
-    "eternal_family": "doctrinal_accuracy",
-    "restoration_history": "doctrinal_accuracy",
-    "living_gospel": "doctrinal_accuracy",
-    "cultural_fluency": "cultural_fluency",
-    "life_choice": "life_choice_alignment",
-    "cultural_open": "cultural_fluency",
-}
 
 
 def slugify(s: str) -> str:
@@ -66,13 +40,14 @@ def content_hash_id(item: dict) -> str:
     return f"{item['dimension']}_{item['difficulty']}_{h}"
 
 
-def validate_mc_item(d: dict) -> list[str]:
+def validate_mc_item(d: dict, *, pack=None) -> list[str]:
+    p = pack or active_pack()
     errs: list[str] = []
     if d.get("format") != "mc":
         errs.append("format must be 'mc'")
-    if d.get("axis") not in AXES:
+    if d.get("axis") not in p.axes:
         errs.append(f"bad axis: {d.get('axis')}")
-    if d.get("dimension") not in MC_DIMENSIONS:
+    if d.get("dimension") not in p.mc_dimensions:
         errs.append(f"bad mc dimension: {d.get('dimension')}")
     if d.get("difficulty") not in DIFFICULTIES:
         errs.append(f"bad difficulty: {d.get('difficulty')}")
@@ -94,7 +69,7 @@ def validate_mc_item(d: dict) -> list[str]:
         if dt is not None:
             if not isinstance(dt, list) or len(dt) != len(ch):
                 errs.append("distractor_types length must match choices")
-            elif any(t not in DISTRACTOR_TYPES for t in dt):
+            elif any(t not in p.distractor_types for t in dt):
                 errs.append(f"bad distractor_type in {dt}")
             else:
                 # exactly one 'correct', and it must sit at the key —
@@ -107,25 +82,26 @@ def validate_mc_item(d: dict) -> list[str]:
                     errs.append("'correct' distractor_type is not at answer_index")
     if not d.get("source"):
         errs.append("missing source")
-    _check_axis(d, errs)
+    _check_axis(d, errs, p)
     return errs
 
 
-def _check_axis(d: dict, errs: list[str]):
+def _check_axis(d: dict, errs: list[str], p):
     dim, axis = d.get("dimension"), d.get("axis")
-    want = AXIS_FOR_DIMENSION.get(dim)
+    want = p.axis_for_dimension.get(dim)
     if want and axis != want:
         errs.append(f"axis '{axis}' inconsistent with dimension '{dim}' "
                     f"(expected '{want}')")
 
 
-def validate_open_item(d: dict) -> list[str]:
+def validate_open_item(d: dict, *, pack=None) -> list[str]:
+    p = pack or active_pack()
     errs: list[str] = []
     if d.get("format") != "open":
         errs.append("format must be 'open'")
-    if d.get("axis") not in AXES:
+    if d.get("axis") not in p.axes:
         errs.append(f"bad axis: {d.get('axis')}")
-    if d.get("dimension") not in OPEN_DIMENSIONS:
+    if d.get("dimension") not in p.open_dimensions:
         errs.append(f"bad open dimension: {d.get('dimension')}")
     if d.get("difficulty") not in DIFFICULTIES:
         errs.append(f"bad difficulty: {d.get('difficulty')}")
@@ -140,15 +116,15 @@ def validate_open_item(d: dict) -> list[str]:
                 errs.append(f"rubric.{k} missing/empty")
         if not isinstance(r.get("ideal_reasoning_pattern", ""), str) or not r.get("ideal_reasoning_pattern"):
             errs.append("rubric.ideal_reasoning_pattern missing")
-    _check_axis(d, errs)
+    _check_axis(d, errs, p)
     return errs
 
 
-def validate_item(d: dict) -> list[str]:
+def validate_item(d: dict, *, pack=None) -> list[str]:
     if d.get("format") == "mc":
-        return validate_mc_item(d)
+        return validate_mc_item(d, pack=pack)
     if d.get("format") == "open":
-        return validate_open_item(d)
+        return validate_open_item(d, pack=pack)
     return [f"unknown format: {d.get('format')}"]
 
 

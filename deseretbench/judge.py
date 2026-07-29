@@ -9,64 +9,23 @@ import json
 import re
 from typing import Optional
 
-JUDGE_PERSONAS = {
-    "seminary_teacher": (
-        "an experienced Latter-day Saint seminary teacher who knows the standard works "
-        "and how to explain doctrine plainly to youth"),
-    "byu_religion_professor": (
-        "a BYU religion professor with deep knowledge of doctrinal development, Church "
-        "history, the Gospel Topics Essays, and where genuine ambiguity exists"),
-    "bishop": (
-        "a serving bishop who counsels members through real life decisions with both "
-        "doctrinal fidelity and pastoral compassion"),
-}
+from .packs import active_pack
 
-JUDGE_SYSTEM = (
-    "You are an expert evaluator scoring another AI's written response to a question "
-    "about Latter-day Saint life and doctrine. Be rigorous, fair, and concrete. "
-    "Output only the requested JSON.")
-
-DIMENSIONS = ["doctrinal_accuracy", "cultural_authenticity", "practical_wisdom", "distinctiveness"]
+# The judge panel is tradition-specific: personas, system framing, the scoring
+# dimensions, and the rubric prompt all come from the active faith pack. These
+# module-level names are bound once at import (the pipeline runs one pack per
+# process) so existing consumers keep working: analyze.py does
+# `from .judge import DIMENSIONS`, and run_benchmark reads judgemod.JUDGE_SYSTEM
+# / judgemod.build_judge_prompt. To score a different tradition, select its pack
+# (DESERETBENCH_PACK or run_config `pack:`); everything below follows.
+_PACK = active_pack()
+JUDGE_PERSONAS = _PACK.judge_personas
+JUDGE_SYSTEM = _PACK.judge_system
+DIMENSIONS = list(_PACK.judge_dimensions)
 
 
 def build_judge_prompt(item: dict, response: str, persona_key: str) -> str:
-    persona = JUDGE_PERSONAS[persona_key]
-    r = item["rubric"]
-    must = "\n".join(f"  - {x}" for x in r["must_include"])
-    snot = "\n".join(f"  - {x}" for x in r["should_not"])
-    return f"""You are {persona}.
-
-You are scoring an AI model's response to this scenario.
-
-SCENARIO:
-{item['prompt']}
-
-SCORING RUBRIC
-The response SHOULD engage these points (must_include):
-{must}
-The response should NOT do these (should_not):
-{snot}
-Ideal Latter-day Saint reasoning pattern:
-  {r['ideal_reasoning_pattern']}
-
-MODEL RESPONSE TO SCORE:
-\"\"\"
-{response}
-\"\"\"
-
-Score the response on each dimension from 1 (poor) to 5 (excellent):
-- doctrinal_accuracy: reflects actual mainstream LDS teaching
-- cultural_authenticity: sounds like someone who understands lived LDS life
-- practical_wisdom: genuinely useful counsel, not just doctrinally correct
-- distinctiveness: gives a recognizably Latter-day Saint answer (not generic Christian/secular)
-
-Also report:
-- must_include_hits: integer count of the must_include points genuinely engaged
-- must_include_total: total number of must_include points
-- should_not_violations: integer count of should_not items the response committed
-
-Respond with ONLY this JSON (no other text):
-{{"doctrinal_accuracy": <1-5>, "cultural_authenticity": <1-5>, "practical_wisdom": <1-5>, "distinctiveness": <1-5>, "must_include_hits": <int>, "must_include_total": <int>, "should_not_violations": <int>, "justification": "<one sentence>"}}"""
+    return active_pack().build_judge_prompt(item, response, persona_key)
 
 
 def _balanced_json_candidates(text: str) -> list[str]:
