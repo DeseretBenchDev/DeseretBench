@@ -12,6 +12,8 @@ deepens understanding. Pick the quadrant that matches what you need right now.
 ## How-to guides — one task, done
 
 - [Add a model to the cohort](how-to/add-a-model.md)
+- [Run any hosted model (OpenAI/Grok/DeepSeek/…)](how-to/run-any-model.md)
+- [Add a faith pack (a new tradition)](how-to/add-a-faith-pack.md)
 - [Add or revise questions](how-to/add-questions.md)
 - [Re-analyze without re-running models](how-to/rerun-analysis.md)
 - [Regenerate the reports and one-pager](how-to/regenerate-reports.md)

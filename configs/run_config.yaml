@@ -1,6 +1,13 @@
 # DeseretBench run configuration — the controlled experimental constants.
 # Everything here is held identical across all models so comparisons are valid.
 
+# Faith pack — the tradition this run authors/validates/scores/reports against.
+# Defaults to "lds" (the reference). Add one with `python -m deseretbench.newpack
+# <key>`; select it here or with the DESERETBENCH_PACK env var (env wins). Every
+# non-LDS pack namespaces its data/ and results/ and reports/ by key, so
+# switching packs never touches the LDS set. See docs/how-to/add-a-faith-pack.md.
+# pack: lds
+
 runner:
   backend: claude_cli          # claude_cli | anthropic_api (api requires ANTHROPIC_API_KEY)
   tools: ""                    # no tool use

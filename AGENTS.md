@@ -54,6 +54,8 @@ The intent lives in [VISION.md](VISION.md). The normative technical spec is
 | Change judging | `deseretbench/judge.py`, judge phase in `run_benchmark.py` | [judge-design](docs/explanation/judge-design.md) |
 | Change statistics | `deseretbench/stats.py`, `analyze.py` | `tests/test_stats.py`, [ADR-0006](docs/adr/0006-statistical-testing-protocol.md) |
 | Add a model | `configs/models.yaml` | [how-to](docs/how-to/add-a-model.md), [ADR-0010](docs/adr/0010-cohort-selection-by-cli-probe.md) |
+| Run a hosted model (OpenAI/Grok/DeepSeek/GLM/Kimi/…) | `backend: openai_compat` in `configs/models.yaml` | [run-any-model](docs/how-to/run-any-model.md) |
+| Add a new tradition (Catholic, Orthodox, …) | `python -m deseretbench.newpack <key>` → `deseretbench/packs/<key>/pack.py` | [add-a-faith-pack](docs/how-to/add-a-faith-pack.md) |
 | Add/revise questions | `author` → `assemble` → `validate_questions` → `balance_positions` | [how-to](docs/how-to/add-questions.md) — mind the balance marker |
 | Run the whole benchmark | `scripts/finish_pipeline.sh` | [recover-interrupted-run](docs/how-to/recover-interrupted-run.md) |
 | Re-analyze without re-running models | `analyze` / `report` | [how-to](docs/how-to/rerun-analysis.md) |
@@ -64,19 +66,27 @@ The intent lives in [VISION.md](VISION.md). The normative technical spec is
 
 ```
 deseretbench/
-  runner.py             model-call layer: CLI/API backends, cache, retries,
-                        served-model verification (the integrity core)
+  runner.py             model-call layer: claude_cli/anthropic_api/ollama/
+                        openai_compat backends, cache, retries, served-model
+                        verification (the integrity core)
   run_benchmark.py      mc/open/judge phases, atomic JSONL sinks, config snapshots
   score_mc.py           MC letter-extraction rule cascade
-  judge.py              judge prompts, JSON parsing, persona-panel aggregation
+  judge.py              judge parsing/aggregation (personas + prompt from the pack)
   stats.py              bootstrap/Holm/Clopper-Pearson/Krippendorff/seeding
-  analyze.py            scores + stats → results/summary.json
-  report.py             summary.json → reports/RESULTS.md, leaderboard, figures
+  analyze.py            scores + stats → <pack>/summary.json
+  report.py             summary.json → <pack>/RESULTS.md, leaderboard, figures
   build_onepager.py     self-contained HTML one-pager (own aesthetic, own palette)
-  schema.py             item schemas + axis/dimension vocabulary
+  schema.py             item validation (taxonomy comes from the active pack)
+  packs/                the tradition surface, PLUGGABLE. packs/<key>/pack.py
+                        exports a Pack (taxonomy, judge, report labels, authoring,
+                        review, output routing); packs/lds is the reference,
+                        packs/_template the scaffold. schema/judge/report/analyze/
+                        author/validate_questions all read the active pack
+                        (DESERETBENCH_PACK env → run_config `pack:` → "lds").
+  newpack.py            scaffold a new faith pack from packs/_template
   author.py/assemble.py/validate_questions.py/balance_positions.py
                         question pipeline: draft → dedupe → persona review → balance
-configs/                models.yaml (cohort + judges), run_config.yaml (constants)
+configs/                models.yaml (cohort + judges), run_config.yaml (constants + pack:)
 data/                   published question pool, candidates, raw cells, reviews;
                         private_holdout/ stays untracked (nominal — see docs)
 scripts/                run_all.sh, resilient_run.sh, finish_pipeline.sh (wave loops)
