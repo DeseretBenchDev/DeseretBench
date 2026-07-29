@@ -588,9 +588,10 @@ def main():
             if sized:
                 lead.append(sized)
             figs = lead + figs
+    rd = _PACK.reports_dir
     (REPORTS / "RESULTS.md").write_text(results_md(summary), encoding="utf-8")
     (REPORTS / "leaderboard.html").write_text(html(summary, figs), encoding="utf-8")
-    print(f"wrote reports/RESULTS.md, reports/leaderboard.html, and "
+    print(f"wrote {rd}/RESULTS.md, {rd}/leaderboard.html, and "
           f"{len(figs)} figure(s): {', '.join(figs)}")
 
 
