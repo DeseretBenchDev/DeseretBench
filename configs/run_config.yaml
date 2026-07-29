@@ -25,6 +25,16 @@ runner:
   # See ADR-0014.
   ollama_num_predict: 16000
   ollama_num_ctx: 20480
+  # OpenAI-compatible backend (cohort entries opting in via `backend:
+  # openai_compat`). One backend for any /chat/completions provider — OpenAI,
+  # xAI Grok, DeepSeek, Zhipu GLM, Moonshot Kimi, OpenRouter, a local proxy.
+  # Commented out so they don't affect the reference (claude_cli) run; set
+  # base_url + the key env var for the provider you're testing. See
+  # docs/how-to/run-any-model.md.
+  # openai_base_url: https://api.openai.com/v1   # e.g. https://api.x.ai/v1 (Grok)
+  # openai_api_key_env: OPENAI_API_KEY           # name of the env var holding the key
+  # openai_map_effort: false        # send `reasoning_effort` (only for models that accept it)
+  # openai_extra_body: {}           # extra JSON body params, e.g. {temperature: 0}
 
 # Effort (reasoning budget) pinned per item class. Constant across models.
 effort:

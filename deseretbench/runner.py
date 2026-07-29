@@ -382,10 +382,121 @@ def _call_ollama(model: str, system: str, prompt: str, effort: str,
     )
 
 
+# --------------------------------------------------------------------------- #
+# OpenAI-compatible backend
+# --------------------------------------------------------------------------- #
+# Any endpoint that speaks OpenAI's /chat/completions: OpenAI, xAI Grok,
+# DeepSeek, Zhipu GLM, Moonshot Kimi, OpenRouter, Together, or a local proxy.
+# One backend covers all of them — the base URL and the API-key env var are
+# configured (run_config runner.openai_*), and a cohort entry just carries
+# `backend: openai_compat` with the provider's model id. Uses urllib, so it
+# adds no dependency; an API key is required (subscription-only providers need
+# a proxy that exchanges the session for a key — see docs/how-to/run-any-model).
+
+# effort -> OpenAI `reasoning_effort`, sent ONLY when openai_map_effort is set:
+# many providers reject an unrecognised field with a 400, so it is opt-in.
+_OPENAI_EFFORT = {"low": "low", "medium": "medium", "high": "high",
+                  "xhigh": "high", "max": "high"}
+
+
+def _call_openai_compat(model: str, system: str, prompt: str, effort: str,
+                        timeout: int, opts: Optional[dict] = None) -> CallResult:
+    import urllib.error
+    import urllib.request
+    opts = opts or {}
+    base = (opts.get("openai_base_url") or "https://api.openai.com/v1").rstrip("/")
+    key_env = opts.get("openai_api_key_env") or "OPENAI_API_KEY"
+    key = os.environ.get(key_env, "")
+    if not key:
+        # No credential -> permanent (retrying can't conjure one). The message
+        # names the exact env var so the fix is obvious; "authentication" makes
+        # it fail-fast via _PERMANENT_ERROR_MARKERS.
+        return CallResult(ok=False, text="", model_requested=model,
+                          model_served=None, effort=effort,
+                          error=f"authentication: ${key_env} is not set",
+                          backend="openai_compat")
+    body: dict = {
+        "model": model,
+        "messages": [{"role": "system", "content": system},
+                     {"role": "user", "content": prompt}],
+        "stream": False,
+    }
+    extra = opts.get("openai_extra_body")
+    if isinstance(extra, dict):
+        body.update(extra)   # operator-supplied params (temperature, max_tokens…)
+    if opts.get("openai_map_effort") and "reasoning_effort" not in body:
+        body["reasoning_effort"] = _OPENAI_EFFORT.get(effort, "medium")
+    req = urllib.request.Request(
+        f"{base}/chat/completions",
+        data=json.dumps(body).encode("utf-8"),
+        headers={"Content-Type": "application/json",
+                 "Authorization": f"Bearer {key}"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            d = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        try:
+            payload = json.loads(e.read().decode("utf-8"))
+            err_obj = payload.get("error")
+            msg = (err_obj.get("message") if isinstance(err_obj, dict)
+                   else err_obj) or ""
+        except Exception:
+            msg = ""
+        # 400/401/403/404 are config errors (bad key, unknown model, rejected
+        # param) that will not heal on retry; 429 and 5xx stay transient. The
+        # "openai http <code>" prefix is what _PERMANENT_ERROR_MARKERS keys on.
+        return CallResult(ok=False, text="", model_requested=model,
+                          model_served=None, effort=effort,
+                          error=f"openai http {e.code}: {str(msg)[:300]}",
+                          backend="openai_compat")
+    except TimeoutError:
+        return CallResult(ok=False, text="", model_requested=model,
+                          model_served=None, effort=effort,
+                          error=f"timeout>{timeout}s", backend="openai_compat")
+    except (urllib.error.URLError, OSError) as e:
+        reason = getattr(e, "reason", e)
+        err = (f"timeout>{timeout}s" if "timed out" in str(reason).lower()
+               else f"provider unreachable: {reason}")
+        return CallResult(ok=False, text="", model_requested=model,
+                          model_served=None, effort=effort,
+                          error=err, backend="openai_compat")
+    except json.JSONDecodeError as e:
+        return CallResult(ok=False, text="", model_requested=model,
+                          model_served=None, effort=effort,
+                          error=f"provider non-json response: {e}",
+                          backend="openai_compat")
+
+    choices = d.get("choices") or []
+    msg_obj = (choices[0].get("message") or {}) if choices else {}
+    text = (msg_obj.get("content") or "").strip()
+    finish = choices[0].get("finish_reason") if choices else None
+    usage = d.get("usage") or {}
+    return CallResult(
+        ok=bool(text),
+        text=text,
+        model_requested=model,
+        # Deliberately None. Providers echo dated snapshots (gpt-5 ->
+        # gpt-5-2026-01-15) that don't fit the Anthropic alias/-YYYYMMDD shape
+        # the served-guard tolerates, and a false mismatch would discard a good
+        # answer. The echoed id is preserved in served_all for provenance.
+        model_served=None,
+        served_all=d.get("model"),
+        effort=effort,
+        input_tokens=int(usage.get("prompt_tokens", 0) or 0),
+        output_tokens=int(usage.get("completion_tokens", 0) or 0),
+        stop_reason=finish,
+        error=None if text else f"empty result (stop_reason={finish})",
+        backend="openai_compat",
+        raw=d,
+    )
+
+
 _BACKENDS: dict[str, Callable[..., CallResult]] = {
     "claude_cli": _call_cli,
     "anthropic_api": _call_api,
     "ollama": _call_ollama,
+    "openai_compat": _call_openai_compat,
 }
 
 # Error markers that will not heal on retry — fail fast instead of burning
@@ -401,6 +512,9 @@ _PERMANENT_ERROR_MARKERS = (
     "authentication", "permission", "billing",
     "try pulling",             # ollama: model not in the local library
     "does not support think",  # ollama: think sent to a non-thinking model
+    # openai_compat: config-class HTTP codes (bad key, unknown model, rejected
+    # param). 429 and 5xx are deliberately absent so they stay transient.
+    "openai http 400", "openai http 401", "openai http 403", "openai http 404",
 )
 
 
@@ -454,6 +568,11 @@ class Runner:
             "ollama_host": rc.get("ollama_host", "http://localhost:11434"),
             "ollama_num_predict": int(rc.get("ollama_num_predict", 4096)),
             "ollama_num_ctx": int(rc.get("ollama_num_ctx", 8192)),
+            # openai_compat backend knobs (ignored by the other backends)
+            "openai_base_url": rc.get("openai_base_url", "https://api.openai.com/v1"),
+            "openai_api_key_env": rc.get("openai_api_key_env", "OPENAI_API_KEY"),
+            "openai_extra_body": rc.get("openai_extra_body") or {},
+            "openai_map_effort": bool(rc.get("openai_map_effort", False)),
         }
         self._lock = threading.Lock()
         self._spend = 0.0

@@ -71,6 +71,11 @@ How the "effort" setting reaches the model depends on the backend:
 
 - **`claude_cli` backend (default):** effort is passed verbatim as `--effort` for
   every model. Nothing to do.
+- **`openai_compat` backend:** for any OpenAI-compatible provider (OpenAI, Grok,
+  DeepSeek, GLM, Kimi, OpenRouter, a local proxy). The abstract effort is *not*
+  sent as `reasoning_effort` unless `openai_map_effort: true`, since many
+  providers 400 on an unknown field. Full setup — base URL, key env var, cohort
+  entry — is in [run-any-model.md](run-any-model.md).
 - **`anthropic_api` backend:** `deseretbench/runner.py` decides per family between
   adaptive thinking + `output_config.effort` and the legacy
   `thinking.budget_tokens` path. The family lists are the module-level tuples
