@@ -10,20 +10,26 @@ RUN="${1:-runs/v0_1}"
 SLEEP="${SLEEP:-1500}"
 export MAX_PARALLEL="${MAX_PARALLEL:-8}"
 
+# Resolve paths from the active faith pack (DESERETBENCH_PACK / run_config
+# `pack:`), so a non-LDS pack reads and writes under its own data/ + results/
+# and never touches the LDS set. For the LDS pack these are data/ and results/.
+DATA=$($PY -c 'from deseretbench.packs import active_pack as a; print(a().data_dir)')
+RESULTS=$($PY -c 'from deseretbench.packs import active_pack as a; print(a().results_dir)')
+
 echo "=== $(date '+%F %H:%M:%S %Z') public set ==="
-wc -l data/questions_mc.jsonl data/questions_open.jsonl
+wc -l "$DATA/questions_mc.jsonl" "$DATA/questions_open.jsonl"
 NMODELS=$(grep -c '^  - id:' configs/models.yaml)
 
 echo "=== $(date '+%F %H:%M:%S %Z') [1/4] MC phase ($NMODELS models, balanced) ==="
-bash scripts/resilient_run.sh mc "$RUN" data/questions_mc.jsonl "$SLEEP" || { echo "[finish] MC FAILED"; exit 2; }
+bash scripts/resilient_run.sh mc "$RUN" "$DATA/questions_mc.jsonl" "$SLEEP" || { echo "[finish] MC FAILED"; exit 2; }
 
 echo "=== $(date '+%F %H:%M:%S %Z') [2/4] OPEN phase ($NMODELS models + judge panel) ==="
-bash scripts/resilient_run.sh open "$RUN" data/questions_open.jsonl "$SLEEP" || { echo "[finish] OPEN FAILED"; exit 3; }
+bash scripts/resilient_run.sh open "$RUN" "$DATA/questions_open.jsonl" "$SLEEP" || { echo "[finish] OPEN FAILED"; exit 3; }
 
 echo "=== $(date '+%F %H:%M:%S %Z') [3/4] analyze ==="
-$PY -m deseretbench.analyze --run "$RUN" --out results/summary.json || { echo "[finish] ANALYZE FAILED"; exit 4; }
+$PY -m deseretbench.analyze --run "$RUN" --out "$RESULTS/summary.json" || { echo "[finish] ANALYZE FAILED"; exit 4; }
 
 echo "=== $(date '+%F %H:%M:%S %Z') [4/4] report ==="
-$PY -m deseretbench.report --summary results/summary.json || { echo "[finish] REPORT FAILED"; exit 5; }
+$PY -m deseretbench.report --summary "$RESULTS/summary.json" || { echo "[finish] REPORT FAILED"; exit 5; }
 
 echo "=== $(date '+%F %H:%M:%S %Z') PIPELINE_COMPLETE -> reports/leaderboard.html ==="

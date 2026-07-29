@@ -5,14 +5,17 @@ cd "$(dirname "$0")/.."
 PY=.venv/bin/python
 RUN="${1:-runs/v0_1}"
 P="${MAX_PARALLEL:-8}"
+# Question set lives under the active pack's data_dir (data/ for LDS,
+# data/<key> otherwise) — see DESERETBENCH_PACK / run_config `pack:`.
+DATA=$($PY -c 'from deseretbench.packs import active_pack as a; print(a().data_dir)')
 
 echo "== 1/7 author =="     ; $PY -m deseretbench.author --max-parallel "$P"
 echo "== 2/7 assemble =="   ; $PY -m deseretbench.assemble
 echo "== 3/7 validate =="   ; $PY -m deseretbench.validate_questions --max-parallel "$P"
 echo "== 4/7 balance =="    # freshly validated set => any old balance marker is stale
-rm -f data/questions_mc.jsonl.balance_meta.json data/questions_mc.prebalance.jsonl
-$PY -m deseretbench.balance_positions --in data/questions_mc.jsonl --out data/questions_mc.jsonl
-echo "== 5/7 run MC =="     ; $PY -m deseretbench.run_benchmark mc   --questions data/questions_mc.jsonl   --out "$RUN" --max-parallel "$P"
-echo "== 6/7 run OPEN =="   ; $PY -m deseretbench.run_benchmark open --questions data/questions_open.jsonl --out "$RUN" --max-parallel "$P"
+rm -f "$DATA/questions_mc.jsonl.balance_meta.json" "$DATA/questions_mc.prebalance.jsonl"
+$PY -m deseretbench.balance_positions --in "$DATA/questions_mc.jsonl" --out "$DATA/questions_mc.jsonl"
+echo "== 5/7 run MC =="     ; $PY -m deseretbench.run_benchmark mc   --questions "$DATA/questions_mc.jsonl"   --out "$RUN" --max-parallel "$P"
+echo "== 6/7 run OPEN =="   ; $PY -m deseretbench.run_benchmark open --questions "$DATA/questions_open.jsonl" --out "$RUN" --max-parallel "$P"
 echo "== 7/7 analyze+report ==" ; $PY -m deseretbench.analyze --run "$RUN" && $PY -m deseretbench.report
 echo "done -> reports/leaderboard.html"

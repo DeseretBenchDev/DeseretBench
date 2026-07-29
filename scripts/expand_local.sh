@@ -18,6 +18,8 @@ PY=.venv/bin/python
 RUN="${1:-runs/v0_1}"
 WARM="${WARM:-runs/warm_local}"
 OLLAMA_URL="${OLLAMA_URL:-http://localhost:11434}"
+# Question set under the active pack's data_dir (data/ for LDS, data/<key> else).
+DATA=$($PY -c 'from deseretbench.packs import active_pack as a; print(a().data_dir)')
 
 LOCALS=$($PY -c "
 import yaml
@@ -33,7 +35,7 @@ curl -s --max-time 5 "$OLLAMA_URL/api/version" >/dev/null \
 echo "=== $(date '+%F %H:%M:%S %Z') [A1] MC warm, per model, serial ==="
 for m in $LOCALS; do
   echo "--- $(date '+%F %H:%M:%S %Z') MC warm: $m ---"
-  $PY -m deseretbench.run_benchmark mc --questions data/questions_mc.jsonl \
+  $PY -m deseretbench.run_benchmark mc --questions "$DATA/questions_mc.jsonl" \
       --out "$WARM" --models "$m" --max-parallel 1 \
       || echo "[expand_local] WARN: mc $m exited rc=$? (leftovers retry in phase B)"
 done
@@ -41,7 +43,7 @@ done
 echo "=== $(date '+%F %H:%M:%S %Z') [A2] OPEN warm (gen + judge trickle), per model, serial ==="
 for m in $LOCALS; do
   echo "--- $(date '+%F %H:%M:%S %Z') OPEN warm: $m ---"
-  $PY -m deseretbench.run_benchmark open --questions data/questions_open.jsonl \
+  $PY -m deseretbench.run_benchmark open --questions "$DATA/questions_open.jsonl" \
       --out "$WARM" --models "$m" --max-parallel 1 \
       || echo "[expand_local] WARN: open $m exited rc=$? (leftovers retry in phase B)"
 done

@@ -116,14 +116,17 @@ def test_served_mismatch_never_fires(monkeypatch, tmp_path):
     """Providers echo dated snapshots (gpt-5 -> gpt-5-2026-01-15) that don't
     match the Anthropic alias/-YYYYMMDD shape the served-guard understands.
     The backend reports model_served=None so a legitimate answer is never
-    thrown away as a fallback; the echoed id is kept in served_all for audit."""
+    thrown away as a fallback; the echoed id is kept in provider_model for audit
+    and served_all stays None (a non-None served_all means multi-model, which the
+    analyze contamination check reads as fallback evidence)."""
     monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
     r = _runner(tmp_path)
     res = _patch_http(monkeypatch, [_oai_json()]) and r.call(
         "gpt-5", "s", "p", "low", backend="openai_compat")
     assert res.ok
     assert res.model_served is None
-    assert res.served_all == "gpt-5-2026-01-15"
+    assert res.served_all is None
+    assert res.provider_model == "gpt-5-2026-01-15"
 
 
 # --------------------------------------------------------------------------- #

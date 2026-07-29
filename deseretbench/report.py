@@ -566,9 +566,12 @@ Framing, methodology, and limitations: see <code>DESIGN.md</code>. Data license 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--summary", default="results/summary.json")
+    ap.add_argument("--summary", default=None,
+                    help="summary json; default <pack.results_dir>/summary.json "
+                         "(results/summary.json for the LDS pack)")
     args = ap.parse_args()
-    summary = json.loads((ROOT / args.summary).read_text())
+    summary_rel = args.summary or f"{_PACK.results_dir}/summary.json"
+    summary = json.loads((ROOT / summary_rel).read_text())
     FIG.mkdir(parents=True, exist_ok=True)
     figs = []
     if "mc" in summary:

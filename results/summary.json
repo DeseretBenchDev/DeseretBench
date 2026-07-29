@@ -1,5 +1,6 @@
 {
   "run": "runs/v0_1",
+  "pack": "lds",
   "config": {
     "effort": {
       "multiple_choice": "low",

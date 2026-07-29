@@ -356,7 +356,7 @@ def main():
         config = {"effort": run_cfg["effort"], "runs": run_cfg["runs"],
                   "ci_level": ci, "bootstrap_resamples": n_boot, "seed": seed,
                   "provenance": "config files at analyze time (no run snapshot)"}
-    summary = {"run": str(run), "config": config}
+    summary = {"run": str(run), "pack": active_pack().key, "config": config}
     mc_path = run / "mc_responses.jsonl"
     if mc_path.exists():
         summary["mc"] = analyze_mc(mc_path, cohort, seed, n_boot, ci)

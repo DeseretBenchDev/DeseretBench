@@ -132,3 +132,8 @@ automatically.
 - **`lm_eval/deseretbench_mc.yaml`** (the EleutherAI harness scaffold) is
   LDS-specific — its `task` name and `test:` path point at the LDS set. Copy and
   repoint it if you want the same portability for your pack.
+- **The one-pager and home page are not pack-aware yet.** `deseretbench.report`
+  (the `reports/<key>/` leaderboard + figures) follows your pack; the standalone
+  broadsheet (`build_onepager.py`) and the site `index.html` are still
+  LDS-branded. Your pack gets the leaderboard and figures; a bespoke landing
+  page is a separate exercise.

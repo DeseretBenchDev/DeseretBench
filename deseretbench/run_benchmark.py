@@ -28,6 +28,7 @@ from .runner import Runner
 from .schema import LETTERS, load_jsonl
 from .score_mc import is_correct
 from . import judge as judgemod
+from .packs import active_pack
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -110,6 +111,7 @@ def write_config_snapshot(out: Path, phase: str, run_cfg: dict, cohort: list[dic
             snap = {}
     snap[phase] = {
         "written_at": _time.strftime("%Y-%m-%dT%H:%M:%SZ", _time.gmtime()),
+        "pack": active_pack().key,
         "cohort": [m["id"] for m in cohort],
         "run_config": run_cfg,
         **(extra or {}),
@@ -171,6 +173,7 @@ def run_mc(args):
             "question_id": it["question_id"], "dimension": it["dimension"],
             "difficulty": it["difficulty"], "axis": it["axis"], "run_index": r,
             "model_served": res.model_served, "served_all": res.served_all,
+            "provider_model": res.provider_model,
             "call_ok": res.ok, "stop_reason": res.stop_reason,
             "called_at": res.called_at,
             "answer_index": it["answer_index"], "parsed_letter": letter,
@@ -274,7 +277,8 @@ def run_open(args):
                         "question_id": it["question_id"], "dimension": it["dimension"],
                         "difficulty": it["difficulty"], "run_index": r,
                         "call_ok": res.ok, "model_served": res.model_served,
-                        "served_all": res.served_all, "stop_reason": res.stop_reason,
+                        "served_all": res.served_all, "provider_model": res.provider_model,
+                        "stop_reason": res.stop_reason,
                         "called_at": res.called_at, "error": res.error,
                         "attempts": res.attempts, "cache_hit": res.cache_hit,
                         "text": text, "cost_usd": res.cost_usd,

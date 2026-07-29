@@ -55,6 +55,7 @@ class CallResult:
     attempts: int = 1
     cache_hit: bool = False
     served_all: Optional[str] = None       # comma-joined modelUsage keys when >1 model reported
+    provider_model: Optional[str] = None   # id a non-Anthropic provider echoed (openai_compat)
     called_at: Optional[str] = None        # UTC wall-clock of the live call (audit vs alias repoints)
     raw: Optional[dict] = None
 
@@ -479,9 +480,12 @@ def _call_openai_compat(model: str, system: str, prompt: str, effort: str,
         # Deliberately None. Providers echo dated snapshots (gpt-5 ->
         # gpt-5-2026-01-15) that don't fit the Anthropic alias/-YYYYMMDD shape
         # the served-guard tolerates, and a false mismatch would discard a good
-        # answer. The echoed id is preserved in served_all for provenance.
+        # answer. The echoed id goes in provider_model for provenance — NOT in
+        # served_all, whose non-None value means "multiple models reported" and
+        # is read as contamination evidence by analyze._classify_served_mismatch.
         model_served=None,
-        served_all=d.get("model"),
+        served_all=None,
+        provider_model=d.get("model"),
         effort=effort,
         input_tokens=int(usage.get("prompt_tokens", 0) or 0),
         output_tokens=int(usage.get("completion_tokens", 0) or 0),
