@@ -7,10 +7,15 @@ contributor brings — is an addition, not a fork. Everything that is NOT
 tradition-specific (the runner, the content-addressed cache, MC scoring, the
 statistics, the analysis grouping) stays where it is and never imports a pack.
 
-A pack is a Python package under ``deseretbench/packs/<key>/`` that exports a
-``PACK`` — a :class:`Pack` instance. Python rather than YAML because a pack
-carries prompt *builders* (the judge prompt, the authoring prompts), which are
-functions, not data. See ``packs/lds`` for the reference and
+A pack is a Python package with a ``pack.py`` that exports a ``PACK`` — a
+:class:`Pack` instance. DeseretBench itself ships exactly one in-package pack,
+``lds`` (plus ``_template``); it is the LDS benchmark. A *contributed* tradition
+is SEPARATE — it lives outside the deseretbench package and is discovered on the
+external search path (:func:`external_pack_dirs`: ``DESERETBENCH_PACK_PATH``,
+default ``<repo>/packs``), which is searched before the in-package location.
+Only the framework is shared. Python rather than YAML because a pack carries
+prompt *builders* (the judge prompt, the authoring prompts), which are functions,
+not data. See ``packs/lds`` for the reference and
 ``docs/how-to/add-a-faith-pack.md`` for the process.
 
 **Resolution.** The active pack is chosen once per process: the ``DESERETBENCH_PACK``
@@ -25,11 +30,14 @@ from __future__ import annotations
 
 import dataclasses
 import importlib
+import importlib.util
 import os
+import sys
 from pathlib import Path
 from typing import Callable, Mapping, Optional
 
 _ROOT = Path(__file__).resolve().parent.parent.parent   # repo root
+_INPKG = Path(__file__).resolve().parent                # deseretbench/packs
 
 
 @dataclasses.dataclass(frozen=True)
@@ -99,21 +107,55 @@ class Pack:
     open_review_prompt: Optional[Callable[[dict], str]] = None
 
 
-def _packs_dir() -> Path:
-    return Path(__file__).resolve().parent
+def external_pack_dirs() -> list[Path]:
+    """Directories searched for *external* packs — separate traditions that live
+    outside the deseretbench package (DeseretBench itself is lds-only). Set
+    ``DESERETBENCH_PACK_PATH`` (os.pathsep-separated) to override; the default is
+    ``<repo>/packs``. Only existing directories are returned."""
+    raw = os.environ.get("DESERETBENCH_PACK_PATH")
+    dirs = ([Path(p) for p in raw.split(os.pathsep) if p.strip()] if raw
+            else [_ROOT / "packs"])
+    return [d for d in dirs if d.is_dir()]
+
+
+def _pack_dirs(d: Path) -> list[str]:
+    if not d.is_dir():
+        return []
+    return [p.name for p in d.iterdir()
+            if p.is_dir() and not p.name.startswith((".", "_"))
+            and (p / "pack.py").exists()]
 
 
 def list_packs() -> list[str]:
-    """Selectable pack keys: every subdir with a ``pack.py`` whose name does not
-    start with ``_`` (``_template`` is scaffolding, not a runnable tradition)."""
-    d = _packs_dir()
-    return sorted(p.name for p in d.iterdir()
-                  if p.is_dir() and not p.name.startswith((".", "_"))
-                  and (p / "pack.py").exists())
+    """Selectable pack keys — the in-package packs (lds) unioned with every
+    external pack on the search path. ``_template`` and dotfiles are hidden."""
+    names = set(_pack_dirs(_INPKG))
+    for d in external_pack_dirs():
+        names.update(_pack_dirs(d))
+    return sorted(names)
+
+
+def _load_pack_file(key: str, pack_py: Path) -> Pack:
+    """Load an external pack from a pack.py path (not on the import path)."""
+    modname = f"_dbpack_{key}"
+    spec = importlib.util.spec_from_file_location(modname, pack_py)
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules[modname] = mod          # so dataclasses/typing resolve during exec
+    spec.loader.exec_module(mod)        # its `from deseretbench.packs import Pack` resolves
+    pack = getattr(mod, "PACK", None)
+    if not isinstance(pack, Pack):
+        raise ValueError(f"pack {key!r} at {pack_py} must export a Pack named PACK")
+    return pack
 
 
 def load_pack(key: str) -> Pack:
-    """Import ``deseretbench.packs.<key>.pack`` and return its ``PACK``."""
+    """Return the ``PACK`` for a key. External packs (on the search path) win
+    over in-package ones, so a contributed tradition never needs to touch the
+    deseretbench package."""
+    for root in external_pack_dirs():
+        pack_py = root / key / "pack.py"
+        if pack_py.exists():
+            return _load_pack_file(key, pack_py)
     try:
         mod = importlib.import_module(f"deseretbench.packs.{key}.pack")
     except ImportError as e:

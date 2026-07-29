@@ -12,15 +12,20 @@ authored or run yet — you would be the first. This page is the recipe.
 ## What a pack is
 
 A pack is the tradition-specific surface of the benchmark gathered into one
-Python package under `deseretbench/packs/<key>/`. It exports a `PACK` object with
-the taxonomy the schema validates against, the judge (personas, dimensions,
-prompt), the report labels, the authoring taxonomy and prompts, and the reviewer
-panel. Everything else in `deseretbench/` reads the *active* pack and is otherwise
-untouched. Packs are Python (not YAML) because they carry prompt *builders* —
-functions — not just data.
+Python package under `packs/<key>/` — **outside** the deseretbench package.
+DeseretBench itself is lds-only (the `lds` pack ships in-package); a contributed
+tradition is *separate*, unified with DeseretBench only by the framework. The
+loader finds external packs via `DESERETBENCH_PACK_PATH` (os-path-separated,
+default `./packs`), searching it before the in-package location. A pack exports
+a `PACK` object with the taxonomy the schema validates against, the judge
+(personas, dimensions, prompt), the report labels, the authoring taxonomy and
+prompts, and the reviewer panel. Everything in `deseretbench/` reads the
+*active* pack and is otherwise untouched. Packs are Python (not YAML) because
+they carry prompt *builders* — functions — not just data.
 
 The active pack resolves once per process: the `DESERETBENCH_PACK` environment
-variable wins, then `pack:` in `configs/run_config.yaml`, then `lds`.
+variable wins, then `pack:` in `configs/run_config.yaml`, then `lds`. (Set
+`DESERETBENCH_PACK_PATH` too if your packs live somewhere other than `./packs`.)
 
 ## 1. Scaffold
 
@@ -28,7 +33,8 @@ variable wins, then `pack:` in `configs/run_config.yaml`, then `lds`.
 python -m deseretbench.newpack catholic --name "the Catholic tradition" --title "CatholicBench"
 ```
 
-This copies the template to `deseretbench/packs/catholic/`, substitutes the
+This copies the template to `packs/catholic/` (repo root, outside the package,
+gitignored), substitutes the
 identity fields, and verifies the pack loads. `--name` should read naturally in a
 sentence ("a question about *the Catholic tradition*"); `--title` is the report
 wordmark. Both default sensibly from the key if omitted.
@@ -41,7 +47,7 @@ set.
 
 ## 2. Fill in the tradition
 
-Open `deseretbench/packs/<key>/pack.py` and work through the `TODO`s top to
+Open `packs/<key>/pack.py` and work through the `TODO`s top to
 bottom. It is one file, sectioned:
 
 - **Taxonomy.** The three evaluation axes (doctrinal accuracy, cultural fluency,
@@ -59,7 +65,7 @@ bottom. It is one file, sectioned:
   subtopics). The authoring prompt builders are already wired to these.
 - **Reviewers.** Five reviewer personas that catch different failure modes.
 
-Then write `deseretbench/packs/<key>/grounding_brief.md` — the factual anchor
+Then write `packs/<key>/grounding_brief.md` — the factual anchor
 embedded in every authoring prompt (canon, official teaching bodies, the
 mainstream position, common confusions, vocabulary, currency notes). The
 placeholder file explains what a good brief contains; `data/grounding_brief.md`

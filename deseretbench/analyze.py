@@ -360,8 +360,12 @@ def main():
     mc_path = run / "mc_responses.jsonl"
     if mc_path.exists():
         summary["mc"] = analyze_mc(mc_path, cohort, seed, n_boot, ci)
-    summary["open"] = analyze_open(run / "open_scores.jsonl", run / "open_judge_raw.jsonl",
-                                   cohort, seed, n_boot, ci)
+    # MC-only runs (e.g. a quick single-model pass on a new pack) have no open
+    # phase; only analyze it when its scores exist, so report can skip it.
+    if (run / "open_scores.jsonl").exists():
+        summary["open"] = analyze_open(run / "open_scores.jsonl",
+                                       run / "open_judge_raw.jsonl",
+                                       cohort, seed, n_boot, ci)
 
     outp = ROOT / out_rel
     outp.parent.mkdir(parents=True, exist_ok=True)

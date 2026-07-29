@@ -16,6 +16,21 @@ runs/*.log
 # Private holdout set — NEVER commit (contamination management, runbook §6.2)
 data/private_holdout/
 
+# External / contributed faith packs live OUTSIDE the package (DeseretBench is
+# lds-only, packs are separate — unified only by the framework). The external
+# pack dir and each contributed tradition's namespaced outputs stay local; the
+# LDS pack's own data/results/reports (data/raw, results/summary.json,
+# reports/figures, runs/v0_1) remain tracked. Add a line per new tradition.
+/packs/
+/data/catholic/
+/data/orthodox/
+/results/catholic/
+/results/orthodox/
+/reports/catholic/
+/reports/orthodox/
+/runs/catholic/
+/runs/orthodox/
+
 # OS / editor / local tooling
 .DS_Store
 .claude/

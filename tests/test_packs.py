@@ -43,6 +43,42 @@ def test_env_var_selects_the_pack(monkeypatch):
     assert active_pack().key == "lds"
 
 
+# --------------------------------------------------------------------------- #
+# External packs — a separate tradition lives OUTSIDE the deseretbench package
+# (DeseretBench itself is lds-only). The framework loads it via
+# DESERETBENCH_PACK_PATH; only the architecture is shared.
+# --------------------------------------------------------------------------- #
+
+
+def test_external_pack_path_is_searched(tmp_path, monkeypatch):
+    import deseretbench.newpack as newpack
+    newpack.scaffold_pack("romanrite", name="the Roman Rite", title="RomanBench",
+                          dest_root=tmp_path)
+    monkeypatch.setenv("DESERETBENCH_PACK_PATH", str(tmp_path))
+    reset_pack_cache()
+    p = load_pack("romanrite")
+    assert isinstance(p, Pack)           # its `from deseretbench.packs import Pack` resolved
+    assert p.key == "romanrite"
+    assert p.name == "the Roman Rite"
+    assert p.data_dir == "data/romanrite"
+
+
+def test_list_packs_unions_external_and_in_package(tmp_path, monkeypatch):
+    import deseretbench.newpack as newpack
+    newpack.scaffold_pack("romanrite", dest_root=tmp_path)
+    monkeypatch.setenv("DESERETBENCH_PACK_PATH", str(tmp_path))
+    names = list_packs()
+    assert "lds" in names            # in-package (DeseretBench's own)
+    assert "romanrite" in names      # external contribution
+    assert "_template" not in names
+
+
+def test_in_package_lds_loads_even_with_external_path_set(tmp_path, monkeypatch):
+    monkeypatch.setenv("DESERETBENCH_PACK_PATH", str(tmp_path))   # empty external root
+    reset_pack_cache()
+    assert load_pack("lds").key == "lds"
+
+
 def test_unknown_pack_is_a_clear_error():
     with pytest.raises(ValueError) as e:
         load_pack("no_such_tradition")

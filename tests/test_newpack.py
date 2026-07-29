@@ -46,28 +46,32 @@ def test_scaffold_refuses_existing_unless_forced(tmp_path):
     assert again.exists()
 
 
-def test_scaffolded_pack_loads_and_is_listed():
-    """Integration: scaffold into the real packs dir, load it, then clean up."""
-    key = "scafftest"
-    packs_dir = Path(N.__file__).resolve().parent / "packs"
-    dest = packs_dir / key
-    shutil.rmtree(dest, ignore_errors=True)
-    try:
-        N.scaffold_pack(key, name="the Test tradition", title="TestBench")
-        reset_pack_cache()
-        p = load_pack(key)
-        assert p.key == key
-        assert p.name == "the Test tradition"
-        assert p.report_title == "TestBench"
-        # a fresh pack namespaces all of its outputs by key
-        assert p.data_dir == f"data/{key}"
-        assert p.results_dir == f"results/{key}"
-        assert p.reports_dir == f"reports/{key}"
-        # it has a complete, loadable taxonomy + judge + authoring + review
-        assert p.mc_dimensions and p.judge_dimensions and p.mc_dims and p.reviewers
-        names = list_packs()
-        assert key in names
-        assert "_template" not in names        # scaffolding source is not selectable
-    finally:
-        shutil.rmtree(dest, ignore_errors=True)
-        reset_pack_cache()
+def test_newpack_defaults_to_the_external_packs_dir(tmp_path, monkeypatch):
+    """No dest_root -> scaffold OUTSIDE the deseretbench package (DeseretBench is
+    lds-only), honoring DESERETBENCH_PACK_PATH."""
+    monkeypatch.setenv("DESERETBENCH_PACK_PATH", str(tmp_path))
+    dest = N.scaffold_pack("byzantine")          # no dest_root
+    assert dest == tmp_path / "byzantine"
+    assert "deseretbench" not in str(dest).replace("\\", "/").rsplit("/byzantine", 1)[0]
+
+
+def test_scaffolded_external_pack_loads_and_is_listed(tmp_path, monkeypatch):
+    """Integration: scaffold to an external dir, load it via the search path."""
+    monkeypatch.setenv("DESERETBENCH_PACK_PATH", str(tmp_path))
+    N.scaffold_pack("byzantine", name="the Byzantine tradition", title="ByzBench")
+    reset_pack_cache()
+    p = load_pack("byzantine")
+    assert p.key == "byzantine"
+    assert p.name == "the Byzantine tradition"
+    assert p.report_title == "ByzBench"
+    # a fresh pack namespaces all of its outputs by key
+    assert p.data_dir == "data/byzantine"
+    assert p.results_dir == "results/byzantine"
+    assert p.reports_dir == "reports/byzantine"
+    # complete, loadable taxonomy + judge + authoring + review
+    assert p.mc_dimensions and p.judge_dimensions and p.mc_dims and p.reviewers
+    names = list_packs()
+    assert "byzantine" in names            # external
+    assert "lds" in names                  # in-package
+    assert "_template" not in names        # scaffolding source is not selectable
+    reset_pack_cache()

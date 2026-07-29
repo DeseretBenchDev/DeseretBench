@@ -77,13 +77,16 @@ deseretbench/
   report.py             summary.json → <pack>/RESULTS.md, leaderboard, figures
   build_onepager.py     self-contained HTML one-pager (own aesthetic, own palette)
   schema.py             item validation (taxonomy comes from the active pack)
-  packs/                the tradition surface, PLUGGABLE. packs/<key>/pack.py
-                        exports a Pack (taxonomy, judge, report labels, authoring,
-                        review, output routing); packs/lds is the reference,
-                        packs/_template the scaffold. schema/judge/report/analyze/
-                        author/validate_questions all read the active pack
-                        (DESERETBENCH_PACK env → run_config `pack:` → "lds").
-  newpack.py            scaffold a new faith pack from packs/_template
+  packs/                the tradition surface, PLUGGABLE. DeseretBench is lds-ONLY:
+                        packs/lds is its pack, packs/_template the scaffold. A
+                        contributed tradition is SEPARATE — it lives outside the
+                        package under <repo>/packs/ (or DESERETBENCH_PACK_PATH),
+                        loaded by the framework, gitignored. A pack.py exports a
+                        Pack (taxonomy, judge, report labels, authoring, review,
+                        output routing). schema/judge/report/analyze/author/
+                        validate_questions read the active pack (DESERETBENCH_PACK
+                        env → run_config `pack:` → "lds").
+  newpack.py            scaffold a new (external) faith pack from packs/_template
   author.py/assemble.py/validate_questions.py/balance_positions.py
                         question pipeline: draft → dedupe → persona review → balance
 configs/                models.yaml (cohort + judges), run_config.yaml (constants + pack:)

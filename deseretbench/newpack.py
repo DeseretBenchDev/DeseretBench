@@ -2,8 +2,10 @@
 
     python -m deseretbench.newpack <key> [--name "..."] [--title "..."] [--force]
 
-Copies deseretbench/packs/_template/ to deseretbench/packs/<key>/, substituting
-the identity fields, then verifies the new pack loads. From there, fill in the
+Copies deseretbench/packs/_template/ to ./packs/<key>/ (outside the package —
+DeseretBench is lds-only; contributed traditions are separate, discovered via
+DESERETBENCH_PACK_PATH), substituting the identity fields, then verifies the new
+pack loads. From there, fill in the
 TODOs in the generated pack.py (taxonomy, judge, authoring, review) and its
 grounding_brief.md. Full walkthrough: docs/how-to/add-a-faith-pack.md.
 
@@ -13,12 +15,18 @@ Nothing here runs a model.
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import shutil
 from pathlib import Path
 
-_PACKS_DIR = Path(__file__).resolve().parent / "packs"
+_PACKS_DIR = Path(__file__).resolve().parent / "packs"   # in-package (template source)
 _TEMPLATE = _PACKS_DIR / "_template"
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+# New packs default OUTSIDE the deseretbench package — DeseretBench is lds-only,
+# and a contributed tradition is separate, unified only by the framework. This
+# matches the default search path in deseretbench.packs.external_pack_dirs().
+_EXTERNAL_PACKS = _REPO_ROOT / "packs"
 
 # A pack key is a Python package name: lowercase, starts with a letter, then
 # letters / digits / underscores. That keeps `import deseretbench.packs.<key>`
@@ -47,7 +55,13 @@ def scaffold_pack(key: str, name: str | None = None, title: str | None = None,
             f"'eastern_orthodox').")
     name = name or _default_name(key)
     title = title or _default_title(key)
-    dest_root = Path(dest_root) if dest_root is not None else _PACKS_DIR
+    if dest_root is not None:
+        dest_root = Path(dest_root)
+    else:
+        # default to the first DESERETBENCH_PACK_PATH dir (so scaffold-then-load
+        # agree), else <repo>/packs
+        env = os.environ.get("DESERETBENCH_PACK_PATH")
+        dest_root = Path(env.split(os.pathsep)[0]) if env else _EXTERNAL_PACKS
     dest = dest_root / key
     if dest.exists():
         if not force:
