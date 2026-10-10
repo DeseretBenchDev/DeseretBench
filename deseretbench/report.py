@@ -85,10 +85,18 @@ TIER_COLOR = {"fable": "#7a4e6d", "opus": "#9a681c", "sonnet": "#33456b",
               # their predecessor so qwen3/qwen3.5 (terracottas) and gemma/gemma4
               # (teals) read as kin.
               "qwen3.5": "#c9663f", "gemma4": "#5a9e97", "granite": "#7d7a2c",
-              "ministral": "#c07a1e", "nemotron": "#5f7d1f"}
+              "ministral": "#c07a1e", "nemotron": "#5f7d1f",
+              # Hosted cohort (2026-08-29, backend openai_compat via OpenCode).
+              # tier = model family, generation = version (the Claude
+              # convention — parameter counts aren't published). Hosted Qwen
+              # keeps the terracotta family so it reads as kin to qwen3/qwen3.5.
+              "kimi": "#1d5c8c", "qwen": "#d98a5b", "glm": "#7a5c9e",
+              "grok": "#4d4d4d", "gpt": "#1f8f6a", "gemini": "#4a8ed9",
+              "minimax": "#b0403f"}
 TIER_ORDER = ("fable", "opus", "sonnet", "haiku",
               "qwen3", "qwen3.5", "gemma", "gemma4", "phi", "smollm",
-              "deepseek", "granite", "ministral", "nemotron")
+              "deepseek", "granite", "ministral", "nemotron",
+              "kimi", "qwen", "glm", "grok", "gpt", "gemini", "minimax")
 
 
 def tier_color(tier: str) -> str:

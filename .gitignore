@@ -48,3 +48,9 @@ outreach/
 # only the content-addressed cache matters, these files are disposable
 runs/warm_local/
 runs/**/*.log
+
+# local secrets (API keys) — never commit
+.env
+
+# Derived: rebuilt by `python -m deseretbench.merge_runs` from the tracked source runs.
+runs/v0_1_plus/

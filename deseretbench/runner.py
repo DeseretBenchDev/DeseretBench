@@ -28,8 +28,10 @@ import re
 import subprocess
 import threading
 import time
+import uuid
 from pathlib import Path
 from typing import Callable, Iterable, Optional
+from deseretbench import __version__
 
 # --------------------------------------------------------------------------- #
 # Result type
@@ -416,22 +418,49 @@ def _call_openai_compat(model: str, system: str, prompt: str, effort: str,
                           model_served=None, effort=effort,
                           error=f"authentication: ${key_env} is not set",
                           backend="openai_compat")
-    body: dict = {
-        "model": model,
-        "messages": [{"role": "system", "content": system},
-                     {"role": "user", "content": prompt}],
-        "stream": False,
-    }
+    # Two wire shapes behind one backend. "chat" is /chat/completions (the
+    # default; most providers). "responses" is the OpenAI Responses API —
+    # some gateways (OpenCode Zen/Go) serve GPT and Grok *only* that way.
+    shape = (opts.get("openai_api_shape") or "chat").lower()
     extra = opts.get("openai_extra_body")
-    if isinstance(extra, dict):
+    extra = dict(extra) if isinstance(extra, dict) else {}
+    body: dict
+    if shape == "responses":
+        # Field renames: system -> instructions, prompt -> input, and the
+        # operator backstop max_tokens -> max_output_tokens (the Responses API
+        # rejects the chat name with a 400).
+        if "max_tokens" in extra:
+            extra["max_output_tokens"] = extra.pop("max_tokens")
+        body = {"model": model, "instructions": system, "input": prompt,
+                "stream": False}
+        body.update(extra)
+        if opts.get("openai_map_effort") and "reasoning" not in body:
+            body["reasoning"] = {"effort": _OPENAI_EFFORT.get(effort, "medium")}
+        path = "/responses"
+    else:
+        body = {
+            "model": model,
+            "messages": [{"role": "system", "content": system},
+                         {"role": "user", "content": prompt}],
+            "stream": False,
+        }
         body.update(extra)   # operator-supplied params (temperature, max_tokens…)
-    if opts.get("openai_map_effort") and "reasoning_effort" not in body:
-        body["reasoning_effort"] = _OPENAI_EFFORT.get(effort, "medium")
+        if opts.get("openai_map_effort") and "reasoning_effort" not in body:
+            body["reasoning_effort"] = _OPENAI_EFFORT.get(effort, "medium")
+        path = "/chat/completions"
     req = urllib.request.Request(
-        f"{base}/chat/completions",
+        f"{base}{path}",
         data=json.dumps(body).encode("utf-8"),
         headers={"Content-Type": "application/json",
-                 "Authorization": f"Bearer {key}"},
+                 "Authorization": f"Bearer {key}",
+                 # Cloudflare-fronted gateways (OpenCode Zen/Go) 403 urllib's
+                 # default "Python-urllib/x.y" UA; identify the harness build.
+                 "User-Agent": f"deseretbench/{__version__}",
+                 # Operator headers (e.g. OpenCode Go's required, stable-per-
+                 # conversation x-opencode-session). "{run_session}" is
+                 # replaced by one id per Runner, set in Runner.__init__.
+                 **{k: str(v).replace("{run_session}", opts.get("run_session", ""))
+                    for k, v in (opts.get("openai_extra_headers") or {}).items()}},
     )
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -468,11 +497,27 @@ def _call_openai_compat(model: str, system: str, prompt: str, effort: str,
                           error=f"provider non-json response: {e}",
                           backend="openai_compat")
 
-    choices = d.get("choices") or []
-    msg_obj = (choices[0].get("message") or {}) if choices else {}
-    text = (msg_obj.get("content") or "").strip()
-    finish = choices[0].get("finish_reason") if choices else None
     usage = d.get("usage") or {}
+    if shape == "responses":
+        # Text = the output_text parts of message items; reasoning items are
+        # skipped. status is the stop reason; when the answer is missing and
+        # the response is incomplete, append why (e.g. max_output_tokens) so
+        # the runaway backstop is visible in the run log.
+        parts = [c.get("text") or ""
+                 for item in (d.get("output") or []) if item.get("type") == "message"
+                 for c in (item.get("content") or []) if c.get("type") == "output_text"]
+        text = "".join(parts).strip()
+        finish = d.get("status")
+        why = (d.get("incomplete_details") or {}).get("reason")
+        if not text and why:
+            finish = f"{finish}:{why}"
+        in_tok, out_tok = usage.get("input_tokens", 0), usage.get("output_tokens", 0)
+    else:
+        choices = d.get("choices") or []
+        msg_obj = (choices[0].get("message") or {}) if choices else {}
+        text = (msg_obj.get("content") or "").strip()
+        finish = choices[0].get("finish_reason") if choices else None
+        in_tok, out_tok = usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0)
     return CallResult(
         ok=bool(text),
         text=text,
@@ -487,8 +532,8 @@ def _call_openai_compat(model: str, system: str, prompt: str, effort: str,
         served_all=None,
         provider_model=d.get("model"),
         effort=effort,
-        input_tokens=int(usage.get("prompt_tokens", 0) or 0),
-        output_tokens=int(usage.get("completion_tokens", 0) or 0),
+        input_tokens=int(in_tok or 0),
+        output_tokens=int(out_tok or 0),
         stop_reason=finish,
         error=None if text else f"empty result (stop_reason={finish})",
         backend="openai_compat",
@@ -577,6 +622,9 @@ class Runner:
             "openai_api_key_env": rc.get("openai_api_key_env", "OPENAI_API_KEY"),
             "openai_extra_body": rc.get("openai_extra_body") or {},
             "openai_map_effort": bool(rc.get("openai_map_effort", False)),
+            "openai_api_shape": rc.get("openai_api_shape", "chat"),
+            "openai_extra_headers": rc.get("openai_extra_headers") or {},
+            "run_session": f"deseretbench-{uuid.uuid4().hex[:16]}",
         }
         self._lock = threading.Lock()
         self._spend = 0.0
@@ -585,12 +633,16 @@ class Runner:
     # -- single call with cache + retry ------------------------------------ #
     def call(self, model: str, system: str, prompt: str, effort: str,
              run_index: int = 0, use_cache: bool = True,
-             backend: Optional[str] = None) -> CallResult:
+             backend: Optional[str] = None,
+             backend_opts: Optional[dict] = None) -> CallResult:
         # Per-call backend override (cohort entries may pin one, e.g. local
         # open-weights models via ollama). The effective backend is part of
-        # the cache key, so entries never cross backends.
+        # the cache key, so entries never cross backends. backend_opts lets an
+        # entry override backend options for itself (e.g. openai_api_shape,
+        # openai_base_url) so one run can mix providers behind one backend.
         be = backend or self.backend
         fn = _BACKENDS[be]
+        opts = {**self._opts, **backend_opts} if backend_opts else self._opts
         key = _cache_key(be, model, system, prompt, effort, run_index)
         cpath = self.cache_dir / f"{key}.json"
         if use_cache and cpath.exists():
@@ -610,7 +662,7 @@ class Runner:
 
         last: Optional[CallResult] = None
         for attempt in range(1, self.max_retries + 1):
-            r = fn(model, system, prompt, effort, self.timeout, self._opts)
+            r = fn(model, system, prompt, effort, self.timeout, opts)
             r.attempts = attempt
             r.called_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
             with self._lock:
@@ -637,13 +689,15 @@ class Runner:
     def map(self, jobs: list[dict],
             on_done: Optional[Callable[[int, dict, CallResult], None]] = None
             ) -> list[CallResult]:
-        """Each job dict: {model, system, prompt, effort, run_index[, backend]}."""
+        """Each job dict: {model, system, prompt, effort, run_index[, backend,
+        backend_opts]}."""
         results: list[Optional[CallResult]] = [None] * len(jobs)
         with cf.ThreadPoolExecutor(max_workers=self.max_parallel) as ex:
             fut_to_i = {
                 ex.submit(self.call, j["model"], j["system"], j["prompt"],
                           j["effort"], j.get("run_index", 0),
-                          backend=j.get("backend")): i
+                          backend=j.get("backend"),
+                          backend_opts=j.get("backend_opts")): i
                 for i, j in enumerate(jobs)
             }
             for fut in cf.as_completed(fut_to_i):

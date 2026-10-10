@@ -149,6 +149,7 @@ def test_request_shape_and_bearer_auth(monkeypatch, tmp_path):
     assert body["stream"] is False
     assert body["messages"][0] == {"role": "system", "content": "SYS"}
     assert body["messages"][1] == {"role": "user", "content": "USER PROMPT"}
+    assert len(body["messages"]) == 2      # nothing beyond system + item reaches the model
 
 
 def test_reasoning_effort_sent_only_when_enabled(monkeypatch, tmp_path):
@@ -242,3 +243,141 @@ def test_registered_and_cache_key_separated(monkeypatch, tmp_path):
     r2 = rn.call("m", "s", "p", "low", backend="openai_compat")
     assert r2.cache_hit and r2.text == r1.text
     assert calls["n"] == 0
+
+
+def test_user_agent_header_identifies_the_harness(monkeypatch, tmp_path):
+    """Cloudflare-fronted gateways (OpenCode Zen/Go, others) answer 403 to
+    urllib's default ``Python-urllib/x.y`` User-Agent — the whole run would fail
+    before the first token. Send a harness UA carrying the version so upstream
+    logs can also tell which benchmark build made the call."""
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+    cap = {}
+    _patch_http(monkeypatch, [_oai_json()], cap)
+    _runner(tmp_path).call("gpt-5", "s", "p", "low", backend="openai_compat")
+    ua = cap["headers"].get("User-agent") or cap["headers"].get("User-Agent")
+    assert ua is not None, "no User-Agent header sent"
+    assert ua.startswith("deseretbench/"), ua
+
+
+# --------------------------------------------------------------------------- #
+# Responses API shape (GPT / Grok behind gateways that don't serve chat/completions)
+# --------------------------------------------------------------------------- #
+
+
+def _responses_json(**over):
+    d = {
+        "id": "resp_abc",
+        "object": "response",
+        "model": "grok-4.6-2026-06-01",
+        "status": "completed",
+        "output": [
+            {"type": "reasoning", "id": "rs_1", "summary": []},
+            {"type": "message", "id": "msg_1", "role": "assistant",
+             "content": [{"type": "output_text", "text": "ANSWER: C"}]},
+        ],
+        "usage": {"input_tokens": 88, "output_tokens": 41, "total_tokens": 129},
+    }
+    d.update(over)
+    return d
+
+
+def test_responses_shape_request(monkeypatch, tmp_path):
+    """openai_api_shape=responses posts to /responses with the Responses-API
+    field names: system -> instructions, prompt -> input, and the extra-body
+    backstop max_tokens -> max_output_tokens (the Responses API 400s on the
+    chat name). No `messages` key."""
+    monkeypatch.setenv("OPENCODE_KEY", "sk-go")
+    cap = {}
+    _patch_http(monkeypatch, [_responses_json()], cap)
+    _runner(tmp_path, openai_base_url="https://opencode.ai/zen/go/v1",
+            openai_api_key_env="OPENCODE_KEY", openai_api_shape="responses",
+            openai_extra_body={"max_tokens": 16000}).call(
+        "grok-4.6", "SYS", "USER PROMPT", "low", backend="openai_compat")
+    assert cap["url"] == "https://opencode.ai/zen/go/v1/responses"
+    body = cap["body"]
+    assert body["model"] == "grok-4.6"
+    assert body["instructions"] == "SYS"
+    assert body["input"] == "USER PROMPT"
+    assert "messages" not in body
+    assert body["max_output_tokens"] == 16000 and "max_tokens" not in body
+
+
+def test_responses_shape_parse(monkeypatch, tmp_path):
+    """Text is the concatenated output_text parts of message items (reasoning
+    items are skipped); tokens come from usage.input/output_tokens; the echoed
+    model id lands in provider_model; status maps to stop_reason."""
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+    _patch_http(monkeypatch, [_responses_json()])
+    r = _runner(tmp_path, openai_api_shape="responses").call(
+        "grok-4.6", "s", "p", "low", backend="openai_compat")
+    assert r.ok and r.text == "ANSWER: C"
+    assert r.input_tokens == 88 and r.output_tokens == 41
+    assert r.provider_model == "grok-4.6-2026-06-01"
+    assert r.stop_reason == "completed"
+    assert r.model_served is None and r.served_all is None
+
+
+def test_responses_shape_truncated_is_empty_error(monkeypatch, tmp_path):
+    """An `incomplete` response with no message text is an empty result whose
+    error names the reason, so the runaway-backstop is visible in the log."""
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+    _patch_http(monkeypatch, [_responses_json(
+        status="incomplete", incomplete_details={"reason": "max_output_tokens"},
+        output=[{"type": "reasoning", "id": "rs_1", "summary": []}])])
+    r = _runner(tmp_path, openai_api_shape="responses").call(
+        "grok-4.6", "s", "p", "low", backend="openai_compat")
+    assert not r.ok
+    assert "max_output_tokens" in r.error
+
+
+def test_per_call_backend_opts_override_global(monkeypatch, tmp_path):
+    """A cohort entry can pin backend options for itself (shape, base_url) so
+    Grok (Responses) and Kimi (chat) share one run against one run_config."""
+    monkeypatch.setenv("OPENCODE_KEY", "sk-go")
+    cap = {}
+    _patch_http(monkeypatch, [_responses_json()], cap)
+    r = _runner(tmp_path, openai_base_url="https://opencode.ai/zen/go/v1",
+                openai_api_key_env="OPENCODE_KEY")
+    res = r.call("grok-4.6", "s", "p", "low", backend="openai_compat",
+                 backend_opts={"openai_api_shape": "responses"})
+    assert res.ok and cap["url"].endswith("/responses")
+    # the global default is untouched for the next call
+    cap2 = {}
+    _patch_http(monkeypatch, [_oai_json()], cap2)
+    res2 = r.call("kimi-k3", "s", "p", "low", backend="openai_compat")
+    assert res2.ok and cap2["url"].endswith("/chat/completions")
+
+
+def test_map_forwards_backend_opts(monkeypatch, tmp_path):
+    """Jobs built from cohort entries carry `backend_opts`; map() must hand
+    them to call() or the per-entry shape/base_url pin silently no-ops."""
+    monkeypatch.setenv("OPENCODE_KEY", "sk-go")
+    cap = {}
+    _patch_http(monkeypatch, [_responses_json()], cap)
+    r = _runner(tmp_path, openai_base_url="https://opencode.ai/zen/go/v1",
+                openai_api_key_env="OPENCODE_KEY")
+    out = r.map([{"model": "grok-4.6", "system": "s", "prompt": "p",
+                  "effort": "low", "run_index": 0, "backend": "openai_compat",
+                  "backend_opts": {"openai_api_shape": "responses"}}])
+    assert out[0].ok and cap["url"].endswith("/responses")
+
+
+def test_extra_headers_sent_with_stable_run_session(monkeypatch, tmp_path):
+    """openai_extra_headers are sent on every request. The placeholder
+    {run_session} becomes one id per Runner, the same on every call in a run,
+    because OpenCode Go asks for a stable x-opencode-session per conversation
+    and rejects requests without one (HTTP 400 MissingSessionID)."""
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+    r = _runner(tmp_path, openai_extra_headers={"x-opencode-session": "{run_session}"})
+    seen = []
+    for q in ("p1", "p2"):
+        cap = {}
+        _patch_http(monkeypatch, [_oai_json()], cap)
+        r.call("kimi-k3", "s", q, "low", backend="openai_compat")
+        seen.append(cap["headers"].get("X-opencode-session"))
+    assert seen[0] and seen[0] == seen[1] and seen[0] != "{run_session}"
+    other = _runner(tmp_path, openai_extra_headers={"x-opencode-session": "{run_session}"})
+    cap = {}
+    _patch_http(monkeypatch, [_oai_json()], cap)
+    other.call("kimi-k3", "s", "p3", "low", backend="openai_compat")
+    assert cap["headers"].get("X-opencode-session") != seen[0]

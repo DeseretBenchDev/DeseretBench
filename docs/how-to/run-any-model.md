@@ -28,10 +28,17 @@ Two deliberate choices worth knowing:
   (`gpt-5` → `gpt-5-2026-01-15`) that don't fit the Anthropic alias shape the
   served-model guard understands, so reporting the echoed id would throw away a
   perfectly good answer as a false "fallback". The echoed id is kept in
-  `served_all` for provenance instead.
+  `provider_model` for provenance instead.
 - **`reasoning_effort` is off unless you opt in.** Many providers reject an
   unrecognised field with a 400, so the abstract `effort` knob is *not* sent as
   `reasoning_effort` unless `openai_map_effort: true`.
+- **Two wire shapes.** `openai_api_shape: chat` (default) is `/chat/completions`.
+  `openai_api_shape: responses` is the OpenAI Responses API (`/responses`,
+  `instructions` + `input`, text read from the `message` output items, reasoning
+  items skipped, `max_tokens` translated to `max_output_tokens`). Some gateways
+  serve GPT and Grok *only* that way — OpenCode is one.
+- **It identifies itself.** Requests carry `User-Agent: deseretbench/<version>`;
+  Cloudflare-fronted gateways answer 403 to urllib's default UA.
 
 ## 1. Get a key and set the provider
 
@@ -64,6 +71,8 @@ Common providers (all OpenAI-compatible):
 | Zhipu GLM      | `https://open.bigmodel.cn/api/paas/v4`     | `ZHIPU_API_KEY`       |
 | Moonshot Kimi  | `https://api.moonshot.cn/v1`               | `MOONSHOT_API_KEY`    |
 | OpenRouter     | `https://openrouter.ai/api/v1`             | `OPENROUTER_API_KEY`  |
+| OpenCode Go    | `https://opencode.ai/zen/go/v1`            | `OPENCODE_KEY`        |
+| OpenCode Zen   | `https://opencode.ai/zen/v1`               | `OPENCODE_KEY`        |
 | Nous Research  | `https://inference-api.nousresearch.com/v1`| `NOUS_API_KEY`        |
 
 > **OpenRouter and Nous (the two you're eyeing) both work as-is.** Both are
@@ -84,10 +93,20 @@ Common providers (all OpenAI-compatible):
 > point `openai_base_url` at that proxy and `openai_api_key_env` at whatever
 > token it wants. Standing up that proxy is a separate task from this one.
 
-Because the base URL and key are configured once per run, **test one provider at
-a time**: set the provider, run, then switch. (Grok and OpenAI can't be in the
-same cohort run today — a small future ergonomic improvement, not a limitation
-of the scoring.)
+The `runner:` values are the defaults for every `openai_compat` entry. An entry
+that needs something different — another base URL, another key, the Responses
+shape — pins it for itself with `backend_opts:` (next section), so one run can
+mix providers.
+
+> **OpenCode (Go / Zen), the route in use since 2026-08-29.** One key, one base
+> URL per plan. **Go** ($10/mo flat, capped at $12 per 5 h) serves the open
+> models — Kimi, GLM, Qwen, DeepSeek, MiniMax — on `/chat/completions`, and
+> `grok-4.6` / `gpt-5.6-luna` on `/responses` only. **Zen** (pay-per-token,
+> billing must be enabled) adds Claude, GPT-5.5, Gemini 3.x and Grok 4.5; its
+> Claude models speak the Anthropic `/messages` shape, which `openai_compat`
+> does not. DeepSeek on Go returns 403 until the China-hosting opt-in is
+> clicked on the workspace page. List what your key can see with
+> `curl -H "Authorization: Bearer $OPENCODE_KEY" -A deseretbench https://opencode.ai/zen/go/v1/models`.
 
 ## 2. Add the models to the cohort
 
@@ -96,12 +115,24 @@ Append entries to `configs/models.yaml` with `backend: openai_compat`:
 ```yaml
 cohort:
   # ...
-  - id: grok-5                    # the provider's model id, verbatim
-    tier: grok
-    label: "Grok 5"
-    generation: 5.0
+  - id: kimi-k3                   # the provider's model id, verbatim
+    tier: kimi
+    label: "Kimi K3"
+    generation: 3.0
     backend: openai_compat
+  - id: grok-4.6                  # same key and plan, different wire shape
+    tier: grok
+    label: "Grok 4.6"
+    generation: 4.6
+    backend: openai_compat
+    backend_opts: {openai_api_shape: responses}
 ```
+
+`backend_opts` may carry any of the `openai_*` keys (`openai_base_url`,
+`openai_api_key_env`, `openai_api_shape`, `openai_extra_body`,
+`openai_map_effort`); the entry's values are laid over the `runner:` defaults
+for that entry only. Every new `tier` needs a colour in `report.py`'s
+`TIER_COLOR` — a test enforces it.
 
 Probe one cheaply before a full run:
 

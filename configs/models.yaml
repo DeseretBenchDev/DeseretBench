@@ -8,6 +8,15 @@
 # measurement configuration identical across the cohort.
 
 cohort:
+  # Fable 5.1 + Haiku 5.5 added 2026-10-09; IDs confirmed served by `claude -p`.
+  - id: claude-fable-5-1
+    tier: fable
+    label: "Fable 5.1"
+    generation: 5.1
+  - id: claude-haiku-5-5
+    tier: haiku
+    label: "Haiku 5.5"
+    generation: 5.5
   - id: claude-fable-5
     tier: fable
     label: "Fable 5"
@@ -145,6 +154,43 @@ cohort:
     label: "Gemma 4 E2B"
     generation: 2.0
     backend: ollama
+
+  # ---- Hosted open-weights cohort via OpenCode Go (backend: openai_compat) ----
+  # One flat-rate key, base_url in run_config.yaml (openai_base_url). Probed
+  # 2026-08-29: these ids answer on /chat/completions. grok-4.6 and
+  # gpt-5.6-luna on the same plan need the Responses shape and are added once
+  # the backend speaks it. deepseek-v4-* requires the China-hosting opt-in on
+  # the Go workspace page before it stops returning 403.
+  - id: kimi-k3
+    tier: kimi
+    label: "Kimi K3"
+    generation: 3.0
+    backend: openai_compat
+  - id: qwen3.8-max
+    tier: qwen
+    label: "Qwen3.8 Max"
+    generation: 3.8
+    backend: openai_compat
+  - id: glm-5.3
+    tier: glm
+    label: "GLM 5.3"
+    generation: 5.3
+    backend: openai_compat
+  # These two are served by OpenCode only through the Responses API
+  # (chat/completions answers 401/500), so they pin the wire shape for
+  # themselves; everything else on the plan keeps the run_config default.
+  - id: grok-4.6
+    tier: grok
+    label: "Grok 4.6"
+    generation: 4.6
+    backend: openai_compat
+    backend_opts: {openai_api_shape: responses}
+  - id: gpt-5.6-luna
+    tier: gpt
+    label: "GPT 5.6 Luna"
+    generation: 5.6
+    backend: openai_compat
+    backend_opts: {openai_api_shape: responses}
 
 # Judge configuration for open-ended (life-choice / cultural-open) scoring.
 judges:

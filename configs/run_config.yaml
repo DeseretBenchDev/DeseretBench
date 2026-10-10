@@ -38,10 +38,22 @@ runner:
   # Commented out so they don't affect the reference (claude_cli) run; set
   # base_url + the key env var for the provider you're testing. See
   # docs/how-to/run-any-model.md.
-  # openai_base_url: https://api.openai.com/v1   # e.g. https://api.x.ai/v1 (Grok)
-  # openai_api_key_env: OPENAI_API_KEY           # name of the env var holding the key
-  # openai_map_effort: false        # send `reasoning_effort` (only for models that accept it)
-  # openai_extra_body: {}           # extra JSON body params, e.g. {temperature: 0}
+  # Set 2026-08-29 to OpenCode Go (flat-rate; key in .env as OPENCODE_KEY).
+  # Only cohort entries with `backend: openai_compat` read these; the
+  # claude_cli reference cohort is untouched. Other providers: swap base_url +
+  # key env (e.g. https://api.x.ai/v1 + XAI_API_KEY).
+  openai_base_url: https://opencode.ai/zen/go/v1
+  openai_api_key_env: OPENCODE_KEY
+  openai_map_effort: false        # send `reasoning_effort` (only for models that accept it)
+  openai_extra_body: {max_tokens: 16000}   # same runaway backstop as ollama_num_predict
+  # Wire shape: chat (= /chat/completions, the default) or responses (= the
+  # OpenAI Responses API). A cohort entry overrides this for itself with
+  # `backend_opts: {openai_api_shape: responses}` — OpenCode serves GPT and
+  # Grok only that way. max_tokens is translated to max_output_tokens there.
+  openai_api_shape: chat
+  # OpenCode Go rejects requests without a stable per-conversation session id
+  # (HTTP 400 MissingSessionID). One id per run; {run_session} is filled in.
+  openai_extra_headers: {x-opencode-session: "{run_session}"}
 
 # Effort (reasoning budget) pinned per item class. Constant across models.
 effort:

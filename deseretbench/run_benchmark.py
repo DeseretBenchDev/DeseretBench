@@ -150,7 +150,8 @@ def run_mc(args):
             for r in range(n_runs):
                 jobs.append({"model": m["id"], "system": system, "prompt": prompt,
                              "effort": effort, "run_index": r,
-                             "backend": m.get("backend")})
+                             "backend": m.get("backend"),
+                             "backend_opts": m.get("backend_opts")})
                 metas.append((m, it, r))
     if not jobs:
         raise SystemExit("error: zero jobs built — refusing to touch output files")
@@ -254,7 +255,8 @@ def run_open(args):
             for r in range(n_runs):
                 gjobs.append({"model": m["id"], "system": system, "prompt": prompt,
                               "effort": gen_effort, "run_index": r,
-                              "backend": m.get("backend")})
+                              "backend": m.get("backend"),
+                             "backend_opts": m.get("backend_opts")})
                 gmetas.append((m, it, r))
     print(f"[OPEN gen] {len(cohort)}x{len(items)}x{n_runs} = {len(gjobs)} responses "
           f"| effort={gen_effort}", flush=True)
