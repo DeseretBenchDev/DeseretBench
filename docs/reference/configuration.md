@@ -34,13 +34,13 @@ A list of model entries. Each entry has four required keys plus one optional:
 | `generation` | number | Model generation (e.g. `4.6`, `5.0`), used to order models within a tier. For local families this is the parameter count in billions, so per-tier report lines read as scaling curves. |
 | `backend` *(optional)* | string | Pins this entry to a specific backend (e.g. `ollama`). Entries without it use `runner.backend` from `run_config.yaml`. The effective backend is part of the cache key ([ADR-0011](../adr/0011-local-open-weights-backend.md)). |
 
-The current cohort is twenty-three models over two serving paths.
+The current cohort is thirty models over three serving paths.
 
-Ten are Claude models reached through the authenticated `claude` CLI: one `fable`,
-five `opus`, three `sonnet`, one `haiku`, spanning generations 4.5–5.0. Per the
+Twelve are Claude models reached through the authenticated `claude` CLI: two `fable`,
+five `opus`, three `sonnet`, two `haiku`, spanning generations 4.5–5.5. Per the
 file's header comment, that set is whatever the CLI genuinely serves in this
 environment (probed 2026-06-05, expanded 2026-07-03 under CLI v2.1.200, then
-again 2026-07-25 to add Opus 5); `claude-mythos-5` is unavailable here, and
+again 2026-07-25 to add Opus 5 and 2026-10-09 to add Fable 5.1 and Haiku 5.5); `claude-mythos-5` is unavailable here, and
 legacy 3.5/3.7 models are excluded because they error under the current
 reasoning-mode configuration.
 
@@ -52,6 +52,13 @@ served by a user-space Ollama (CPU for the original cohort; a single consumer GP
 is the model family and `generation` is the parameter count in billions, so each
 per-tier report line reads as a within-family scaling curve
 ([ADR-0011](../adr/0011-local-open-weights-backend.md)).
+
+Five are hosted models from other labs pinned with `backend: openai_compat` and reached
+through an OpenCode Go subscription: `kimi-k3`, `qwen3.8-max`, `glm-5.3`, and (with
+`backend_opts: {openai_api_shape: responses}`) `grok-4.6` and `gpt-5.6-luna`. Their `tier`
+is the vendor family and `generation` the version number. Reasoning effort is not
+mapped for them (`openai_map_effort: false`), so they run at the provider default
+([run-any-model](../how-to/run-any-model.md)).
 
 `run_benchmark.py` runs the whole cohort by default; its `--models` flag takes a
 comma-separated subset of ids, and an unknown id is a hard error

@@ -1,0 +1,61 @@
+{
+ "open": {
+  "written_at": "2026-10-09T20:45:41Z",
+  "pack": "lds",
+  "cohort": [
+   "claude-fable-5-1",
+   "claude-haiku-5-5"
+  ],
+  "run_config": {
+   "runner": {
+    "backend": "claude_cli",
+    "tools": "",
+    "no_session_persistence": true,
+    "max_retries": 4,
+    "retry_backoff_seconds": 5,
+    "timeout_seconds": 1200,
+    "max_parallel": 8,
+    "cache_dir": "cache",
+    "ollama_host": "http://localhost:11434",
+    "ollama_num_predict": 16000,
+    "ollama_num_ctx": 20480,
+    "openai_base_url": "https://opencode.ai/zen/go/v1",
+    "openai_api_key_env": "OPENCODE_KEY",
+    "openai_map_effort": false,
+    "openai_extra_body": {
+     "max_tokens": 16000
+    },
+    "openai_api_shape": "chat",
+    "openai_extra_headers": {
+     "x-opencode-session": "{run_session}"
+    }
+   },
+   "effort": {
+    "multiple_choice": "low",
+    "open_ended": "high",
+    "judge": "medium"
+   },
+   "runs": {
+    "multiple_choice": 5,
+    "open_ended": 3
+   },
+   "system_prompt": "You are answering items on a written knowledge assessment. Read each item\ncarefully and follow its output instructions exactly. Do not add commentary\nbeyond what is requested.\n",
+   "mc_prompt_template": "{{ question }}\n\n{% for letter, choice in lettered_choices %}{{ letter }}. {{ choice }}\n{% endfor %}\nThink it through if helpful, then end your response with a line in exactly\nthis format:\nANSWER: <letter>\n",
+   "open_prompt_template": "{{ prompt }}\n",
+   "stats": {
+    "bootstrap_resamples": 100000,
+    "rng_seed": 19470417,
+    "holdout_fraction": 0.2,
+    "ci_level": 0.95
+   }
+  },
+  "n_items": 40,
+  "n_runs": 3,
+  "judge_model": "claude-sonnet-4-6",
+  "personas": [
+   "seminary_teacher",
+   "byu_religion_professor",
+   "bishop"
+  ]
+ }
+}

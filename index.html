@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DeseretBench &mdash; a reproducible benchmark of LDS doctrine in language models</title>
-<meta name="description" content="Do large language models get Latter-day Saint doctrine, culture, and life-choice counsel right? DeseretBench measures it across 23 models with two tracks, a three-persona judge panel, and a fully seeded, reproducible pipeline.">
+<meta name="description" content="Do large language models get Latter-day Saint doctrine, culture, and life-choice counsel right? DeseretBench measures it across 30 models with two tracks, a three-persona judge panel, and a fully seeded, reproducible pipeline.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23f4ead6'/%3E%3Cg fill='%23c1852a' stroke='%232a2018' stroke-width='1.3'%3E%3Crect x='5.5' y='22' width='21' height='5' rx='2.5'/%3E%3Crect x='7.5' y='17.2' width='17' height='5' rx='2.5'/%3E%3Crect x='9.5' y='12.4' width='13' height='5' rx='2.5'/%3E%3Crect x='11.5' y='7.6' width='9' height='5' rx='2.5'/%3E%3Cellipse cx='16' cy='6.4' rx='3.3' ry='2.6'/%3E%3C/g%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="DeseretBench &mdash; a reproducible LDS-doctrine benchmark for language models">
@@ -177,6 +177,11 @@ td.metric{width:8.6rem}
   font-variant-numeric:tabular-nums lining-nums;font-size:.82rem;color:var(--ink)}
 .tnote{font-size:.8rem;color:var(--ink-2);margin:.4rem 0 0}
 .tnote sup{color:var(--oxblood);font-weight:700}
+.pend{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--ink-3);text-transform:uppercase;line-height:1.55rem}
+.update{border:1px solid var(--rule-2);border-left:3px solid var(--oxblood);background:var(--paper-2);padding:.9rem 1.15rem;margin:1.4rem 0;border-radius:0 3px 3px 0}
+.update h3{margin-top:0}
+.update ul{margin:.4rem 0 0;padding-left:1.2rem}
+.update li{margin:.35rem 0}
 
 /* ---- figures ---- */
 figure{margin:1.8rem 0;text-align:center}
@@ -271,12 +276,12 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
   <blockquote class="epigraph">&hellip; which, by interpretation, is a honey bee; and thus they did
   carry with them swarms of bees.<cite>Ether 2:3 &middot; the meaning of &ldquo;Deseret&rdquo;</cite></blockquote>
   <dl class="meta">
-    <div><dt>Version</dt><dd>v0.1</dd></div>
-    <div><dt>Cohort</dt><dd>23 models</dd></div>
+    <div><dt>Version</dt><dd>v0.1 &middot; Oct additions</dd></div>
+    <div><dt>Cohort</dt><dd>30 models</dd></div>
     <div><dt>Items</dt><dd>213 MC &middot; 40 open</dd></div>
     <div><dt>Judge &#945;</dt><dd>0.993</dd></div>
-    <div><dt>Volume</dt><dd>24,495 MC &middot; 2,760 judged</dd></div>
-    <div><dt>Updated</dt><dd>25 Jul 2026</dd></div>
+    <div><dt>Volume</dt><dd>27,477 MC &middot; 3,000 judged</dd></div>
+    <div><dt>Updated</dt><dd>10 Oct 2026</dd></div>
     <div><dt>License</dt><dd>CC BY-NC-SA &middot; MIT</dd></div>
   </dl>
   <nav class="actions">
@@ -342,9 +347,36 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
 
     <section id="standings">
       <h2><span class="secno">&sect; 2</span>The standings</h2>
-      <p>All twenty-three models, ranked by the open-ended composite, the score that still separates
-      models at the very top. Multiple-choice accuracy (the gold column) runs into a ceiling among
-      the Claude models and only spreads out further down the list. The two columns use different
+      <div class="update">
+        <h3>New in October 2026</h3>
+        <p class="small">Seven models joined the v0.1 field. Two are new Claude releases, run on
+        the same instrument as the original cohort. Five come from other labs, which is a first for this
+        benchmark.</p>
+        <ul class="small">
+          <li><strong>Fable 5.1</strong> posts the highest open-ended composite yet, 98.6
+          [97.6&ndash;99.4]. Its lead over Opus 4.7 is 0.4 points
+          and not significant, so read the top of the table as a tie.</li>
+          <li><strong>Haiku 5.5</strong> is the larger story. It scores 80.9 against
+          Haiku 4.5&rsquo;s 48.5, a 32.4-point jump. That puts the smallest
+          Claude tier level with Opus 4.5 and Sonnet 5 (neither gap is significant) and clearly
+          above Sonnet 4.5.</li>
+          <li><strong>Kimi K3, Qwen3.8 Max, GLM 5.3, Grok 4.6 and GPT 5.6 Luna</strong> each answer
+          every multiple-choice item correctly on both runs. Their open-ended runs are under way and
+          paced by a subscription usage cap. Kimi K3 is furthest along, at a provisional
+          92.9 on 21 of 40 questions, which is too few to rank.</li>
+        </ul>
+        <p class="small"><strong>How the new runs differ.</strong> The new models had two
+        multiple-choice runs each rather than five; frontier models barely vary between runs, and
+        the scores are per-item means, so the columns stay comparable. The five outside models
+        were reached through an OpenAI-compatible endpoint rather than the Claude CLI. Their
+        reasoning effort is the provider&rsquo;s default rather than a pinned budget, and the judge
+        panel is a Claude model scoring their answers. Treat cross-lab comparisons on the
+        open-ended track with that in mind once those results land.</p>
+      </div>
+      <p>All thirty models. The twenty-five with open-ended scores are ranked by that
+      composite, the score that still separates models at the very top; the five outside models
+      appear unranked until their open-ended runs finish. Multiple-choice accuracy (the gold column) runs into a ceiling among
+      the frontier models, from every lab, and only spreads out further down the list. The two columns use different
       scales: the composite runs <strong>0&ndash;100</strong>, accuracy runs
       <strong>0&ndash;1</strong>.</p>
       <div class="tablewrap">
@@ -356,39 +388,48 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
           </tr></thead>
           <tbody>
 <tr class="grouprow"><td colspan="5"><span class="gt">Frontier</span> <span class="gs">Claude family &mdash; served through the authenticated CLI</span></td></tr>
-<tr><td class="rk">1</td><td class="mdl">Opus 4.7</td><td class="fam">Anthropic · Opus</td><td class="metric"><span class="bar bar-open"><i style="width:98.2%"></i><b>98.2</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
-<tr><td class="rk">2</td><td class="mdl">Fable 5</td><td class="fam">Anthropic · Fable</td><td class="metric"><span class="bar bar-open"><i style="width:97.9%"></i><b>97.9</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:99.9%"></i><b>0.999</b></span></td></tr>
-<tr><td class="rk">3</td><td class="mdl">Opus 5</td><td class="fam">Anthropic · Opus</td><td class="metric"><span class="bar bar-open"><i style="width:97.6%"></i><b>97.6</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
-<tr><td class="rk">4</td><td class="mdl">Opus 4.6</td><td class="fam">Anthropic · Opus</td><td class="metric"><span class="bar bar-open"><i style="width:95.0%"></i><b>95.0</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
-<tr><td class="rk">5</td><td class="mdl">Opus 4.8</td><td class="fam">Anthropic · Opus</td><td class="metric"><span class="bar bar-open"><i style="width:91.4%"></i><b>91.4</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
-<tr><td class="rk">6</td><td class="mdl">Sonnet 4.6</td><td class="fam">Anthropic · Sonnet</td><td class="metric"><span class="bar bar-open"><i style="width:89.6%"></i><b>89.6</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
-<tr><td class="rk">7</td><td class="mdl">Sonnet 5</td><td class="fam">Anthropic · Sonnet</td><td class="metric"><span class="bar bar-open"><i style="width:86.6%"></i><b>86.6</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:98.6%"></i><b>0.986</b></span></td></tr>
-<tr><td class="rk">8</td><td class="mdl">Opus 4.5</td><td class="fam">Anthropic · Opus</td><td class="metric"><span class="bar bar-open"><i style="width:83.5%"></i><b>83.5</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
-<tr><td class="rk">9</td><td class="mdl">Sonnet 4.5</td><td class="fam">Anthropic · Sonnet</td><td class="metric"><span class="bar bar-open"><i style="width:69.7%"></i><b>69.7</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
-<tr><td class="rk">10</td><td class="mdl">Haiku 4.5</td><td class="fam">Anthropic · Haiku</td><td class="metric"><span class="bar bar-open"><i style="width:48.5%"></i><b>48.5</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:99.4%"></i><b>0.994</b></span></td></tr>
+<tr><td class="rk">1</td><td class="mdl">Fable 5.1</td><td class="fam">Anthropic · Fable</td><td class="metric"><span class="bar bar-open"><i style="width:98.6%"></i><b>98.6</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">2</td><td class="mdl">Opus 4.7</td><td class="fam">Anthropic · Opus</td><td class="metric"><span class="bar bar-open"><i style="width:98.2%"></i><b>98.2</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">3</td><td class="mdl">Fable 5</td><td class="fam">Anthropic · Fable</td><td class="metric"><span class="bar bar-open"><i style="width:97.9%"></i><b>97.9</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:99.9%"></i><b>0.999</b></span></td></tr>
+<tr><td class="rk">4</td><td class="mdl">Opus 5</td><td class="fam">Anthropic · Opus</td><td class="metric"><span class="bar bar-open"><i style="width:97.6%"></i><b>97.6</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">5</td><td class="mdl">Opus 4.6</td><td class="fam">Anthropic · Opus</td><td class="metric"><span class="bar bar-open"><i style="width:95.0%"></i><b>95.0</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">6</td><td class="mdl">Opus 4.8</td><td class="fam">Anthropic · Opus</td><td class="metric"><span class="bar bar-open"><i style="width:91.4%"></i><b>91.4</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">7</td><td class="mdl">Sonnet 4.6</td><td class="fam">Anthropic · Sonnet</td><td class="metric"><span class="bar bar-open"><i style="width:89.6%"></i><b>89.6</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">8</td><td class="mdl">Sonnet 5</td><td class="fam">Anthropic · Sonnet</td><td class="metric"><span class="bar bar-open"><i style="width:86.6%"></i><b>86.6</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:98.6%"></i><b>0.986</b></span></td></tr>
+<tr><td class="rk">9</td><td class="mdl">Opus 4.5</td><td class="fam">Anthropic · Opus</td><td class="metric"><span class="bar bar-open"><i style="width:83.5%"></i><b>83.5</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">10</td><td class="mdl">Haiku 5.5</td><td class="fam">Anthropic · Haiku</td><td class="metric"><span class="bar bar-open"><i style="width:80.9%"></i><b>80.9</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:99.8%"></i><b>0.998</b></span></td></tr>
+<tr><td class="rk">11</td><td class="mdl">Sonnet 4.5</td><td class="fam">Anthropic · Sonnet</td><td class="metric"><span class="bar bar-open"><i style="width:69.7%"></i><b>69.7</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">12</td><td class="mdl">Haiku 4.5</td><td class="fam">Anthropic · Haiku</td><td class="metric"><span class="bar bar-open"><i style="width:48.5%"></i><b>48.5</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:99.4%"></i><b>0.994</b></span></td></tr>
+<tr class="grouprow"><td colspan="5"><span class="gt">Frontier &middot; other labs</span> <span class="gs">hosted models served through OpenCode Go &mdash; open-ended runs in progress</span></td></tr>
+<tr><td class="rk">&ndash;</td><td class="mdl">Kimi K3 <sup>&sect;</sup></td><td class="fam">Moonshot · Kimi</td><td class="metric"><span class="pend">in progress</span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">&ndash;</td><td class="mdl">Qwen3.8 Max</td><td class="fam">Alibaba · Qwen</td><td class="metric"><span class="pend">in progress</span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">&ndash;</td><td class="mdl">GLM 5.3</td><td class="fam">Zhipu · GLM</td><td class="metric"><span class="pend">in progress</span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">&ndash;</td><td class="mdl">Grok 4.6</td><td class="fam">xAI · Grok</td><td class="metric"><span class="pend">in progress</span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
+<tr><td class="rk">&ndash;</td><td class="mdl">GPT 5.6 Luna</td><td class="fam">OpenAI · GPT</td><td class="metric"><span class="pend">in progress</span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
 <tr class="grouprow"><td colspan="5"><span class="gt">Open weights</span> <span class="gs">local models, 0.6&ndash;4B parameters, one consumer GPU</span></td></tr>
-<tr><td class="rk">11</td><td class="mdl">Qwen3 4B <sup>&#8225;</sup></td><td class="fam">Alibaba · Qwen3</td><td class="metric"><span class="bar bar-open"><i style="width:21.8%"></i><b>21.8</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:92.2%"></i><b>0.922</b></span></td></tr>
-<tr><td class="rk">12</td><td class="mdl">Gemma 4 E2B</td><td class="fam">Google · Gemma</td><td class="metric"><span class="bar bar-open"><i style="width:18.7%"></i><b>18.7</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:81.3%"></i><b>0.813</b></span></td></tr>
-<tr><td class="rk">13</td><td class="mdl">Granite 4.1 3B</td><td class="fam">IBM · Granite</td><td class="metric"><span class="bar bar-open"><i style="width:18.4%"></i><b>18.4</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:90.5%"></i><b>0.905</b></span></td></tr>
-<tr><td class="rk">14</td><td class="mdl">Ministral 3 3B</td><td class="fam">Mistral · Ministral</td><td class="metric"><span class="bar bar-open"><i style="width:17.7%"></i><b>17.7</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:89.2%"></i><b>0.892</b></span></td></tr>
-<tr><td class="rk">15</td><td class="mdl">Gemma 3 4B</td><td class="fam">Google · Gemma</td><td class="metric"><span class="bar bar-open"><i style="width:17.7%"></i><b>17.7</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:81.3%"></i><b>0.813</b></span></td></tr>
-<tr><td class="rk">16</td><td class="mdl">Qwen3.5 4B <sup>&#8224;</sup></td><td class="fam">Alibaba · Qwen3.5</td><td class="metric"><span class="bar bar-open"><i style="width:17.6%"></i><b>17.6</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:93.2%"></i><b>0.932</b></span></td></tr>
-<tr><td class="rk">17</td><td class="mdl">SmolLM2 1.7B</td><td class="fam">Hugging Face · SmolLM</td><td class="metric"><span class="bar bar-open"><i style="width:11.7%"></i><b>11.7</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:70.3%"></i><b>0.703</b></span></td></tr>
-<tr><td class="rk">18</td><td class="mdl">Qwen3 1.7B</td><td class="fam">Alibaba · Qwen3</td><td class="metric"><span class="bar bar-open"><i style="width:9.9%"></i><b>9.9</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:81.1%"></i><b>0.811</b></span></td></tr>
-<tr><td class="rk">19</td><td class="mdl">Nemotron 3 Nano 4B</td><td class="fam">NVIDIA · Nemotron</td><td class="metric"><span class="bar bar-open"><i style="width:8.4%"></i><b>8.4</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:82.0%"></i><b>0.820</b></span></td></tr>
-<tr><td class="rk">20</td><td class="mdl">Phi-4 Mini</td><td class="fam">Microsoft · Phi</td><td class="metric"><span class="bar bar-open"><i style="width:7.6%"></i><b>7.6</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:81.1%"></i><b>0.811</b></span></td></tr>
-<tr><td class="rk">21</td><td class="mdl">Gemma 3 1B</td><td class="fam">Google · Gemma</td><td class="metric"><span class="bar bar-open"><i style="width:4.5%"></i><b>4.5</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:54.8%"></i><b>0.548</b></span></td></tr>
-<tr><td class="rk">22</td><td class="mdl">Qwen3 0.6B</td><td class="fam">Alibaba · Qwen3</td><td class="metric"><span class="bar bar-open"><i style="width:2.0%"></i><b>2.0</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:53.6%"></i><b>0.536</b></span></td></tr>
-<tr><td class="rk">23</td><td class="mdl">R1-Distill 1.5B</td><td class="fam">DeepSeek · R1</td><td class="metric"><span class="bar bar-open"><i style="width:0.3%"></i><b>0.3</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:52.1%"></i><b>0.521</b></span></td></tr>
+<tr><td class="rk">13</td><td class="mdl">Qwen3 4B <sup>&#8225;</sup></td><td class="fam">Alibaba · Qwen3</td><td class="metric"><span class="bar bar-open"><i style="width:21.8%"></i><b>21.8</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:92.2%"></i><b>0.922</b></span></td></tr>
+<tr><td class="rk">14</td><td class="mdl">Gemma 4 E2B</td><td class="fam">Google · Gemma</td><td class="metric"><span class="bar bar-open"><i style="width:18.7%"></i><b>18.7</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:81.3%"></i><b>0.813</b></span></td></tr>
+<tr><td class="rk">15</td><td class="mdl">Granite 4.1 3B</td><td class="fam">IBM · Granite</td><td class="metric"><span class="bar bar-open"><i style="width:18.4%"></i><b>18.4</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:90.5%"></i><b>0.905</b></span></td></tr>
+<tr><td class="rk">16</td><td class="mdl">Ministral 3 3B</td><td class="fam">Mistral · Ministral</td><td class="metric"><span class="bar bar-open"><i style="width:17.7%"></i><b>17.7</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:89.2%"></i><b>0.892</b></span></td></tr>
+<tr><td class="rk">17</td><td class="mdl">Gemma 3 4B</td><td class="fam">Google · Gemma</td><td class="metric"><span class="bar bar-open"><i style="width:17.7%"></i><b>17.7</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:81.3%"></i><b>0.813</b></span></td></tr>
+<tr><td class="rk">18</td><td class="mdl">Qwen3.5 4B <sup>&#8224;</sup></td><td class="fam">Alibaba · Qwen3.5</td><td class="metric"><span class="bar bar-open"><i style="width:17.6%"></i><b>17.6</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:93.2%"></i><b>0.932</b></span></td></tr>
+<tr><td class="rk">19</td><td class="mdl">SmolLM2 1.7B</td><td class="fam">Hugging Face · SmolLM</td><td class="metric"><span class="bar bar-open"><i style="width:11.7%"></i><b>11.7</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:70.3%"></i><b>0.703</b></span></td></tr>
+<tr><td class="rk">20</td><td class="mdl">Qwen3 1.7B</td><td class="fam">Alibaba · Qwen3</td><td class="metric"><span class="bar bar-open"><i style="width:9.9%"></i><b>9.9</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:81.1%"></i><b>0.811</b></span></td></tr>
+<tr><td class="rk">21</td><td class="mdl">Nemotron 3 Nano 4B</td><td class="fam">NVIDIA · Nemotron</td><td class="metric"><span class="bar bar-open"><i style="width:8.4%"></i><b>8.4</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:82.0%"></i><b>0.820</b></span></td></tr>
+<tr><td class="rk">22</td><td class="mdl">Phi-4 Mini</td><td class="fam">Microsoft · Phi</td><td class="metric"><span class="bar bar-open"><i style="width:7.6%"></i><b>7.6</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:81.1%"></i><b>0.811</b></span></td></tr>
+<tr><td class="rk">23</td><td class="mdl">Gemma 3 1B</td><td class="fam">Google · Gemma</td><td class="metric"><span class="bar bar-open"><i style="width:4.5%"></i><b>4.5</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:54.8%"></i><b>0.548</b></span></td></tr>
+<tr><td class="rk">24</td><td class="mdl">Qwen3 0.6B</td><td class="fam">Alibaba · Qwen3</td><td class="metric"><span class="bar bar-open"><i style="width:2.0%"></i><b>2.0</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:53.6%"></i><b>0.536</b></span></td></tr>
+<tr><td class="rk">25</td><td class="mdl">R1-Distill 1.5B</td><td class="fam">DeepSeek · R1</td><td class="metric"><span class="bar bar-open"><i style="width:0.3%"></i><b>0.3</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:52.1%"></i><b>0.521</b></span></td></tr>
           </tbody>
         </table>
       </div>
       <p class="tnote"><sup>&dagger;</sup> Tops the open-weights field on multiple choice (0.932) yet
       sits mid-pack on open generation, where the recognition does not carry over into writing.
-      &nbsp; <sup>&Dagger;</sup> Tops the open-weights field on the open-ended composite.</p>
+      &nbsp; <sup>&Dagger;</sup> Tops the open-weights field on the open-ended composite.
+      &nbsp; <sup>&sect;</sup> Provisional open-ended composite 92.9 on 21 of 40 questions.</p>
       <p class="small">Composite is the mean of four judge dimensions, 0&ndash;100, with 95% bootstrap
-      intervals. Per-dimension scores, pairwise significance (Holm-adjusted over the 253-comparison
-      family), and item analysis live in the
+      intervals. Per-dimension scores, pairwise significance (Holm-adjusted over the 300-comparison
+      open-ended family), and item analysis live in the
       <a href="reports/leaderboard.html">full results tables</a>.</p>
     </section>
 
@@ -401,16 +442,17 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
 
       <div class="finding">
         <h3><span class="fn">3.1</span>A ceiling is a property of the cohort, not the items.</h3>
-        <p>None of the 45 pairings among the ten Claude models is statistically distinguishable on
-        multiple choice. At the top, the test has run out of room. Across the full 23-model field,
-        though, <strong>186 of 253</strong> pairings separate cleanly. The same 213 items that looked
+        <p>None of the 136 pairings among the seventeen frontier models (twelve from
+        Anthropic, five from other labs) is statistically distinguishable on multiple choice. At the
+        top, the test has run out of room. Across the full 30-model field, though,
+        <strong>277 of 435</strong> pairings separate cleanly. The same 213 items that looked
         like a ceiling for a small cohort turn out to discriminate sharply for a large one. Nothing
         changed about the items; what people call a ceiling is usually a fact about the cohort being
         measured.</p>
       </div>
 
       <figure>
-        <a href="reports/figures/mc_vs_open.png"><img src="reports/figures/mc_vs_open.png" alt="Scatter of multiple-choice accuracy versus open-ended composite for all 23 models"></a>
+        <a href="reports/figures/mc_vs_open.png"><img src="reports/figures/mc_vs_open.png" alt="Scatter of multiple-choice accuracy versus open-ended composite for every model with both scores"></a>
         <figcaption>Recognition runs along the horizontal axis, generation along the vertical. The
         frontier models bunch at the right edge, while the open-weights models sit near the floor
         even when their multiple-choice scores are respectable.</figcaption>
@@ -419,7 +461,7 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
       <div class="finding">
         <h3><span class="fn">3.2</span>Recognition is not generation.</h3>
         <p>Qwen3 4B gets 0.922 on multiple choice, which puts it in the Claude band, and then scores
-        21.8 on the open composite, less than half of the weakest Claude model (Haiku, at 48.5). A
+        21.8 on the open composite, less than half of the weakest Claude model (Haiku 4.5, at 48.5). A
         model can reliably <em>pick</em> the doctrinally correct option and still be unable to
         <em>write</em> a doctrinally sound paragraph, and most of the domain&rsquo;s difficulty lives
         in that gap.</p>
@@ -437,10 +479,11 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
       <div class="finding">
         <h3><span class="fn">3.4</span>&ldquo;Distinctiveness&rdquo; is the hardest axis for everyone.</h3>
         <p>From top to bottom the field spans about ninety-eight points, and one judge dimension
-        still comes out lowest for <strong>all twenty-three models</strong>: distinctiveness, meaning
+        still comes out lowest for <strong>all twenty-five models</strong> with open-ended scores: distinctiveness, meaning
         whether an answer reflects specifically Latter-day Saint practice rather than generic
         Christianity. Models that handle doctrine well still drift toward the ecumenical middle. No
-        model has solved this one yet.</p>
+        model has solved this one yet; the closest is Fable 5.1, where distinctiveness only ties
+        doctrinal accuracy for lowest.</p>
       </div>
 
       <div class="figrow">
@@ -460,7 +503,8 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
         <p>Inside Anthropic&rsquo;s Opus line the order zig-zags rather than climbing. Opus 4.8 scores
         well below Opus 4.7 (91.4 against 98.2, a significant gap), and then the newest model, Opus 5,
         recovers to 97.6 and ties Opus 4.7 at the top. Sonnet 5, meanwhile, does not improve on Sonnet
-        4.6. Knowing a model is newer tells you little about how faithfully it handles the tradition.</p>
+        4.6. The October releases bend the same way: Fable 5.1 sits level with Fable 5, while Haiku
+        5.5 gains 32.4 points on Haiku 4.5. Knowing a model is newer tells you little about how faithfully it handles the tradition.</p>
       </div>
     </section>
 
@@ -472,12 +516,12 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
       answer is a specific, recognizable mistake (a folk belief, say, or an earnest heterodoxy), so a
       wrong pick tells you <em>how</em> the model went wrong instead of just that it did. Reasoning
       budgets are pinned per item class and kept identical across models (multiple choice at low
-      effort, open-ended at high), so differences in the scores come from the models and not their
+      effort, open-ended at high) across every model served through the Claude CLI, so differences in the scores come from the models and not their
       settings.</p>
       <p>The open-ended &ldquo;panel&rdquo; is a single model prompted as three personas: a
       <em>seminary teacher</em>, a <em>BYU religion professor</em>, and a <em>bishop</em>. Each
       scores every answer on the four dimensions, and they agree closely (Krippendorff&rsquo;s
-      &#945; = 0.993 over 2,760 judged units), which is what lets the composite carry weight. Every
+      &#945; = 0.993 over 3,000 judged units), which is what lets the composite carry weight. Every
       score traces back to a seeded, content-addressed cache. Identical inputs return identical
       outputs, and the results regenerate from committed artifacts with no new model calls.</p>
       <div class="aside"><strong>One honest limit.</strong> The v0.1 items were written and reviewed
@@ -499,7 +543,9 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
 
     <section id="reproduce">
       <h2><span class="secno">&sect; 5</span>Reproduce &amp; data</h2>
-      <p>The artifacts under <code>runs/v0_1/</code> are immutable. Every model call, its parsed
+      <p>The artifacts under <code>runs/v0_1/</code> are immutable. Models added later live in
+      their own run directories, and <code>python -m deseretbench.merge_runs</code> combines them
+      into the <code>runs/v0_1_plus/</code> set these standings are computed from. Every model call, its parsed
       answer, and its provenance are on record. Analysis, figures, and both report pages rebuild from
       those files with no model calls, so anyone can audit the standings for themselves. The full
       path from a clean checkout to the figures on this page is in

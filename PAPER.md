@@ -37,6 +37,14 @@ single highest score. Newer is not automatically more culturally aligned: an int
 Opus release (4.8) measurably regressed before Opus 5 recovered, and the newest Sonnet does
 not advance on its predecessor.
 
+*October 2026 addendum (§4.6).* Seven models were added after release: Fable 5.1 and Haiku
+5.5 on the original instrument, and five hosted models from other labs (Kimi K3, Qwen3.8 Max,
+GLM 5.3, Grok 4.6, GPT 5.6 Luna). All five outside models score 1.000 on multiple choice, so
+none of the 136 comparisons among the seventeen frontier models is significant. Fable 5.1
+posts the highest open-ended composite measured (98.6), statistically tied with Opus 4.7, and
+Haiku 5.5 rises 32.4 points over Haiku 4.5 to 80.9 across one full version step,
+the largest gap between successive models of one tier in the data.
+
 ## 1. Motivation
 
 Religious knowledge is an underexplored axis of LLM evaluation. General benchmarks (MMLU and
@@ -137,12 +145,24 @@ from each other. The local cohort asks what the instrument looks like when it is
 measuring the frontier — which, as §4.1 shows, is the only way the item set's discriminative
 power becomes visible.
 
+**October 2026 additions.** Two newer Claude models, Fable 5.1 and Haiku 5.5, were run on the
+same CLI instrument and configuration. Five hosted models from other labs — Kimi K3 (Moonshot),
+Qwen3.8 Max (Alibaba), GLM 5.3 (Zhipu), Grok 4.6 (xAI) and GPT 5.6 Luna (OpenAI) — were reached
+through the OpenAI-compatible endpoint of an OpenCode Go subscription (`backend:
+openai_compat`). Prompts, templates and the judge are identical; two things differ. The
+outside models run at the provider's default reasoning effort, since the endpoint takes no
+pinned budget, and all seven additions ran two MC repeats rather than five. Scores are
+per-item means, so the repeat count changes precision, not the estimand.
+
 ## 4. Results
 
 All numbers are from `runs/v0_1` (seed 19470417, 100,000 bootstrap resamples; MC = 5 runs,
 open = 3 runs; 23 models × 213 public MC items and × 40 public open items — 24,495 MC
 responses and 2,760 open responses scored by a 3-persona judge panel). Full tables and
-figures are in `reports/RESULTS.md` and `reports/leaderboard.html`.
+figures for the current thirty-model cohort are in `reports/RESULTS.md` and
+`reports/leaderboard.html`; §4.1–§4.5 report the twenty-three-model v0.1 analysis, which
+regenerates exactly with `python -m deseretbench.analyze --run runs/v0_1`. §4.6 covers the
+October 2026 additions, analyzed over the merged run `runs/v0_1_plus`.
 
 ### 4.1 Multiple choice saturates at the frontier and discriminates below it
 Among Claude models the set is saturated: Opus 4.5/4.6/4.7/4.8/5 and Sonnet 4.5/4.6 all score a
@@ -306,13 +326,58 @@ answer, but the binding constraint in this domain is knowledge, and form does no
 for it. A benchmark scoring only structure would rank this model far higher than it
 deserves.
 
+### 4.6 October 2026 additions
+Merging the additions into the v0.1 records gives 27,477 MC responses from thirty models
+and 3,000 judged open-ended units from the twenty-five whose open-ended runs are complete.
+The judge panel stays reliable at this size (Krippendorff's α = 0.993; lowest
+dimension 0.978).
+
+**The MC ceiling now spans labs.** Kimi K3, Qwen3.8 Max, GLM 5.3, Grok 4.6 and GPT 5.6 Luna each
+answer all 213 items correctly on both runs, as do Fable 5.1 (1.000) and, to
+within one response, Haiku 5.5 (0.998). None of the 136 comparisons among the
+seventeen frontier models is significant, against 277 of 435 across the full cohort. The
+saturation reported in §4.1 is therefore not an Anthropic artifact. With more perfect scorers
+the item statistics drift toward the ceiling (mean difficulty *p* = 0.884;
+56 items above 0.95), which strengthens the case for harder items. We checked the
+outside models' perfect scores for answer leakage through the new endpoint. The system prompt
+and MC template in their run snapshots are byte-identical to v0.1's, the backend's tests pin
+that only the system prompt and the item prompt go over the wire, and the two models that
+expose their reasoning (Kimi K3, GLM 5.3) argue from doctrine before answering. A weak-model
+control through the same code path, which would also exercise the answer parser there, is
+still to run.
+
+**Fable 5.1 takes the top score; the tie at the top holds.** Fable 5.1 scores
+**98.6** [97.6, 99.4], numerically the highest composite measured, but its margin over
+Opus 4.7 (Δ = +0.4, Holm *p* = 1.000) and Fable 5 (Δ = +0.7, *p* = 0.932) is not
+significant. It is significantly above Opus 4.6 (Δ = +3.6). Its distinctiveness mean
+(4.906) ties doctrinal accuracy as its lowest dimension, so §4.4's observation that
+distinctiveness is the hardest axis still holds for every model, though Fable 5.1 comes closest
+to closing it.
+
+**Haiku 5.5: the largest gap between successive models of one tier.** It scores **80.9**
+[75.2, 86.0] against Haiku 4.5's 48.5 (Δ = +32.4, Holm *p* = 0.006, the resampling floor for this 300-comparison family). That
+places the smallest Claude tier level with Opus 4.5 (Δ = −2.7, *p* = 1.000) and Sonnet 5
+(Δ = −5.8, *p* = 0.111), clearly above Sonnet 4.5 (Δ = +11.2), and still below Sonnet 4.6
+(Δ = −8.7, *p* = 0.022). §4.3 found that generation number does not predict fidelity within
+Opus and Sonnet; within Haiku one version step (4.5 to 5.5, with
+no Haiku 5 between them) moved the score by more than thirty points.
+Among Claude models 53 of 66 open-ended pairs now differ significantly, and 270 of
+300 across the cohort.
+
+**Outside models on the open track.** Their open-ended runs are paced by the subscription's
+usage cap and are incomplete. Kimi K3 is furthest along at a provisional 92.9 on 21 of 40
+questions. Because those questions are the first ones run rather than a random sample, the
+figure is reported here and not ranked. When these results land they will carry two
+qualifications the Claude rows do not: unpinned reasoning effort, and a Claude-family judge
+scoring other labs' answers.
+
 ## 5. Discussion
 
 **Separating the constructs was the right call.** Had DeseretBench been a multiple-choice
 benchmark alone, it would have reported a near-uniform ~99–100% ceiling and concluded — wrongly —
 that these models are interchangeable on Latter-day Saint competence. The open-ended axis tells a
 completely different story, with a ~50-point spread and 37 of 45 pairwise differences
-significant. Factual recall (knowing *what* the Church teaches) and applied alignment (giving
+significant in the v0.1 cohort (53 of 66 once Fable 5.1 and Haiku 5.5 join, §4.6). Factual recall (knowing *what* the Church teaches) and applied alignment (giving
 counsel a faithful member would recognize as their own) are empirically distinct capabilities,
 and only the latter still discriminates frontier models.
 
@@ -357,7 +422,7 @@ is by automated personas rather than a credentialed human panel** — and those 
 are a single model (`claude-opus-4-8`) wearing five system-prompt personas, so their unanimous
 key agreement (Fleiss' κ = 1.0) evidences item clarity, not independent validation; questions
 authored by models in the same family as the evaluated cohort (mitigated by source-anchoring
-and blind review); seven of the ten Claude cohort ids are undated aliases, so the
+and blind review); nine of the twelve Claude cohort ids are undated aliases, so the
 served snapshot is pinned only by the run's serving window; and measurement of the Claude
 slice through the CLI harness rather than the bare Messages API. The cohort is no longer
 single-provider, but it is still narrow in a specific way: the Claude models are frontier
@@ -375,7 +440,11 @@ pastoral scenarios (the harness now re-solicits failed reviews and reports no-qu
 separately); and the **MC axis is near-saturated** for this frontier cohort (see §5), so its
 discriminative power against *those* models is limited to harder future items — though §4.1
 shows the items themselves discriminate sharply the moment the cohort extends below the
-frontier. Each is a concrete avenue for v1.0.
+frontier. The October 2026 additions bring two
+more: the five outside models were measured at provider-default reasoning effort through a
+subscription endpoint rather than a pinned budget, and their open-ended answers will be scored
+by a Claude-family judge, so cross-lab open-ended comparisons should be read with both in mind.
+Each is a concrete avenue for v1.0.
 
 **Judge-harness settings inheritance.** During the 17-model run we found that the `claude`
 CLI reads the operator's `~/.claude/settings.json`, and an `advisorModel` set there is

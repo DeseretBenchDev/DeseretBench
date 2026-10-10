@@ -93,6 +93,24 @@ failed calls remain (cache makes progress monotonic across reset windows).
 open reports/leaderboard.html
 ```
 
+### Current standings (v0.1 + October 2026 additions)
+
+The thirty-model standings on the home page combine `runs/v0_1` with models run into their
+own directories afterwards. Rebuild them with no model calls:
+
+```bash
+.venv/bin/python -m deseretbench.merge_runs --out runs/v0_1_plus \
+    runs/v0_1 runs/claude_new_mc runs/claude_new_open runs/go_mc_r2 runs/go_open \
+    --exclude-open kimi-k3
+.venv/bin/python -m deseretbench.analyze --run runs/v0_1_plus --out results/summary.json
+.venv/bin/python -m deseretbench.report  --summary results/summary.json
+.venv/bin/python -m deseretbench.build_onepager
+.venv/bin/python -m deseretbench.build_explorer --run runs/v0_1_plus --label "v0.1 + Oct 2026"
+```
+
+The section-4 commands above regenerate the twenty-three-model v0.1 analysis that
+§4.1–§4.5 of PAPER.md report.
+
 ## 5. Run the test suite
 
 ```bash

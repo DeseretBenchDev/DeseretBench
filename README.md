@@ -40,9 +40,10 @@ power, and the limitations.
 - **Reproducible & provider-agnostic.** Seeded, content-addressed cache, pinned configs,
   a canonical Anthropic-API path, and an lm-evaluation-harness task config.
 
-## Cohort evaluated (v0.1)
+## Cohort evaluated (v0.1 + October 2026 additions)
 
-Twenty-three models across nine vendors and two serving paths.
+Thirty models across thirteen vendors and three serving paths. The v0.1 release measured
+twenty-three; seven more were added in October 2026 (see below).
 
 **Ten current-generation Claude models** served by the local `claude` CLI (probed
 2026-06-05, expanded 2026-07-03 and 2026-07-24): `claude-fable-5`, `claude-opus-5`, `claude-opus-4-8`,
@@ -62,7 +63,17 @@ Microsoft, IBM, Mistral, NVIDIA, DeepSeek, HuggingFace). See
 [ADR-0011](docs/adr/0011-local-open-weights-backend.md) and
 [ADR-0013](docs/adr/0013-2026-cohort-expansion-and-gpu-inference.md).
 
-The two halves answer different questions. The Claude cohort measures how frontier
+**Two newer Claude models** (added 2026-10-09, same CLI and configuration): `claude-fable-5-1`
+and `claude-haiku-5-5`.
+
+**Five hosted models from other labs** (added 2026-10-09) reached through the
+OpenAI-compatible endpoint of an OpenCode Go subscription (`backend: openai_compat`):
+Kimi K3 (Moonshot), Qwen3.8 Max (Alibaba), GLM 5.3 (Zhipu), Grok 4.6 (xAI) and GPT 5.6 Luna
+(OpenAI). Their reasoning effort is the provider default rather than a pinned budget, and
+their open-ended runs are still in progress, paced by the subscription's usage cap. See
+[run-any-model](docs/how-to/run-any-model.md).
+
+The halves answer different questions. The Claude cohort measures how frontier
 models differ from each other. The local cohort measures the benchmark against models
 well below the frontier, which is what makes the item set's discriminative power
 visible.
@@ -90,26 +101,30 @@ Tests: `uv pip install --python .venv/bin/python --group dev && .venv/bin/python
 Full details: **[REPRODUCE.md](REPRODUCE.md)**. Results live in `reports/leaderboard.html`
 and `reports/RESULTS.md`.
 
-## Headline results (v0.1)
+## Headline results
 
-Twenty-three models, balanced MC + judge-panel open-ended, 5/3 repeat runs, seed
-19470417. Numbers regenerated from `reports/RESULTS.md` — never hand-typed.
+Thirty models, balanced MC + judge-panel open-ended, seed 19470417. The v0.1 cohort ran
+5 MC / 3 open repeats; the October additions ran 2 MC repeats (frontier models barely
+vary run to run, and scores are per-item means). Analysis is over the merged run
+`runs/v0_1_plus` (`python -m deseretbench.merge_runs`; the v0.1-only analysis still
+regenerates from `runs/v0_1`). Numbers regenerated from `reports/RESULTS.md` — never hand-typed.
 
-- **Multiple choice saturates at the frontier and discriminates below it.** All 45
-  Claude-vs-Claude MC comparisons are non-significant after correction. Across the full
-  cohort, 186 of 253 are significant. Accuracy runs from 0.521 (R1-Distill 1.5B) through
+- **Multiple choice saturates at the frontier and discriminates below it.** All 136
+  comparisons among the seventeen frontier models (twelve Claude, five from other labs) are
+  non-significant after correction. Across the full cohort, 277 of 435 are significant. Accuracy runs from 0.521 (R1-Distill 1.5B) through
   0.703 (SmolLM2 1.7B) and 0.811–0.813 (Phi-4 Mini, Qwen3 1.7B, Gemma 3 4B) to 0.922
-  (Qwen3 4B) and 0.932 (Qwen3.5 4B), then 0.986–1.000 across the Claude cohort. The items
-  discriminate; the ten-model cohort was too narrow to show it.
+  (Qwen3 4B) and 0.932 (Qwen3.5 4B), then 0.986–1.000 across the frontier. All five models from other labs
+  score 1.000. The items discriminate; a frontier-only cohort is too narrow to show it.
 - **The MC-to-open collapse.** Qwen3 4B scores 0.922 on MC, close to Claude's range, and
   **21.8** on open-ended, under half of Haiku 4.5 (48.5), the weakest Claude. MC asks a
   model to recognize an answer among four options; the open track asks it to write counsel
   with no options in view.
-- **Open-ended discriminates sharply** (judge Krippendorff's α = 0.9929, 2,760 scored
-  units; 228 of 253 pairwise comparisons significant), composite 0–100:
+- **Open-ended discriminates sharply** (judge Krippendorff's α = 0.993, 3,000 scored
+  units; 270 of 300 pairwise comparisons significant), composite 0–100:
 
   | Model | Composite (95% CI) | MC accuracy |
   |---|---|---|
+  | Fable 5.1 | **98.6** [97.6, 99.4] | 1.000 |
   | Opus 4.7 | **98.2** [96.8, 99.3] | 1.000 |
   | Fable 5 | **97.9** [96.6, 99.0] | 0.999 |
   | Opus 5 | **97.6** [96.2, 98.8] | 1.000 |
@@ -118,6 +133,7 @@ Twenty-three models, balanced MC + judge-panel open-ended, 5/3 repeat runs, seed
   | Sonnet 4.6 | **89.6** [86.0, 92.8] | 1.000 |
   | Sonnet 5 | **86.6** [82.1, 90.6] | 0.986 |
   | Opus 4.5 | **83.5** [79.7, 87.0] | 1.000 |
+  | Haiku 5.5 | **80.9** [75.2, 86.0] | 0.998 |
   | Sonnet 4.5 | **69.7** [64.9, 74.2] | 1.000 |
   | Haiku 4.5 | **48.5** [44.2, 52.7] | 0.994 |
   | Qwen3 4B | **21.8** [18.8, 24.5] | 0.922 |
@@ -133,6 +149,14 @@ Twenty-three models, balanced MC + judge-panel open-ended, 5/3 repeat runs, seed
   | Gemma 3 1B | **4.5** [3.2, 5.9] | 0.548 |
   | Qwen3 0.6B | **2.0** [1.2, 2.9] | 0.536 |
   | R1-Distill 1.5B | **0.3** [0.1, 0.6] | 0.521 |
+  | Kimi K3 | *in progress* | 1.000 |
+  | Qwen3.8 Max | *in progress* | 1.000 |
+  | GLM 5.3 | *in progress* | 1.000 |
+  | Grok 4.6 | *in progress* | 1.000 |
+  | GPT 5.6 Luna | *in progress* | 1.000 |
+
+  Kimi K3's open-ended run is furthest along: a provisional 92.9 on 21 of 40
+  questions, not yet ranked.
 
 - **Parameter count does not predict open score in the mid band.** Phi-4 Mini (3.8B)
   matches Qwen3 1.7B on MC (0.811 each) at more than twice the size, but scores lower on
@@ -146,17 +170,23 @@ Twenty-three models, balanced MC + judge-panel open-ended, 5/3 repeat runs, seed
   0.3 open), and is the only reasoning-distilled model in the cohort. Its answers are not
   truncated or empty: all 120 terminate normally at a median of ~1,100 characters, and they
   score 0.02 on rubric coverage.
-- **Fable 5 debuts at the top,** statistically tied with Opus 4.7 for first (Δ = −0.3, not
+- **Fable 5.1 posts the highest composite yet** (98.6), statistically tied with
+  Opus 4.7 (Δ = +0.4, not significant) and with Fable 5.
+- **Haiku 5.5 makes the largest jump between successive models of one tier** (4.5 → 5.5,
+  one full version step). It scores 80.9
+  against Haiku 4.5's 48.5 (Δ = +32.4), tied with Opus 4.5 and Sonnet 5,
+  above Sonnet 4.5 (Δ = +11.2) and still below Sonnet 4.6 (Δ = −8.7).
+- **Fable 5 debuted at the top in v0.1,** statistically tied with Opus 4.7 for first (Δ = −0.3, not
   significant), and significantly ahead of Opus 4.8.
 - **Newer is not automatically more faithful.** Within Anthropic's Opus line the ordering
   zig-zags rather than climbing. Opus 4.8 scores significantly below Opus 4.7 (Δ = −6.8,
-  Holm-corrected over 253 pairwise comparisons), and then the newest model, Opus 5, recovers:
+  Holm-corrected over 300 pairwise comparisons), and then the newest model, Opus 5, recovers:
   significantly above 4.8 (Δ = +6.2) and statistically tied with 4.7 at the top. Sonnet 5, for
   its part, does not improve on Sonnet 4.6, and Fable 5 reaches the top of the board. A model's
   generation number does not predict its within-tradition fidelity.
 - **A wider cohort costs statistical power.** The Opus 4.8 vs 4.6 gap (Δ = −3.6) was
   significant when Holm-corrected over the nine-model family's 36 comparisons
-  (*p* = 0.041) and is not over the 23-model family's 253 (*p* = 0.184, raw *p* = 0.008).
+  (*p* = 0.041) and is not over the 25-model open family's 300 (*p* = 0.217, raw *p* = 0.008).
   The estimate is unchanged; only the size of the correction family grew.
 
 ## Repository layout
