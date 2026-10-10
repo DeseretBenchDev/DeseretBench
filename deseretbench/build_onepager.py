@@ -313,6 +313,11 @@ def open_table(summary):
     return "".join(out)
 
 
+def cohort_badge(mc_overall):
+    """The cohort badge: every scored model, whatever its vendor."""
+    return str(len(mc_overall)), "models"
+
+
 def mc_table(summary):
     import html as _h
     ov = summary["mc"]["overall"]
@@ -385,7 +390,7 @@ def build(summary, vr):
     cp = (mco[top_mid].get("cp_lo"), mco[top_mid].get("cp_hi"))
     figdir = ROOT / "reports" / "figures"
 
-    badges = [("v0.1", "proof of concept"), (str(n_models), "Claude models"),
+    badges = [("v0.1", "proof of concept"), cohort_badge(mco),
               (f'{vr["mc_public"]}+{vr["open_public"]}', "items"),
               (f'MC×{cfg["runs"]["multiple_choice"]} open×{cfg["runs"]["open_ended"]}', "runs"),
               (f'α {alpha_s}', "judge agreement")]

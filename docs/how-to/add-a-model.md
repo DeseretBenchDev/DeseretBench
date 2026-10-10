@@ -114,7 +114,9 @@ Notes:
   `--models <new-id>` to run only the new model, but the output file for the phase
   is rewritten from that run's jobs — a single-model run produces a single-model
   `mc_responses.jsonl`. To keep a complete run directory, run the full cohort and
-  let the cache do the saving.
+  let the cache do the saving — or run the new model into its own directory and
+  combine it with `python -m deseretbench.merge_runs` (see
+  [regenerate-reports](regenerate-reports.md#4-merged-runs-and-the-question-explorer)).
 - A typo'd id in `--models` is a hard error (`SystemExit` listing the valid
   cohort), never silently ignored.
 - If the run is interrupted or hits rate limits, see

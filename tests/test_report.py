@@ -45,3 +45,9 @@ def test_known_tier_colours_are_distinct():
     dupes = {c for c in TIER_COLOR.values()
              if list(TIER_COLOR.values()).count(c) > 1}
     assert not dupes, f"colours reused across tiers: {sorted(dupes)}"
+
+
+def test_onepager_cohort_badge_counts_every_model_without_calling_them_claude():
+    from deseretbench.build_onepager import cohort_badge
+    mco = {"claude-opus-5": {}, "kimi-k3": {}, "qwen3:4b": {}}
+    assert cohort_badge(mco) == ("3", "models")

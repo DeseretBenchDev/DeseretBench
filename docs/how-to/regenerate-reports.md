@@ -84,7 +84,27 @@ Consequence: always run the two tools in order, against the same summary:
 .venv/bin/python -m deseretbench.build_onepager
 ```
 
-## 4. Fonts
+## 4. Merged runs and the question explorer
+
+Models added after a release run into their own directories, because the run phases rewrite
+their output files with only the models passed. Combine them before analyzing, then rebuild
+the explorer's data alongside the reports:
+
+```bash
+.venv/bin/python -m deseretbench.merge_runs --out runs/v0_1_plus \
+    runs/v0_1 runs/claude_new_mc runs/claude_new_open runs/go_mc_r2 runs/go_open \
+    --exclude-open kimi-k3          # open-ended records still incomplete
+.venv/bin/python -m deseretbench.analyze --run runs/v0_1_plus --out results/summary.json
+.venv/bin/python -m deseretbench.report --summary results/summary.json
+.venv/bin/python -m deseretbench.build_onepager
+.venv/bin/python -m deseretbench.build_explorer --run runs/v0_1_plus --label "v0.1 + Oct 2026"
+```
+
+`merge_runs` refuses duplicate `(model, question, run)` records and keeps every source's
+config snapshot under `merged_from`. `build_explorer` rewrites only the inlined data block
+and version line of `reports/explorer.html`, plus `reports/explorer_texts.json`.
+
+## 5. Fonts
 
 The one-pager embeds eight woff2 files from `assets/fonts/` (Cinzel 600/800,
 EB Garamond 400/400-italic/600, IBM Plex Mono 400/600, and a Deseret-alphabet
