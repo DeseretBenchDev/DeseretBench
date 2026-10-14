@@ -9700,6 +9700,25 @@
           "practical_wisdom": 4.925,
           "distinctiveness": 4.671
         }
+      },
+      "qwen3.8-max": {
+        "label": "Qwen3.8 Max",
+        "tier": "qwen",
+        "generation": 3.8,
+        "mean": 79.19270833333333,
+        "lo": 73.93229166666667,
+        "hi": 83.93229166666666,
+        "n": 40,
+        "sem": 2.587147243036085,
+        "n_unscored_records": 0,
+        "mean_must_include_coverage": 0.8608,
+        "mean_should_not_violations": 0.1208,
+        "judge_dimension_means": {
+          "doctrinal_accuracy": 4.154,
+          "cultural_authenticity": 4.15,
+          "practical_wisdom": 4.671,
+          "distinctiveness": 3.696
+        }
       }
     },
     "by_dimension": {
@@ -10118,6 +10137,22 @@
           "n": 24,
           "sem": 1.2960306180110341
         }
+      },
+      "qwen3.8-max": {
+        "cultural_open": {
+          "mean": 80.6640625,
+          "lo": 71.2890625,
+          "hi": 88.671875,
+          "n": 16,
+          "sem": 4.610643804890258
+        },
+        "life_choice": {
+          "mean": 78.21180555555556,
+          "lo": 71.96180555555556,
+          "hi": 83.72395833333333,
+          "n": 24,
+          "sem": 3.0933358742439085
+        }
       }
     },
     "pairwise": [
@@ -10130,7 +10165,7 @@
         "lo": 12.795,
         "hi": 23.108,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10166,7 +10201,7 @@
         "lo": 4.514,
         "hi": 10.191,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10190,7 +10225,7 @@
         "lo": 1.667,
         "hi": 5.833,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10202,7 +10237,7 @@
         "lo": 11.962,
         "hi": 18.507,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10214,7 +10249,7 @@
         "lo": 8.437,
         "hi": 15.92,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10226,7 +10261,7 @@
         "lo": 5.955,
         "hi": 12.483,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10238,7 +10273,7 @@
         "lo": 24.722,
         "hi": 33.351,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10250,7 +10285,7 @@
         "lo": 45.99,
         "hi": 54.219,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10262,7 +10297,7 @@
         "lo": 95.191,
         "hi": 97.778,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10274,7 +10309,7 @@
         "lo": 92.222,
         "hi": 95.729,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10286,7 +10321,7 @@
         "lo": 97.222,
         "hi": 99.097,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10298,7 +10333,7 @@
         "lo": 86.736,
         "hi": 90.591,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10310,7 +10345,7 @@
         "lo": 84.948,
         "hi": 88.837,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10322,7 +10357,7 @@
         "lo": 89.01,
         "hi": 92.917,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10334,7 +10369,7 @@
         "lo": 73.733,
         "hi": 80.035,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10346,7 +10381,7 @@
         "lo": 77.795,
         "hi": 84.01,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10358,7 +10393,7 @@
         "lo": 77.656,
         "hi": 82.622,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10370,7 +10405,7 @@
         "lo": 78.785,
         "hi": 83.247,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10382,7 +10417,7 @@
         "lo": 78.299,
         "hi": 83.542,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10394,7 +10429,7 @@
         "lo": 87.795,
         "hi": 92.413,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10406,7 +10441,7 @@
         "lo": 76.962,
         "hi": 82.83,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10418,8 +10453,20 @@
         "lo": 0.486,
         "hi": 7.587,
         "p_bootstrap": 0.00618,
-        "p_holm": 0.20394,
+        "p_holm": 0.2163,
         "significant_holm": false
+      },
+      {
+        "a": "claude-fable-5-1",
+        "a_label": "Fable 5.1",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": 19.384,
+        "lo": 14.896,
+        "hi": 24.444,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
+        "significant_holm": true
       },
       {
         "a": "claude-haiku-5-5",
@@ -10430,7 +10477,7 @@
         "lo": -22.361,
         "hi": -12.222,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10442,7 +10489,7 @@
         "lo": -21.719,
         "hi": -12.118,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10454,7 +10501,7 @@
         "lo": -14.635,
         "hi": -6.562,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10466,7 +10513,7 @@
         "lo": -22.743,
         "hi": -12.431,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10478,7 +10525,7 @@
         "lo": -19.062,
         "hi": -9.722,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10502,7 +10549,7 @@
         "lo": -10.035,
         "hi": -1.753,
         "p_bootstrap": 0.00384,
-        "p_holm": 0.1344,
+        "p_holm": 0.14208,
         "significant_holm": false
       },
       {
@@ -10514,7 +10561,7 @@
         "lo": -13.819,
         "hi": -3.75,
         "p_bootstrap": 0.00066,
-        "p_holm": 0.02706,
+        "p_holm": 0.02904,
         "significant_holm": true
       },
       {
@@ -10526,7 +10573,7 @@
         "lo": 6.91,
         "hi": 15.573,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10538,7 +10585,7 @@
         "lo": 28.09,
         "hi": 36.597,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10550,7 +10597,7 @@
         "lo": 73.125,
         "hi": 84.253,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10562,7 +10609,7 @@
         "lo": 70.868,
         "hi": 81.562,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10574,7 +10621,7 @@
         "lo": 74.931,
         "hi": 85.694,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10586,7 +10633,7 @@
         "lo": 65.122,
         "hi": 76.615,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10598,7 +10645,7 @@
         "lo": 63.733,
         "hi": 74.392,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10610,7 +10657,7 @@
         "lo": 67.708,
         "hi": 78.559,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10622,7 +10669,7 @@
         "lo": 53.715,
         "hi": 64.306,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10634,7 +10681,7 @@
         "lo": 57.986,
         "hi": 68.368,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10646,7 +10693,7 @@
         "lo": 56.823,
         "hi": 67.708,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10658,7 +10705,7 @@
         "lo": 58.021,
         "hi": 68.229,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10670,7 +10717,7 @@
         "lo": 58.194,
         "hi": 67.969,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10682,7 +10729,7 @@
         "lo": 66.84,
         "hi": 77.865,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10694,7 +10741,7 @@
         "lo": 56.667,
         "hi": 67.622,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10706,8 +10753,20 @@
         "lo": -19.436,
         "hi": -9.722,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
+      },
+      {
+        "a": "claude-haiku-5-5",
+        "a_label": "Haiku 5.5",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": 1.675,
+        "lo": -2.76,
+        "hi": 6.068,
+        "p_bootstrap": 0.45466,
+        "p_holm": 1.0,
+        "significant_holm": false
       },
       {
         "a": "claude-fable-5",
@@ -10730,7 +10789,7 @@
         "lo": 3.854,
         "hi": 9.531,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10754,7 +10813,7 @@
         "lo": 1.059,
         "hi": 5.087,
         "p_bootstrap": 0.00046,
-        "p_holm": 0.01978,
+        "p_holm": 0.02116,
         "significant_holm": true
       },
       {
@@ -10766,7 +10825,7 @@
         "lo": 11.424,
         "hi": 17.691,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10778,7 +10837,7 @@
         "lo": 7.865,
         "hi": 15.0,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10790,7 +10849,7 @@
         "lo": 5.365,
         "hi": 11.753,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10802,7 +10861,7 @@
         "lo": 24.271,
         "hi": 32.465,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10814,7 +10873,7 @@
         "lo": 45.503,
         "hi": 53.385,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10826,7 +10885,7 @@
         "lo": 94.306,
         "hi": 97.274,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10838,7 +10897,7 @@
         "lo": 91.441,
         "hi": 95.191,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10850,7 +10909,7 @@
         "lo": 96.25,
         "hi": 98.646,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10862,7 +10921,7 @@
         "lo": 85.92,
         "hi": 90.035,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10874,7 +10933,7 @@
         "lo": 84.115,
         "hi": 88.247,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10886,7 +10945,7 @@
         "lo": 88.003,
         "hi": 92.483,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10898,7 +10957,7 @@
         "lo": 73.073,
         "hi": 79.34,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10910,7 +10969,7 @@
         "lo": 77.188,
         "hi": 83.247,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10922,7 +10981,7 @@
         "lo": 76.632,
         "hi": 82.24,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10934,7 +10993,7 @@
         "lo": 77.969,
         "hi": 82.656,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10946,7 +11005,7 @@
         "lo": 77.674,
         "hi": 82.865,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10958,7 +11017,7 @@
         "lo": 87.083,
         "hi": 91.788,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10970,7 +11029,7 @@
         "lo": 76.336,
         "hi": 82.066,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -10986,6 +11045,18 @@
         "significant_holm": false
       },
       {
+        "a": "claude-fable-5",
+        "a_label": "Fable 5",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": 18.707,
+        "lo": 14.227,
+        "hi": 23.759,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
         "a": "claude-opus-5",
         "a_label": "Opus 5",
         "b": "claude-opus-4-8",
@@ -10994,7 +11065,7 @@
         "lo": 3.576,
         "hi": 9.149,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11018,7 +11089,7 @@
         "lo": 0.608,
         "hi": 4.792,
         "p_bootstrap": 0.01062,
-        "p_holm": 0.30798,
+        "p_holm": 0.32922,
         "significant_holm": false
       },
       {
@@ -11030,7 +11101,7 @@
         "lo": 11.094,
         "hi": 17.24,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11042,7 +11113,7 @@
         "lo": 7.569,
         "hi": 14.931,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11054,7 +11125,7 @@
         "lo": 5.174,
         "hi": 11.354,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11066,7 +11137,7 @@
         "lo": 24.08,
         "hi": 31.997,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11078,7 +11149,7 @@
         "lo": 45.139,
         "hi": 53.056,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11090,7 +11161,7 @@
         "lo": 94.01,
         "hi": 97.049,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11102,7 +11173,7 @@
         "lo": 91.215,
         "hi": 94.826,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11114,7 +11185,7 @@
         "lo": 95.885,
         "hi": 98.455,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11126,7 +11197,7 @@
         "lo": 85.434,
         "hi": 89.878,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11138,7 +11209,7 @@
         "lo": 83.993,
         "hi": 87.865,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11150,7 +11221,7 @@
         "lo": 88.003,
         "hi": 91.997,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11162,7 +11233,7 @@
         "lo": 72.76,
         "hi": 79.01,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11174,7 +11245,7 @@
         "lo": 76.753,
         "hi": 83.038,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11186,7 +11257,7 @@
         "lo": 76.84,
         "hi": 81.562,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11198,7 +11269,7 @@
         "lo": 77.969,
         "hi": 82.153,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11210,7 +11281,7 @@
         "lo": 77.205,
         "hi": 82.604,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11222,7 +11293,7 @@
         "lo": 86.701,
         "hi": 91.51,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11234,7 +11305,7 @@
         "lo": 75.972,
         "hi": 81.858,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11250,6 +11321,18 @@
         "significant_holm": false
       },
       {
+        "a": "claude-opus-5",
+        "a_label": "Opus 5",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": 18.411,
+        "lo": 14.045,
+        "hi": 23.194,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
         "a": "claude-opus-4-8",
         "a_label": "Opus 4.8",
         "b": "claude-opus-4-7",
@@ -11258,7 +11341,7 @@
         "lo": -9.67,
         "hi": -4.288,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11270,7 +11353,7 @@
         "lo": -6.667,
         "hi": -0.851,
         "p_bootstrap": 0.00802,
-        "p_holm": 0.25664,
+        "p_holm": 0.27268,
         "significant_holm": false
       },
       {
@@ -11282,7 +11365,7 @@
         "lo": 5.382,
         "hi": 10.174,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11294,7 +11377,7 @@
         "lo": 2.413,
         "hi": 7.378,
         "p_bootstrap": 4e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11318,7 +11401,7 @@
         "lo": 17.743,
         "hi": 25.955,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11330,7 +11413,7 @@
         "lo": 39.132,
         "hi": 46.458,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11342,7 +11425,7 @@
         "lo": 85.747,
         "hi": 92.639,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11354,7 +11437,7 @@
         "lo": 82.847,
         "hi": 90.521,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11366,7 +11449,7 @@
         "lo": 87.552,
         "hi": 94.184,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11378,7 +11461,7 @@
         "lo": 77.604,
         "hi": 85.208,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11390,7 +11473,7 @@
         "lo": 76.076,
         "hi": 83.108,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11402,7 +11485,7 @@
         "lo": 79.792,
         "hi": 87.569,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11414,7 +11497,7 @@
         "lo": 65.573,
         "hi": 73.524,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11426,7 +11509,7 @@
         "lo": 69.688,
         "hi": 77.431,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11438,7 +11521,7 @@
         "lo": 68.889,
         "hi": 76.753,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11450,7 +11533,7 @@
         "lo": 69.861,
         "hi": 77.535,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11462,7 +11545,7 @@
         "lo": 70.139,
         "hi": 77.014,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11474,7 +11557,7 @@
         "lo": 78.854,
         "hi": 86.84,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11486,7 +11569,7 @@
         "lo": 68.542,
         "hi": 76.545,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11498,8 +11581,20 @@
         "lo": -6.979,
         "hi": -0.564,
         "p_bootstrap": 0.02442,
-        "p_holm": 0.68376,
+        "p_holm": 0.7326,
         "significant_holm": false
+      },
+      {
+        "a": "claude-opus-4-8",
+        "a_label": "Opus 4.8",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": 12.196,
+        "lo": 8.542,
+        "hi": 16.25,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
+        "significant_holm": true
       },
       {
         "a": "claude-opus-4-7",
@@ -11510,7 +11605,7 @@
         "lo": 1.632,
         "hi": 5.0,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11522,7 +11617,7 @@
         "lo": 11.667,
         "hi": 18.09,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11534,7 +11629,7 @@
         "lo": 7.969,
         "hi": 15.868,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11546,7 +11641,7 @@
         "lo": 5.799,
         "hi": 11.84,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11558,7 +11653,7 @@
         "lo": 24.392,
         "hi": 32.917,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11570,7 +11665,7 @@
         "lo": 45.503,
         "hi": 53.976,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11582,7 +11677,7 @@
         "lo": 94.722,
         "hi": 97.535,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11594,7 +11689,7 @@
         "lo": 91.667,
         "hi": 95.451,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11606,7 +11701,7 @@
         "lo": 96.476,
         "hi": 98.993,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11618,7 +11713,7 @@
         "lo": 86.302,
         "hi": 90.312,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11630,7 +11725,7 @@
         "lo": 84.479,
         "hi": 88.472,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11642,7 +11737,7 @@
         "lo": 88.49,
         "hi": 92.656,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11654,7 +11749,7 @@
         "lo": 73.351,
         "hi": 79.531,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11666,7 +11761,7 @@
         "lo": 77.483,
         "hi": 83.507,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11678,7 +11773,7 @@
         "lo": 77.378,
         "hi": 82.153,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11690,7 +11785,7 @@
         "lo": 78.316,
         "hi": 82.899,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11702,7 +11797,7 @@
         "lo": 78.021,
         "hi": 83.073,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11714,7 +11809,7 @@
         "lo": 87.483,
         "hi": 91.91,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11726,7 +11821,7 @@
         "lo": 76.493,
         "hi": 82.5,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11738,8 +11833,20 @@
         "lo": 0.434,
         "hi": 6.424,
         "p_bootstrap": 0.0093,
-        "p_holm": 0.279,
+        "p_holm": 0.2976,
         "significant_holm": false
+      },
+      {
+        "a": "claude-opus-4-7",
+        "a_label": "Opus 4.7",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": 19.019,
+        "lo": 14.783,
+        "hi": 23.672,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
+        "significant_holm": true
       },
       {
         "a": "claude-opus-4-6",
@@ -11750,7 +11857,7 @@
         "lo": 8.628,
         "hi": 14.74,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11762,7 +11869,7 @@
         "lo": 4.618,
         "hi": 12.5,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11774,7 +11881,7 @@
         "lo": 2.691,
         "hi": 8.472,
         "p_bootstrap": 6e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11786,7 +11893,7 @@
         "lo": 21.753,
         "hi": 29.08,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11798,7 +11905,7 @@
         "lo": 42.552,
         "hi": 50.59,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11810,7 +11917,7 @@
         "lo": 90.642,
         "hi": 95.087,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11822,7 +11929,7 @@
         "lo": 88.003,
         "hi": 92.795,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11834,7 +11941,7 @@
         "lo": 92.326,
         "hi": 96.719,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11846,7 +11953,7 @@
         "lo": 82.309,
         "hi": 87.778,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11858,7 +11965,7 @@
         "lo": 80.556,
         "hi": 85.938,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11870,7 +11977,7 @@
         "lo": 84.635,
         "hi": 90.018,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11882,7 +11989,7 @@
         "lo": 69.774,
         "hi": 76.701,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11894,7 +12001,7 @@
         "lo": 74.115,
         "hi": 80.503,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11906,7 +12013,7 @@
         "lo": 73.681,
         "hi": 79.41,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11918,7 +12025,7 @@
         "lo": 74.757,
         "hi": 79.965,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11930,7 +12037,7 @@
         "lo": 74.514,
         "hi": 80.069,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11942,7 +12049,7 @@
         "lo": 83.837,
         "hi": 89.219,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11954,7 +12061,7 @@
         "lo": 73.021,
         "hi": 79.497,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -11968,6 +12075,18 @@
         "p_bootstrap": 0.79553,
         "p_holm": 1.0,
         "significant_holm": false
+      },
+      {
+        "a": "claude-opus-4-6",
+        "a_label": "Opus 4.6",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": 15.807,
+        "lo": 11.406,
+        "hi": 20.556,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
+        "significant_holm": true
       },
       {
         "a": "claude-opus-4-5-20251101",
@@ -11990,8 +12109,8 @@
         "lo": -9.618,
         "hi": -2.431,
         "p_bootstrap": 0.00124,
-        "p_holm": 0.04636,
-        "significant_holm": true
+        "p_holm": 0.05002,
+        "significant_holm": false
       },
       {
         "a": "claude-opus-4-5-20251101",
@@ -12002,7 +12121,7 @@
         "lo": 10.052,
         "hi": 17.847,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12014,7 +12133,7 @@
         "lo": 31.979,
         "hi": 37.917,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12026,7 +12145,7 @@
         "lo": 77.691,
         "hi": 85.035,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12038,7 +12157,7 @@
         "lo": 75.156,
         "hi": 82.691,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12050,7 +12169,7 @@
         "lo": 79.427,
         "hi": 86.667,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12062,7 +12181,7 @@
         "lo": 69.514,
         "hi": 77.639,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12074,7 +12193,7 @@
         "lo": 67.899,
         "hi": 75.66,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12086,7 +12205,7 @@
         "lo": 72.031,
         "hi": 79.705,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12098,7 +12217,7 @@
         "lo": 57.5,
         "hi": 66.076,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12110,7 +12229,7 @@
         "lo": 61.788,
         "hi": 69.878,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12122,7 +12241,7 @@
         "lo": 60.764,
         "hi": 69.271,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12134,7 +12253,7 @@
         "lo": 61.91,
         "hi": 69.844,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12146,7 +12265,7 @@
         "lo": 62.083,
         "hi": 69.531,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12158,7 +12277,7 @@
         "lo": 70.851,
         "hi": 79.219,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12170,7 +12289,7 @@
         "lo": 60.573,
         "hi": 69.097,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12182,8 +12301,20 @@
         "lo": -15.234,
         "hi": -8.038,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
+      },
+      {
+        "a": "claude-opus-4-5-20251101",
+        "a_label": "Opus 4.5",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": 4.349,
+        "lo": -0.122,
+        "hi": 9.366,
+        "p_bootstrap": 0.0572,
+        "p_holm": 1.0,
+        "significant_holm": false
       },
       {
         "a": "claude-sonnet-5",
@@ -12206,7 +12337,7 @@
         "lo": 12.882,
         "hi": 21.337,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12218,7 +12349,7 @@
         "lo": 34.184,
         "hi": 41.91,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12230,7 +12361,7 @@
         "lo": 79.896,
         "hi": 88.785,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12242,7 +12373,7 @@
         "lo": 77.344,
         "hi": 86.458,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12254,7 +12385,7 @@
         "lo": 81.701,
         "hi": 90.312,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12266,7 +12397,7 @@
         "lo": 71.944,
         "hi": 81.094,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12278,7 +12409,7 @@
         "lo": 70.33,
         "hi": 79.115,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12290,7 +12421,7 @@
         "lo": 74.028,
         "hi": 83.542,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12302,7 +12433,7 @@
         "lo": 60.104,
         "hi": 69.375,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12314,7 +12445,7 @@
         "lo": 64.253,
         "hi": 73.385,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12326,7 +12457,7 @@
         "lo": 63.038,
         "hi": 72.691,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12338,7 +12469,7 @@
         "lo": 64.306,
         "hi": 73.281,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12350,7 +12481,7 @@
         "lo": 64.618,
         "hi": 72.986,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12362,7 +12493,7 @@
         "lo": 73.108,
         "hi": 82.847,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12374,7 +12505,7 @@
         "lo": 63.438,
         "hi": 72.188,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12386,8 +12517,20 @@
         "lo": -12.795,
         "hi": -4.453,
         "p_bootstrap": 6e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
+      },
+      {
+        "a": "claude-sonnet-5",
+        "a_label": "Sonnet 5",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": 7.457,
+        "lo": 2.995,
+        "hi": 12.092,
+        "p_bootstrap": 0.00128,
+        "p_holm": 0.05002,
+        "significant_holm": false
       },
       {
         "a": "claude-sonnet-4-6",
@@ -12398,7 +12541,7 @@
         "lo": 15.677,
         "hi": 24.236,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12410,7 +12553,7 @@
         "lo": 36.51,
         "hi": 45.486,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12422,7 +12565,7 @@
         "lo": 83.924,
         "hi": 90.851,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12434,7 +12577,7 @@
         "lo": 81.215,
         "hi": 88.576,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12446,7 +12589,7 @@
         "lo": 85.625,
         "hi": 92.465,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12458,7 +12601,7 @@
         "lo": 75.747,
         "hi": 83.351,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12470,7 +12613,7 @@
         "lo": 74.028,
         "hi": 81.406,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12482,7 +12625,7 @@
         "lo": 78.177,
         "hi": 85.556,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12494,7 +12637,7 @@
         "lo": 63.663,
         "hi": 71.875,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12506,7 +12649,7 @@
         "lo": 67.934,
         "hi": 75.677,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12518,7 +12661,7 @@
         "lo": 67.014,
         "hi": 75.0,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12530,7 +12673,7 @@
         "lo": 68.351,
         "hi": 75.365,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12542,7 +12685,7 @@
         "lo": 68.576,
         "hi": 75.052,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12554,7 +12697,7 @@
         "lo": 77.083,
         "hi": 84.913,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12566,7 +12709,7 @@
         "lo": 67.378,
         "hi": 74.219,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12578,7 +12721,19 @@
         "lo": -9.002,
         "hi": -2.344,
         "p_bootstrap": 0.00122,
-        "p_holm": 0.04636,
+        "p_holm": 0.05002,
+        "significant_holm": false
+      },
+      {
+        "a": "claude-sonnet-4-6",
+        "a_label": "Sonnet 4.6",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": 10.373,
+        "lo": 6.484,
+        "hi": 14.618,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12590,7 +12745,7 @@
         "lo": 17.24,
         "hi": 24.931,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12602,7 +12757,7 @@
         "lo": 62.969,
         "hi": 72.153,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12614,7 +12769,7 @@
         "lo": 60.451,
         "hi": 69.705,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12626,7 +12781,7 @@
         "lo": 64.566,
         "hi": 73.819,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12638,7 +12793,7 @@
         "lo": 54.931,
         "hi": 64.41,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12650,7 +12805,7 @@
         "lo": 53.42,
         "hi": 62.413,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12662,7 +12817,7 @@
         "lo": 57.24,
         "hi": 66.736,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12674,7 +12829,7 @@
         "lo": 43.056,
         "hi": 52.483,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12686,7 +12841,7 @@
         "lo": 47.205,
         "hi": 56.528,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12698,7 +12853,7 @@
         "lo": 46.319,
         "hi": 56.007,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12710,7 +12865,7 @@
         "lo": 47.951,
         "hi": 56.181,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12722,7 +12877,7 @@
         "lo": 47.431,
         "hi": 56.181,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12734,7 +12889,7 @@
         "lo": 56.51,
         "hi": 65.799,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12746,7 +12901,7 @@
         "lo": 46.458,
         "hi": 55.347,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12758,7 +12913,19 @@
         "lo": -30.521,
         "hi": -20.825,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "claude-sonnet-4-5-20250929",
+        "a_label": "Sonnet 4.5",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -9.505,
+        "lo": -14.019,
+        "hi": -5.382,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12770,7 +12937,7 @@
         "lo": 42.24,
         "hi": 50.781,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12782,7 +12949,7 @@
         "lo": 39.583,
         "hi": 48.507,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12794,7 +12961,7 @@
         "lo": 43.889,
         "hi": 52.378,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12806,7 +12973,7 @@
         "lo": 34.34,
         "hi": 42.899,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12818,7 +12985,7 @@
         "lo": 32.639,
         "hi": 41.146,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12830,7 +12997,7 @@
         "lo": 36.632,
         "hi": 45.26,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12842,7 +13009,7 @@
         "lo": 22.448,
         "hi": 31.181,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12854,7 +13021,7 @@
         "lo": 26.58,
         "hi": 35.104,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12866,7 +13033,7 @@
         "lo": 25.469,
         "hi": 34.653,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12878,7 +13045,7 @@
         "lo": 26.806,
         "hi": 35.069,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12890,7 +13057,7 @@
         "lo": 26.858,
         "hi": 34.896,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12902,7 +13069,7 @@
         "lo": 35.833,
         "hi": 44.392,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12914,7 +13081,7 @@
         "lo": 25.434,
         "hi": 34.462,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12926,7 +13093,19 @@
         "lo": -51.372,
         "hi": -42.014,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "claude-haiku-4-5-20251001",
+        "a_label": "Haiku 4.5",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -30.686,
+        "lo": -35.521,
+        "hi": -25.451,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12938,7 +13117,7 @@
         "lo": -3.958,
         "hi": -1.128,
         "p_bootstrap": 0.00016,
-        "p_holm": 0.00704,
+        "p_holm": 0.00752,
         "significant_holm": true
       },
       {
@@ -12950,7 +13129,7 @@
         "lo": 0.955,
         "hi": 2.465,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12962,7 +13141,7 @@
         "lo": -9.271,
         "hi": -6.528,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12974,7 +13153,7 @@
         "lo": -11.198,
         "hi": -8.142,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12986,7 +13165,7 @@
         "lo": -7.309,
         "hi": -3.976,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -12998,7 +13177,7 @@
         "lo": -22.465,
         "hi": -16.944,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13010,7 +13189,7 @@
         "lo": -18.316,
         "hi": -13.038,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13022,7 +13201,7 @@
         "lo": -18.438,
         "hi": -14.427,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13034,7 +13213,7 @@
         "lo": -17.483,
         "hi": -13.594,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13046,7 +13225,7 @@
         "lo": -18.125,
         "hi": -13.177,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13058,7 +13237,7 @@
         "lo": -8.212,
         "hi": -4.74,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13070,7 +13249,7 @@
         "lo": -19.184,
         "hi": -14.167,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13082,7 +13261,19 @@
         "lo": -96.415,
         "hi": -88.941,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "qwen3:0.6b",
+        "a_label": "Qwen3 0.6B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -77.196,
+        "lo": -82.031,
+        "hi": -71.91,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13094,7 +13285,7 @@
         "lo": 2.951,
         "hi": 5.503,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13106,7 +13297,7 @@
         "lo": -7.431,
         "hi": -3.299,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13118,7 +13309,7 @@
         "lo": -8.837,
         "hi": -5.503,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13130,7 +13321,7 @@
         "lo": -5.035,
         "hi": -1.198,
         "p_bootstrap": 0.00102,
-        "p_holm": 0.03978,
+        "p_holm": 0.04284,
         "significant_holm": true
       },
       {
@@ -13142,7 +13333,7 @@
         "lo": -20.347,
         "hi": -14.184,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13154,7 +13345,7 @@
         "lo": -15.972,
         "hi": -10.521,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13166,7 +13357,7 @@
         "lo": -16.476,
         "hi": -11.441,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13178,7 +13369,7 @@
         "lo": -15.278,
         "hi": -10.799,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13190,7 +13381,7 @@
         "lo": -15.712,
         "hi": -10.642,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13202,7 +13393,7 @@
         "lo": -5.747,
         "hi": -2.17,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13214,7 +13405,7 @@
         "lo": -16.84,
         "hi": -11.615,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13226,7 +13417,19 @@
         "lo": -94.01,
         "hi": -86.519,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "gemma3:1b",
+        "a_label": "Gemma 3 1B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -74.696,
+        "lo": -79.609,
+        "hi": -69.418,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13238,7 +13441,7 @@
         "lo": -11.198,
         "hi": -7.934,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13250,7 +13453,7 @@
         "lo": -12.934,
         "hi": -9.74,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13262,7 +13465,7 @@
         "lo": -8.906,
         "hi": -5.66,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13274,7 +13477,7 @@
         "lo": -24.219,
         "hi": -18.507,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13286,7 +13489,7 @@
         "lo": -20.191,
         "hi": -14.479,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13298,7 +13501,7 @@
         "lo": -20.26,
         "hi": -15.885,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13310,7 +13513,7 @@
         "lo": -19.201,
         "hi": -15.156,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13322,7 +13525,7 @@
         "lo": -19.774,
         "hi": -14.844,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13334,7 +13537,7 @@
         "lo": -9.965,
         "hi": -6.285,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13346,7 +13549,7 @@
         "lo": -21.007,
         "hi": -15.66,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13358,7 +13561,19 @@
         "lo": -97.934,
         "hi": -90.642,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "deepseek-r1:1.5b",
+        "a_label": "R1-Distill 1.5B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -78.863,
+        "lo": -83.637,
+        "hi": -73.611,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13382,7 +13597,7 @@
         "lo": 0.174,
         "hi": 4.288,
         "p_bootstrap": 0.03512,
-        "p_holm": 0.94824,
+        "p_holm": 1.0,
         "significant_holm": false
       },
       {
@@ -13394,7 +13609,7 @@
         "lo": -14.323,
         "hi": -9.41,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13406,7 +13621,7 @@
         "lo": -10.347,
         "hi": -5.243,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13418,7 +13633,7 @@
         "lo": -10.538,
         "hi": -6.597,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13430,7 +13645,7 @@
         "lo": -9.566,
         "hi": -5.799,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13442,7 +13657,7 @@
         "lo": -10.017,
         "hi": -5.642,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13466,7 +13681,7 @@
         "lo": -11.163,
         "hi": -6.424,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13478,7 +13693,19 @@
         "lo": -89.071,
         "hi": -80.842,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "qwen3:1.7b",
+        "a_label": "Qwen3 1.7B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -69.332,
+        "lo": -74.323,
+        "hi": -63.932,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13490,7 +13717,7 @@
         "lo": 1.91,
         "hi": 6.076,
         "p_bootstrap": 0.00052,
-        "p_holm": 0.02184,
+        "p_holm": 0.0234,
         "significant_holm": true
       },
       {
@@ -13502,7 +13729,7 @@
         "lo": -12.448,
         "hi": -7.76,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13514,7 +13741,7 @@
         "lo": -8.299,
         "hi": -3.733,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13526,7 +13753,7 @@
         "lo": -8.941,
         "hi": -4.67,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13538,7 +13765,7 @@
         "lo": -8.003,
         "hi": -3.785,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13550,7 +13777,7 @@
         "lo": -8.021,
         "hi": -4.062,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13562,7 +13789,7 @@
         "lo": 1.615,
         "hi": 4.878,
         "p_bootstrap": 8e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13574,7 +13801,7 @@
         "lo": -9.271,
         "hi": -4.809,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13586,7 +13813,19 @@
         "lo": -87.014,
         "hi": -79.193,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "smollm2:1.7b",
+        "a_label": "SmolLM2 1.7B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -67.526,
+        "lo": -72.153,
+        "hi": -62.474,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13598,7 +13837,7 @@
         "lo": -17.292,
         "hi": -10.885,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13610,7 +13849,7 @@
         "lo": -13.281,
         "hi": -6.771,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13622,7 +13861,7 @@
         "lo": -12.882,
         "hi": -8.906,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13634,7 +13873,7 @@
         "lo": -11.997,
         "hi": -8.003,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13646,7 +13885,7 @@
         "lo": -12.622,
         "hi": -7.396,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13670,7 +13909,7 @@
         "lo": -13.819,
         "hi": -8.177,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13682,7 +13921,19 @@
         "lo": -91.25,
         "hi": -83.22,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "phi4-mini",
+        "a_label": "Phi-4 Mini",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -71.641,
+        "lo": -76.693,
+        "hi": -66.128,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13694,7 +13945,7 @@
         "lo": 1.684,
         "hi": 6.58,
         "p_bootstrap": 0.00074,
-        "p_holm": 0.0296,
+        "p_holm": 0.03182,
         "significant_holm": true
       },
       {
@@ -13706,7 +13957,7 @@
         "lo": 0.868,
         "hi": 5.642,
         "p_bootstrap": 0.00878,
-        "p_holm": 0.27218,
+        "p_holm": 0.28974,
         "significant_holm": false
       },
       {
@@ -13718,7 +13969,7 @@
         "lo": 1.441,
         "hi": 6.858,
         "p_bootstrap": 0.00266,
-        "p_holm": 0.09576,
+        "p_holm": 0.10108,
         "significant_holm": false
       },
       {
@@ -13730,7 +13981,7 @@
         "lo": 2.031,
         "hi": 6.059,
         "p_bootstrap": 0.00012,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13742,7 +13993,7 @@
         "lo": 10.59,
         "hi": 16.111,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13754,7 +14005,7 @@
         "lo": 0.92,
         "hi": 5.347,
         "p_bootstrap": 0.0046,
-        "p_holm": 0.1564,
+        "p_holm": 0.1656,
         "significant_holm": false
       },
       {
@@ -13766,7 +14017,19 @@
         "lo": -77.7,
         "hi": -68.811,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "qwen3:4b-instruct",
+        "a_label": "Qwen3 4B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -57.439,
+        "lo": -62.309,
+        "hi": -52.179,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13814,7 +14077,7 @@
         "lo": 6.84,
         "hi": 11.719,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13838,7 +14101,19 @@
         "lo": -81.311,
         "hi": -73.455,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "gemma3:4b",
+        "a_label": "Gemma 3 4B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -61.519,
+        "lo": -66.198,
+        "hi": -56.571,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13874,7 +14149,7 @@
         "lo": 7.708,
         "hi": 12.309,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13898,7 +14173,19 @@
         "lo": -80.66,
         "hi": -72.413,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "granite4.1:3b",
+        "a_label": "Granite 4.1 3B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -60.773,
+        "lo": -65.799,
+        "hi": -55.443,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13922,7 +14209,7 @@
         "lo": 7.049,
         "hi": 11.215,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13946,7 +14233,19 @@
         "lo": -81.562,
         "hi": -73.038,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "qwen3.5:4b",
+        "a_label": "Qwen3.5 4B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -61.641,
+        "lo": -66.406,
+        "hi": -56.493,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13958,7 +14257,7 @@
         "lo": 7.101,
         "hi": 11.476,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13982,7 +14281,19 @@
         "lo": -81.042,
         "hi": -73.472,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "ministral-3:3b",
+        "a_label": "Ministral 3 3B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -61.484,
+        "lo": -65.729,
+        "hi": -56.823,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -13994,7 +14305,7 @@
         "lo": -12.795,
         "hi": -7.743,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -14006,7 +14317,19 @@
         "lo": -90.521,
         "hi": -82.431,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "nemotron-3-nano:4b",
+        "a_label": "Nemotron 3 Nano 4B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -70.773,
+        "lo": -75.66,
+        "hi": -65.512,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       },
       {
@@ -14018,22 +14341,46 @@
         "lo": -80.538,
         "hi": -71.988,
         "p_bootstrap": 2e-05,
-        "p_holm": 0.0065,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "gemma4:e2b-it-qat",
+        "a_label": "Gemma 4 E2B",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": -60.53,
+        "lo": -65.286,
+        "hi": -55.373,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
+        "significant_holm": true
+      },
+      {
+        "a": "kimi-k3",
+        "a_label": "Kimi K3",
+        "b": "qwen3.8-max",
+        "b_label": "Qwen3.8 Max",
+        "diff": 16.12,
+        "lo": 12.474,
+        "hi": 20.208,
+        "p_bootstrap": 2e-05,
+        "p_holm": 0.00702,
         "significant_holm": true
       }
     ],
     "judge_irr": {
-      "krippendorff_alpha": 0.9932,
+      "krippendorff_alpha": 0.9931,
       "per_dimension_alpha": {
-        "doctrinal_accuracy": 0.9786,
-        "cultural_authenticity": 0.9808,
-        "practical_wisdom": 0.9827,
-        "distinctiveness": 0.9793
+        "doctrinal_accuracy": 0.9783,
+        "cultural_authenticity": 0.98,
+        "practical_wisdom": 0.9829,
+        "distinctiveness": 0.9788
       },
-      "min_dimension_alpha": 0.9786,
+      "min_dimension_alpha": 0.9783,
       "n_personas": 3,
-      "n_units": 3080
+      "n_units": 3160
     },
-    "n_records": 3080
+    "n_records": 3160
   }
 }

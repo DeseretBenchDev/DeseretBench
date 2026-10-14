@@ -45,7 +45,7 @@ posts the highest open-ended composite measured (98.6), statistically tied with 
 Haiku 5.5 rises 32.4 points over Haiku 4.5 to 80.9 across one full version step,
 the largest gap between successive models of one tier in the data.
 <!--abstract-outside:start-->
-Of the outside models whose open-ended runs are complete, Kimi K3 scores 95.3 (5th of 26); the rest are still running.
+Of the outside models whose open-ended runs are complete, Kimi K3 scores 95.3 (5th of 27) and Qwen3.8 Max scores 79.2 (12th of 27); the rest are still running.
 <!--abstract-outside:end-->
 
 ## 1. Motivation
@@ -331,9 +331,9 @@ deserves.
 
 ### 4.6 October 2026 additions
 Merging the additions into the v0.1 records gives 27,477 MC responses from thirty models
-and 3,080 judged open-ended units from the twenty-six whose open-ended runs are complete.
+and 3,160 judged open-ended units from the twenty-seven whose open-ended runs are complete.
 The judge panel stays reliable at this size (Krippendorff's α = 0.993; lowest
-dimension 0.979).
+dimension 0.978).
 
 **The MC ceiling now spans labs.** Kimi K3, Qwen3.8 Max, GLM 5.3, Grok 4.6 and GPT 5.6 Luna each
 answer all 213 items correctly on both runs, as do Fable 5.1 (1.000) and, to
@@ -358,17 +358,17 @@ distinctiveness is the hardest axis still holds for every model, though Fable 5.
 to closing it.
 
 **Haiku 5.5: the largest gap between successive models of one tier.** It scores **80.9**
-[75.2, 86.0] against Haiku 4.5's 48.5 (Δ = +32.4, Holm *p* = 0.006, the resampling floor for this 325-comparison family). That
+[75.2, 86.0] against Haiku 4.5's 48.5 (Δ = +32.4, Holm *p* = 0.007, the resampling floor for this 351-comparison family). That
 places the smallest Claude tier level with Opus 4.5 (Δ = −2.7, *p* = 1.000) and Sonnet 5
-(Δ = −5.8, *p* = 0.134), clearly above Sonnet 4.5 (Δ = +11.2), and still below Sonnet 4.6
-(Δ = −8.7, *p* = 0.027). §4.3 found that generation number does not predict fidelity within
+(Δ = −5.8, *p* = 0.142), clearly above Sonnet 4.5 (Δ = +11.2), and still below Sonnet 4.6
+(Δ = −8.7, *p* = 0.029). §4.3 found that generation number does not predict fidelity within
 Opus and Sonnet; within Haiku one version step (4.5 to 5.5, with
 no Haiku 5 between them) moved the score by more than thirty points.
-Among Claude models 53 of 66 open-ended pairs now differ significantly, and 289 of
-325 across the cohort.
+Among Claude models 52 of 66 open-ended pairs now differ significantly, and 310 of
+351 across the cohort.
 
 <!--outside:start-->
-**Outside models on the open track.** Kimi K3 scores 95.3 [91.0–98.3] on the open-ended track, 5th of 26, statistically level with every model above it, and significantly above Sonnet 4.6. The open-ended runs for Qwen3.8 Max, GLM 5.3, Grok 4.6 and GPT 5.6 Luna are under way, paced by a subscription usage cap. These rows carry three qualifications the Claude rows do not: two open-ended runs rather than three, unpinned reasoning effort, and a Claude-family judge scoring other labs' answers.
+**Outside models on the open track.** Kimi K3 scores 95.3 [91.0–98.3] on the open-ended track, 5th of 27, statistically level with every model above it, and significantly above Sonnet 5. Qwen3.8 Max scores 79.2 [73.9–83.9] on the open-ended track, 12th of 27, statistically level with Sonnet 5, Opus 4.5 and Haiku 5.5, and significantly above Sonnet 4.5. The open-ended runs for GLM 5.3, Grok 4.6 and GPT 5.6 Luna are under way, paced by a subscription usage cap. These rows carry three qualifications the Claude rows do not: two open-ended runs rather than three, unpinned reasoning effort, and a Claude-family judge scoring other labs' answers.
 <!--outside:end-->
 
 ## 5. Discussion

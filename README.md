@@ -119,8 +119,8 @@ regenerates from `runs/v0_1`). Numbers regenerated from `reports/RESULTS.md` —
   **21.8** on open-ended, under half of Haiku 4.5 (48.5), the weakest Claude. MC asks a
   model to recognize an answer among four options; the open track asks it to write counsel
   with no options in view.
-- **Open-ended discriminates sharply** (judge Krippendorff's α = 0.993, 3,080 scored
-  units; 289 of 325 pairwise comparisons significant), composite 0–100:
+- **Open-ended discriminates sharply** (judge Krippendorff's α = 0.993, 3,160 scored
+  units; 310 of 351 pairwise comparisons significant), composite 0–100:
 
   | Model | Composite (95% CI) | MC accuracy |
   |---|---|---|
@@ -135,6 +135,7 @@ regenerates from `runs/v0_1`). Numbers regenerated from `reports/RESULTS.md` —
   | Sonnet 5 | **86.6** [82.1, 90.6] | 0.986 |
   | Opus 4.5 | **83.5** [79.7, 87.0] | 1.000 |
   | Haiku 5.5 | **80.9** [75.2, 86.0] | 0.998 |
+  | Qwen3.8 Max | **79.2** [73.9, 83.9] | 1.000 |
   | Sonnet 4.5 | **69.7** [64.9, 74.2] | 1.000 |
   | Haiku 4.5 | **48.5** [44.2, 52.7] | 0.994 |
   | Qwen3 4B | **21.8** [18.8, 24.5] | 0.922 |
@@ -150,13 +151,12 @@ regenerates from `runs/v0_1`). Numbers regenerated from `reports/RESULTS.md` —
   | Gemma 3 1B | **4.5** [3.2, 5.9] | 0.548 |
   | Qwen3 0.6B | **2.0** [1.2, 2.9] | 0.536 |
   | R1-Distill 1.5B | **0.3** [0.1, 0.6] | 0.521 |
-  | Qwen3.8 Max | *in progress* | 1.000 |
   | GLM 5.3 | *in progress* | 1.000 |
   | Grok 4.6 | *in progress* | 1.000 |
   | GPT 5.6 Luna | *in progress* | 1.000 |
 
 <!--outside:start-->
-  Kimi K3 scores 95.3 [91.0–98.3] on the open-ended track, 5th of 26, statistically level with every model above it, and significantly above Sonnet 4.6. The open-ended runs for Qwen3.8 Max, GLM 5.3, Grok 4.6 and GPT 5.6 Luna are under way, paced by a subscription usage cap.
+  Kimi K3 scores 95.3 [91.0–98.3] on the open-ended track, 5th of 27, statistically level with every model above it, and significantly above Sonnet 5. Qwen3.8 Max scores 79.2 [73.9–83.9] on the open-ended track, 12th of 27, statistically level with Sonnet 5, Opus 4.5 and Haiku 5.5, and significantly above Sonnet 4.5. The open-ended runs for GLM 5.3, Grok 4.6 and GPT 5.6 Luna are under way, paced by a subscription usage cap.
 <!--outside:end-->
 
 - **Parameter count does not predict open score in the mid band.** Phi-4 Mini (3.8B)
@@ -181,13 +181,13 @@ regenerates from `runs/v0_1`). Numbers regenerated from `reports/RESULTS.md` —
   significant), and significantly ahead of Opus 4.8.
 - **Newer is not automatically more faithful.** Within Anthropic's Opus line the ordering
   zig-zags rather than climbing. Opus 4.8 scores significantly below Opus 4.7 (Δ = −6.8,
-  Holm-corrected over 325 pairwise comparisons), and then the newest model, Opus 5, recovers:
+  Holm-corrected over 351 pairwise comparisons), and then the newest model, Opus 5, recovers:
   significantly above 4.8 (Δ = +6.2) and statistically tied with 4.7 at the top. Sonnet 5, for
   its part, does not improve on Sonnet 4.6, and Fable 5 reaches the top of the board. A model's
   generation number does not predict its within-tradition fidelity.
 - **A wider cohort costs statistical power.** The Opus 4.8 vs 4.6 gap (Δ = −3.6) was
   significant when Holm-corrected over the nine-model family's 36 comparisons
-  (*p* = 0.041) and is not over the 26-model open family's 325 (*p* = 0.257, raw *p* = 0.008).
+  (*p* = 0.041) and is not over the 27-model open family's 351 (*p* = 0.273, raw *p* = 0.008).
   The estimate is unchanged; only the size of the correction family grew.
 
 ## Repository layout
