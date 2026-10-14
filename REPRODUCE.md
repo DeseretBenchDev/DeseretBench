@@ -100,8 +100,7 @@ own directories afterwards. Rebuild them with no model calls:
 
 ```bash
 .venv/bin/python -m deseretbench.merge_runs --out runs/v0_1_plus \
-    runs/v0_1 runs/claude_new_mc runs/claude_new_open runs/go_mc_r2 runs/go_open \
-    --exclude-open kimi-k3
+    runs/v0_1 runs/claude_new_mc runs/claude_new_open runs/go_mc_r2 runs/go_open
 .venv/bin/python -m deseretbench.analyze --run runs/v0_1_plus --out results/summary.json
 .venv/bin/python -m deseretbench.report  --summary results/summary.json
 .venv/bin/python -m deseretbench.build_onepager
