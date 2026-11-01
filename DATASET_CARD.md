@@ -29,7 +29,10 @@ reviewer personas — one model (`claude-opus-4-8`) under five system prompts, s
 answers reflects item clarity, not independent raters — retained **266 / 267 MC** and **50 / 57
 open** items. Of the 7 dropped open items, all 7 were dropped because their reviews failed to
 parse (a review-infrastructure failure on sensitive topics, not a quality judgment); the
-harness now re-solicits failed reviews and reports no-quorum items separately. A stratified **20% holdout is withheld** (not published) for
+harness now re-solicits failed reviews and reports no-quorum items separately. All seven are
+life-choice items, and six of them were the only expert-level life-choice items, so the
+published open-ended set has no expert-level life-choice item (its four expert items are
+cultural). They have not been reviewed again. A stratified **20% holdout is withheld** (not published) for
 contamination-resistant scoring (DESIGN.md §6.3):
 
 | split | multiple_choice | open_ended |
@@ -103,6 +106,30 @@ English-only; US-Anglo-centric cultural assumptions; orthodox/correlated framing
 **v0.1 validation is by automated personas, not a credentialed human panel**; questions
 authored by models in the same family as (some) evaluated models (mitigated by
 source-anchoring + independent validation). See DESIGN.md §9.
+
+**Reworded duplicates in the multiple-choice set.** The build removes exact duplicates only.
+A check by hand found at least 8 groups of multiple-choice items that ask the same thing in
+other words, 19 items in all: how a Church President's successor is chosen (3 items), how
+leadership passed to Brigham Young in 1844 (4), how a member obtains a temple recommend (2),
+how the Family Proclamation describes gender (2), the purpose stated on the Book of Mormon
+title page (2), intelligence as co-eternal with God (2), eternal marriage and exaltation (2),
+and green tea under the Word of Wisdom (2). Each group weighs that topic two to four times in
+every multiple-choice score. Not all item pairs have been checked; the open-ended set showed
+no close pairs on the same check.
+
+**Letters in the `notes` field are the authored ones.** Each item's `notes` names options by
+the letter they had when the item was written. The build then reordered the options in 210 of
+the 213 multiple-choice items to balance the keyed letter, so a letter in `notes` usually no
+longer points at the option it describes (`data/questions_mc.jsonl.balance_meta.json` maps each
+option back to its authored letter). Read `notes` by the option's text, not its letter.
+Models never see `notes`, so no score is affected.
+
+**One distractor is arguable.** In `restoration_history_basic_ed4bd39f3e` (how leadership
+passed to Brigham Young in 1844), the distractor "a general election of the membership chose
+Brigham Young" is wrong as a statement of where the keys lay, but the membership did sustain
+the Twelve by vote on 8 August 1844. A careful answer can see some truth in it. The keyed
+answer is right. It is one of the 8 items that some frontier model missed; it stays as
+written until the human review.
 
 ## Citation
 

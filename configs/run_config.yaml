@@ -27,8 +27,8 @@ runner:
   # before it emitted an answer -> empty content -> failed call, while the Claude
   # cohort answers effectively uncapped via the CLI. 16000/20480 lets 2026
   # thinking models finish naturally (qwen3.5 needs ~5.6k tokens end-to-end;
-  # calibrated on a real open item) and still fits the 6 GB card on GPU (~19 t/s,
-  # no CPU offload). Remains a real backstop against genuine runaway loops.
+  # calibrated on a real open item) and still fits the card on GPU (no CPU
+  # offload). Remains a real backstop against genuine runaway loops.
   # See ADR-0014.
   ollama_num_predict: 16000
   ollama_num_ctx: 20480
@@ -64,7 +64,9 @@ effort:
 # Repeat runs for statistical certainty.
 # v0.1 ran 5 MC / 3 open; the October 2026 additions set the current practice of
 # 2 MC repeats (their open repeats: 3 for the two Claude models, 2 for the hosted
-# models). Reproducing the v0.1 numbers needs --runs 5 on the mc phase.
+# models). The November 2026 local additions ran 2 MC and 2 open (--runs 2), and
+# their open-ended scores rest on those two.
+# Reproducing the v0.1 numbers needs --runs 5 on the mc phase.
 runs:
   multiple_choice: 2
   open_ended: 3

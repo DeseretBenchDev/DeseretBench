@@ -81,6 +81,13 @@ class Pack:
     judge_dimensions: tuple
     build_judge_prompt: Callable[[dict, str, str], str]   # (item, response, persona_key)
 
+    # ---- framed condition (optional) --------------------------------------- #
+    # One sentence telling the model to answer from inside this tradition. The
+    # framed edition appends it to the neutral system prompt; the gap between a
+    # model's framed and neutral scores separates what it knows from what it
+    # says by default. None means this pack has no framed edition.
+    framed_instruction: Optional[str] = None
+
     # ---- authoring (optional) ---------------------------------------------- #
     # Generating a fresh question set for this tradition. A pack that only needs
     # to be *scored* (running models against a set someone else authored) can

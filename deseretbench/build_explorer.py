@@ -19,8 +19,22 @@ ROOT = Path(__file__).resolve().parent.parent
 LETTERS = "ABCDEFGH"
 
 
+def authored_letters(position_map: dict, qid: str, n: int) -> list[str] | None:
+    """For each option as shown, the letter it had when the item was written.
+
+    balance_positions shuffled answer positions after authoring, and the author
+    notes still name options by their authored letters ("Distractor B is ...").
+    Rewriting letters inside free prose is unsafe (an article "A", "D&C"), so
+    the explorer shows each option's authored letter beside it instead. None
+    when the item was not reordered or has no record."""
+    rec = position_map.get(qid)
+    if not rec or rec["order"] == list(range(n)):
+        return None
+    return [LETTERS[orig] for orig in rec["order"]]
+
+
 def build_data(models, mc_questions, open_questions, mc_records, open_scores,
-               open_responses, summary):
+               open_responses, summary, position_map=None):
     mc_mean = {m: v["mean"] for m, v in summary["mc"]["overall"].items()}
     op_mean = {m: v["mean"] for m, v in (summary.get("open") or {}).get("overall", {}).items()}
     cohort = [m for m in models if m["id"] in mc_mean]
@@ -51,7 +65,8 @@ def build_data(models, mc_questions, open_questions, mc_records, open_scores,
             "dt": q.get("distractor_types", []), "ans": q["answer_index"],
             "src": q.get("source", ""), "notes": q.get("notes", ""), "dist": dist,
             "n": len(got), "p": round(sum(ok for *_, ok in got) / len(got), 3) if got else 0,
-            "missed": missed, "fmiss": any(m in frontier for m in missed)})
+            "missed": missed, "fmiss": any(m in frontier for m in missed),
+            "au": authored_letters(position_map or {}, qid, len(q["choices"]))})
 
     scores = defaultdict(lambda: defaultdict(dict))    # qid -> model -> run -> rec
     for r in open_scores:
@@ -113,7 +128,9 @@ def main():
         mc_records=_jsonl(run / "mc_responses.jsonl"),
         open_scores=_jsonl(run / "open_scores.jsonl"),
         open_responses=_jsonl(run / "open_responses.jsonl"),
-        summary=json.loads((ROOT / a.summary).read_text()))
+        summary=json.loads((ROOT / a.summary).read_text()),
+        position_map=json.loads((ROOT / "data/questions_mc.jsonl.balance_meta.json")
+                                .read_text())["position_map"])
     page = ROOT / a.page
     html = page.read_text()
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")

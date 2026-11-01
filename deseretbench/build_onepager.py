@@ -19,7 +19,18 @@ ROOT = Path(__file__).resolve().parent.parent
 TIER_COLOR = {"fable": "#4A2E63", "opus": "#9A6B1E", "sonnet": "#2C3D63", "haiku": "#7A3326",
               # local open-weights tiers, muted to match the print palette
               "qwen3": "#8C2F39", "gemma": "#1F5F5B", "phi": "#4E3B31",
-              "smollm": "#8A4E6E", "deepseek": "#55606B"}
+              "smollm": "#8A4E6E", "deepseek": "#55606B",
+              # Tiers added after v0.1. Each is a darker cousin of its report.py
+              # hue: the tier chip and the bar label are white text on this
+              # colour, so every entry keeps at least 4.5:1 contrast with white.
+              # A tier missing here still renders, as grey (#888, 3.5:1).
+              "qwen3.5": "#B04A2A", "gemma4": "#3B7F78", "granite": "#756A1C",
+              "ministral": "#B05A12", "nemotron": "#5A6B14",
+              "olmo-3": "#2F5A8C", "olmo-3-think": "#4F7AA3", "falcon": "#8B3F8F",
+              "apertus": "#7F6A3E", "lfm": "#3F7A3A",
+              "kimi": "#126A8C", "qwen": "#99603F", "glm": "#6E55A0",
+              "grok": "#33383D", "gpt": "#157A5C", "gemini": "#2F6FBF",
+              "minimax": "#A6294A"}
 
 FONTS = [  # (family, weight, style, file)
     ("Cinzel", 600, "normal", "cinzel-600.woff2"),
@@ -313,6 +324,11 @@ def open_table(summary):
     return "".join(out)
 
 
+def _ctx_cell(o):
+    """Mark and window size for a row measured under its own context window."""
+    return f' § <span class="num">context {o["num_ctx"]:,}</span>' if o.get("num_ctx") else ""
+
+
 def cohort_badge(mc_overall):
     """The cohort badge: every scored model, whatever its vendor."""
     return str(len(mc_overall)), "models"
@@ -330,12 +346,17 @@ def mc_table(summary):
     for mid, o in rows:
         c = TIER_COLOR.get(o["tier"], "#888")
         out.append(
-            f'<tr><td><b>{_h.escape(o["label"])}</b></td>'
+            f'<tr><td><b>{_h.escape(o["label"])}</b>{_ctx_cell(o)}</td>'
             f'<td><span class="tier" style="background:{c}">{_h.escape(str(o["tier"]))}</span></td>'
             f'<td class="num">{_fnum(o["mean"], 3)}</td>'
             f'<td class="num">[{_fnum(o["lo"], 3)}, {_fnum(o["hi"], 3)}]</td>'
             f'<td class="num">{_fnum(o["parse_fail_rate"], 3)}</td></tr>')
     out.append("</tbody></table>")
+    if any(o.get("num_ctx") for o in ov.values()):
+        out.append('<p class="small">§ Measured with its own, smaller context window '
+                   '(tokens, beside the name): the model does not fit the test card at '
+                   'the window the other local models ran with. Every item fits the '
+                   'smaller window whole.</p>')
     return "".join(out)
 
 

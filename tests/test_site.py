@@ -26,7 +26,7 @@ def _page():
 
 
 def _rows():
-    """label -> (rank cell, [numbers in <b>], whether the open cell is pending)."""
+    """label -> (rank cell, [numbers in <b>], whether the open cell is unscored)."""
     rows = {}
     for line in _page().splitlines():
         m = _ROW.match(line)
@@ -34,8 +34,10 @@ def _rows():
             continue
         label = re.sub(r"\s*<sup>.*?</sup>", "", m.group(2)).strip()
         assert label not in rows, f"model listed twice on the home page: {label}"
+        # no open-ended score: either still running, or measured on multiple
+        # choice only (a model whose own context window only fits that track)
         rows[label] = (m.group(1), re.findall(r"<b>([\d.]+)</b>", line),
-                       "in progress" in line)
+                       "in progress" in line or "multiple choice only" in line)
     return rows
 
 

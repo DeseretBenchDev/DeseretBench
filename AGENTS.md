@@ -1,5 +1,7 @@
 # AGENTS.md — how to work in this repo
 
+This codebase is yours: what it's for and how it's built are your call, and you'll keep building on it.
+
 *For AI agents and human contributors alike. Opinionated on purpose. Each layer goes
 one level deeper — read until you have what you need, then follow the links.*
 
@@ -58,6 +60,9 @@ The intent lives in [VISION.md](VISION.md). The normative technical spec is
 | Add a new tradition (Catholic, Orthodox, …) | `python -m deseretbench.newpack <key>` → `deseretbench/packs/<key>/pack.py` | [add-a-faith-pack](docs/how-to/add-a-faith-pack.md) |
 | Add/revise questions | `author` → `assemble` → `validate_questions` → `balance_positions` | [how-to](docs/how-to/add-questions.md) — mind the balance marker |
 | Run the whole benchmark | `scripts/finish_pipeline.sh` | [recover-interrupted-run](docs/how-to/recover-interrupted-run.md) |
+| Measure what a model knows against what it says by default | `run_benchmark --condition framed`, `deseretbench/framing.py` | [how-to](docs/how-to/run-the-framed-edition.md), [ADR-0015](docs/adr/0015-framed-prompt-condition.md) |
+| Have people review the questions and check the judge | `deseretbench/human_review.py` | [how-to](docs/how-to/run-a-human-review-round.md), [DESIGN §6.1](DESIGN.md) |
+| Check the standings against a judge from another lab | `deseretbench/second_judge.py` | [how-to](docs/how-to/score-with-a-second-judge.md), [judge-design](docs/explanation/judge-design.md) |
 | Re-analyze without re-running models | `analyze` / `report` | [how-to](docs/how-to/rerun-analysis.md) |
 | Understand a past decision | [docs/adr/](docs/adr/) | `DESIGN.md` |
 | Cut a release / push | — | [release-checklist](docs/how-to/release-checklist.md) |
@@ -73,7 +78,8 @@ deseretbench/
   score_mc.py           MC letter-extraction rule cascade
   judge.py              judge parsing/aggregation (personas + prompt from the pack)
   stats.py              bootstrap/Holm/Clopper-Pearson/Krippendorff/seeding
-  analyze.py            scores + stats → <pack>/summary.json
+  analyze.py            scores + stats → <pack>/summary.json (neutral runs only)
+  framing.py            framed run vs neutral run → framing.json, FRAMING.md
   report.py             summary.json → <pack>/RESULTS.md, leaderboard, figures
   build_onepager.py     self-contained HTML one-pager (own aesthetic, own palette)
   schema.py             item validation (taxonomy comes from the active pack)

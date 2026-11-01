@@ -49,7 +49,7 @@ Of the outside models whose open-ended runs are complete, Kimi K3 scores 95.3 (5
 <!--abstract-outside:end-->
 
 *November 2026 addendum (§4.7).* Eight larger local open-weights models (4B–12B) were added on
-a 10 GB consumer GPU, bringing the cohort to thirty-eight. Gemma 4 12B scores 0.991 on multiple
+a single consumer GPU, and Phi-4 14B on multiple choice only, bringing the cohort to thirty-nine. Gemma 4 12B scores 0.991 on multiple
 choice, statistically level with every frontier model, and 33.5 open-ended. Granite 4.2 8B
 posts the highest local open-ended composite, 36.1, still significantly below Haiku 4.5 (48.5).
 The capability gap that MC alone conceals therefore persists in a local model at the MC ceiling.
@@ -150,11 +150,12 @@ original CPU-served cohort was extended with the five 2026 families on a single 
 GPU ([ADR-0013](docs/adr/0013-2026-cohort-expansion-and-gpu-inference.md)).
 
 **Later additions.** Seven models joined in October 2026 (§4.6). Eight larger local models
-followed in November 2026 on an RTX 3080 with 10 GB (§4.7): Gemma 4 E4B and 12B, Granite 4.2
+followed in November 2026 on a single consumer GPU (§4.7): Gemma 4 E4B and 12B, Granite 4.2
 8B, OLMo 3 7B Instruct and Think, Falcon-H1R 7B, Apertus 8B Instruct and LFM2.5 8B, adding the
 Allen Institute, the Swiss AI Initiative, TII and Liquid AI as vendors. Four pulled models
-were not run because they do not fit 10 GB at the configured context (Phi-4 14B, gpt-oss 20B,
-Gemma 4 26B, Muse Glimmer 30B), and one, RNJ-1 8B, failed to load.
+did not fit the card's memory at the configured context. One of them, Phi-4 14B, was then measured on
+multiple choice only under its own 2,048-token window ([ADR-0014](docs/adr/0014-local-generation-caps.md));
+the other three (gpt-oss 20B, Gemma 4 26B, Muse Glimmer 30B) were not run, and RNJ-1 8B failed to load.
 
 The two halves answer different questions. The Claude cohort asks how frontier models differ
 from each other. The local cohort asks what the instrument looks like when it is *not*
@@ -175,7 +176,7 @@ per-item means, so the repeat count changes precision, not the estimand.
 All numbers are from `runs/v0_1` (seed 19470417, 100,000 bootstrap resamples; MC = 5 runs,
 open = 3 runs; 23 models × 213 public MC items and × 40 public open items — 24,495 MC
 responses and 2,760 open responses scored by a 3-persona judge panel). Full tables and
-figures for the current thirty-eight-model cohort are in `reports/RESULTS.md` and
+figures for the current thirty-nine-model cohort are in `reports/RESULTS.md` and
 `reports/leaderboard.html`; §4.1–§4.5 report the twenty-three-model v0.1 analysis, which
 regenerates exactly with `python -m deseretbench.analyze --run runs/v0_1`. §4.6 covers the
 October 2026 additions, analyzed over the merged run `runs/v0_1_plus`. §4.7 covers the
@@ -390,8 +391,9 @@ Among Claude models 52 of 66 open-ended pairs now differ significantly, and 310 
 
 ### 4.7 November 2026 additions
 Eight local models were added in November 2026, each with 2 MC and 2 open repeats on the shipped
-items, judged by the same panel. The merged analysis has 30,885 MC responses from
-thirty-eight models and 3,800 judged units from thirty-five. Judge reliability holds
+items, judged by the same panel, and Phi-4 14B was added on multiple choice only (below). The
+merged analysis has 31,311 MC responses from thirty-nine models and 3,800 judged units from
+thirty-five. Judge reliability holds
 (Krippendorff's α = 0.992; lowest dimension
 0.976). No score from an earlier model changed.
 
@@ -414,12 +416,24 @@ the MC-to-open collapse now appears in a model at the ceiling: a local model can
 every keyed answer and still score about a third of the frontier on written counsel.
 
 **Larger families cost power again.** The open family grows from 351 to 595 comparisons, and 519
-are significant; the MC family grows from 435 to 703, with 465 significant. The Holm floor for the
+are significant; the MC family grows from 435 to 741 with Phi-4 14B, and 480 are significant.
+Three earlier MC pairs lose significance in the larger family, with unchanged estimates: Qwen3 1.7B
+against SmolLM2 1.7B, Ministral 3 3B against Gemma 4 E2B, and Gemma 4 E4B against Falcon-H1R 7B. The Holm floor for the
 open family is 0.012. Two findings shift only in their corrected *p*: Haiku 5.5 against Sonnet 4.6
 (Δ = −8.7) moves to *p* = 0.050 and no longer reaches significance, and Opus 4.8 against 4.6
 (Δ = −3.6) moves to *p* = 0.521.
 
-**Qualifications.** Local scores here use 2 repeats of each item. `think: false` clearly disables
+**Phi-4 14B, multiple choice only.** It does not fit the test card at the shared 20,480-token
+window, so it ran under its own 2,048-token window, which holds every multiple-choice item whole
+(the largest call used 799 tokens). It scores 0.986 [0.969, 0.998], not significantly different
+from any frontier model. Between 27 and 36 of its 41 layers sat on the card in the two sessions
+it ran in, the rest on the CPU; that changes speed and not the answers, and no speed figure is
+reported. Its row is marked wherever it is printed. It has no open-ended score: a long written
+answer could not be guaranteed to fit the smaller window.
+
+**Qualifications.** The scores of these eight models rest on 2 repeats of each item on both
+tracks; on the open-ended track that is 80 judged answers per model, against 120 for the v0.1
+cohort's three repeats, and their intervals are wider for it. `think: false` clearly disables
 reasoning only on Granite 4.2 among the new thinking families, so Falcon-H1R, OLMo 3 Think and
 possibly LFM2.5 reason on MC at low effort. OLMo 3 Instruct and Granite 4.2 ran with about 8–9% of
 layers on CPU. See `docs/explanation/2026-11-box-cohort.md`. MC item statistics drift further toward the ceiling (mean

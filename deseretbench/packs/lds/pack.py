@@ -351,6 +351,8 @@ PACK = Pack(
     dim_short=DIM_SHORT,
     judge_personas=JUDGE_PERSONAS,
     judge_system=JUDGE_SYSTEM,
+    framed_instruction=("Answer according to the teachings of The Church of "
+                        "Jesus Christ of Latter-day Saints."),
     judge_dimensions=JUDGE_DIMENSIONS,
     build_judge_prompt=build_judge_prompt,
     # authoring

@@ -4,13 +4,18 @@ Eight local open-weights models were added to the cohort. This note records what
 not and why. Scores are from `results/summary.json` (analysis seed 19470417, 100,000 bootstrap
 resamples); model sampling is not seeded.
 
-**Setup.** RTX 3080 (10 GB), Ollama 0.40.7, one model resident, serial requests, `num_ctx` 20480,
+**Setup.** One consumer graphics card, Ollama 0.40.7, one model resident, serial requests, `num_ctx` 20480,
 `num_predict` 16000. Shipped question set, unchanged. MC 2 repeats at low effort; open-ended 2
 repeats at high effort, judged by `claude-sonnet-4-6` under three personas through the `claude` CLI.
 The repeat counts follow the October additions: 2 MC throughout, and 2 open as the most recent
 October runs used (their two Claude models ran 3).
 
-| Model | Tag | Quantization | MC (95% CI) | Open-ended (95% CI) |
+**Every score in the table below rests on two repeats of each item, on both tracks.** For the
+open-ended track that is 80 judged answers per model (40 items × 2), against 120 for the v0.1
+cohort, which ran three. Two is the final count for these eight models. Scores are per-item
+means, so the smaller count widens the intervals and does not change what is estimated.
+
+| Model | Tag | Quantization | MC, 2 repeats (95% CI) | Open-ended, 2 repeats (95% CI) |
 |---|---|---|---|---|
 | Granite 4.2 8B | `granite4.2:8b` | Q4_K_M | 0.941 [0.913, 0.967] | 36.1 [31.8, 40.3] |
 | Gemma 4 12B | `gemma4-12b:q4_0` | Q4_0 | 0.991 [0.981, 0.998] | 33.5 [30.0, 36.7] |
@@ -23,13 +28,17 @@ October runs used (their two Claude models ran 3).
 
 All 3,408 MC calls and 640 open generations succeeded, and all 1,920 judge verdicts parsed. Judge
 α over the merged cohort is 0.992. Mean within-item standard deviation across the 2 MC repeats, in
-the table's order: 0.036, 0.013, 0.030, 0.060, 0.073, 0.070, 0.053, 0.053.
+the table's order: 0.036, 0.013, 0.030, 0.060, 0.073, 0.070, 0.053, 0.053. The
+same statistic across the 2 open-ended repeats, in composite points (0–100) and in the same order:
+6.9, 3.8, 4.5, 4.7, 4.2, 4.5, 3.9, 4.2. Each open-ended repeat is a fresh answer judged afresh, so
+that figure includes the judges' spread. The thirteen earlier local models, which ran three
+repeats, range from 0.5 to 6.7 on the same statistic.
 
 ## Not run
 
 | Model | Reason |
 |---|---|
-| `phi4:14b` | not run: VRAM (12.7 GB resident) |
+| `phi4:14b` | not run at the shared window: VRAM (12.7 GB resident). Measured on 11 November on multiple choice only, under its own 2,048-token window: 0.986 [0.969, 0.998]. See PAPER §4.7. |
 | `gpt-oss:20b` | not run: VRAM (13.8 GB on disk) |
 | `gemma4:26b` | not run: VRAM (18.7 GB on disk) |
 | `muse-glimmer:30b` | not run: VRAM (18.2 GB on disk) |

@@ -47,6 +47,33 @@ def test_known_tier_colours_are_distinct():
     assert not dupes, f"colours reused across tiers: {sorted(dupes)}"
 
 
+def test_onepager_palette_covers_every_tier_report_knows():
+    """The one-pager keeps its own print palette, so a tier added to report.py
+    alone renders there as a grey chip: seventeen tiers did, across three cohort
+    additions, and nothing failed."""
+    from deseretbench import build_onepager
+    missing = sorted((_cohort_tiers() | set(TIER_COLOR))
+                     - set(build_onepager.TIER_COLOR))
+    assert not missing, f"tiers with no one-pager colour: {missing}"
+
+
+def test_onepager_tier_colours_are_distinct_and_carry_white_text():
+    """The tier chip and the bar label are white text on the tier colour."""
+    from deseretbench.build_onepager import TIER_COLOR as PAGE
+
+    def luminance(colour):
+        chans = [int(colour[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+        r, g, b = (c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+                   for c in chans)
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+    colours = [c.upper() for c in PAGE.values()]
+    assert len(set(colours)) == len(colours), "colours reused across tiers"
+    faint = {t: round(1.05 / (luminance(c) + 0.05), 2) for t, c in PAGE.items()
+             if 1.05 / (luminance(c) + 0.05) < 4.5}
+    assert not faint, f"white text below 4.5:1 on: {faint}"
+
+
 def test_onepager_cohort_badge_counts_every_model_without_calling_them_claude():
     from deseretbench.build_onepager import cohort_badge
     mco = {"claude-opus-5": {}, "kimi-k3": {}, "qwen3:4b": {}}

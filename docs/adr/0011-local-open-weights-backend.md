@@ -14,8 +14,8 @@ pattern-matching, small open-weights models should fail it in measurable,
 type-diagnosable ways. A frontier-only leaderboard also can't say where the
 capability *emerges*.
 
-The bench host is modest (4-core i5-7300HQ, 15 GB RAM, no CUDA — the GTX 1060
-runs nouveau), so anything local must be small, quantized, CPU-served, and
+The bench host is modest (a few CPU cores, limited memory, no working GPU
+driver), so anything local must be small, quantized, CPU-served, and
 strictly one-model-at-a-time to avoid OOM.
 
 ## Decision
@@ -27,7 +27,7 @@ configured default, `claude_cli`).
 - **Serving.** A user-space Ollama install (no root, no HF token; models pulled
   from the Ollama library, which hosts official vendor uploads) with
   `OLLAMA_MAX_LOADED_MODELS=1` and `OLLAMA_NUM_PARALLEL=1`: at most one model
-  resident, requests queued serially — OOM-safe by construction on a 15 GB host.
+  resident, requests queued serially — OOM-safe by construction on a small host.
 - **Transport.** `POST /api/chat` on localhost via stdlib `urllib` (no new
   dependencies), `stream: false`, system + user messages, pinned generation
   caps (`num_predict: 4096`, `num_ctx: 8192`).
@@ -84,7 +84,7 @@ three would have cost the next person a day.
   requests at **2.5–10 GB/h**. The rate is model-dependent and does **not**
   track thinking mode — the fastest leak measured was SmolLM2, a non-thinking
   model, which falsified the obvious hypothesis. It self-clears when the model
-  idle-unloads, but a long generation leg exhausts a 15 GB host first. A
+  idle-unloads, but a long generation leg exhausts a small host first. A
   supervisor outside this repo bounces the server on `MemAvailable` (the
   primary trigger, checked independently of any process match — a safety net
   that disables itself when it cannot find a process name is worse than none)

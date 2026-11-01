@@ -163,3 +163,54 @@ def test_open_overall_carries_generation(tmp_path):
                        seed=7, n_boot=50, ci=0.95)
     assert out["overall"]["model-a"]["generation"] == 1.7
     assert out["overall"]["model-b"]["generation"] is None
+
+
+def test_open_reports_run_to_run_spread_and_repeat_count(tmp_path):
+    # q1: runs 40, 60 -> SD (ddof=1) 14.142; q2: 80, 80 -> 0; q3 has one run and
+    # cannot contribute. Mean over the two repeated items = 7.07.
+    recs = [_open_score("model-a", "q1", 0, 40.0), _open_score("model-a", "q1", 1, 60.0),
+            _open_score("model-a", "q2", 0, 80.0), _open_score("model-a", "q2", 1, 80.0),
+            _open_score("model-a", "q3", 0, 50.0),
+            # an unscored repeat is not a repeat
+            _open_score("model-a", "q3", 1, None)]
+    sp = tmp_path / "open_scores.jsonl"
+    _write(sp, recs)
+    o = analyze_open(sp, tmp_path / "missing_judge.jsonl", COHORT,
+                     seed=7, n_boot=100, ci=0.95)["overall"]["model-a"]
+    assert o["mean_within_item_sd"] == 7.07
+    assert o["n_items_repeated"] == 2
+    assert o["n_repeats"] == 2
+    assert o["n"] == 3
+
+
+def test_open_run_spread_is_undefined_with_a_single_repeat(tmp_path):
+    # One run per item says nothing about spread: report None, not 0.0.
+    sp = tmp_path / "open_scores.jsonl"
+    _write(sp, [_open_score("model-a", "q1", 0, 40.0),
+                _open_score("model-a", "q2", 0, 80.0)])
+    o = analyze_open(sp, tmp_path / "missing_judge.jsonl", COHORT,
+                     seed=7, n_boot=100, ci=0.95)["overall"]["model-a"]
+    assert o["mean_within_item_sd"] is None
+    assert o["n_items_repeated"] == 0
+    assert o["n_repeats"] == 1
+
+
+def test_context_override_travels_with_the_row_and_only_that_row(tmp_path):
+    # A model run under its own context window must say so wherever its row is
+    # printed; every other model's record must not gain the key.
+    cohort = [{"id": "model-a", "label": "A", "tier": "opus"},
+              {"id": "model-b", "label": "B", "tier": "phi", "backend": "ollama",
+               "backend_opts": {"ollama_num_ctx": 4096}}]
+    recs = [_mc_rec(m, q, r, True) for m in ("model-a", "model-b")
+            for q in ("q1", "q2") for r in (0, 1)]
+    p = tmp_path / "mc.jsonl"
+    _write(p, recs)
+    ov = analyze_mc(p, cohort, seed=7, n_boot=100, ci=0.95)["overall"]
+    assert ov["model-b"]["num_ctx"] == 4096
+    assert "num_ctx" not in ov["model-a"]
+
+    from deseretbench.report import ctx_note, row_label
+    assert row_label(ov["model-b"]) == "B § (context 4,096)"
+    assert row_label(ov["model-a"]) == "A"
+    assert "§" in ctx_note(ov)
+    assert ctx_note({"model-a": ov["model-a"]}) == ""

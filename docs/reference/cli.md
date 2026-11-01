@@ -186,9 +186,17 @@ Prints the key-letter distribution before and after.
 ## `deseretbench.run_benchmark`
 
 ```
-python -m deseretbench.run_benchmark mc   --questions PATH --out DIR [--models a,b] [--runs N] [--limit K] [--max-parallel P]
-python -m deseretbench.run_benchmark open --questions PATH --out DIR [--models a,b] [--runs N] [--limit K] [--max-parallel P] [--judge-crosscheck]
+python -m deseretbench.run_benchmark mc   --questions PATH --out DIR [--models a,b] [--runs N] [--limit K] [--max-parallel P] [--condition neutral|framed]
+python -m deseretbench.run_benchmark open --questions PATH --out DIR [--models a,b] [--runs N] [--limit K] [--max-parallel P] [--condition neutral|framed] [--judge-crosscheck]
 ```
+
+`--condition` (default `neutral`) selects the prompt condition. `framed` appends the active
+pack's `framed_instruction` to the system prompt, stamps `"condition": "framed"` on every
+record, and needs an `--out` directory that holds no neutral run. Framed runs are compared
+with the neutral run by `python -m deseretbench.framing --neutral DIR --framed DIR
+[--out PATH] [--report PATH]`, which writes `framing.json` and `FRAMING.md`; `analyze` and
+`merge_runs` refuse framed records. See
+[run the framed edition](../how-to/run-the-framed-edition.md).
 
 Runs the benchmark itself. Two required subcommands: `mc` (multiple choice,
 inline-scored) and `open` (open-ended: generate, judge, aggregate).

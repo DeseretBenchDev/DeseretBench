@@ -176,6 +176,12 @@ Effort is constant across models within each item class, so it never confounds a
 We do *not* tell the model the test is about the LDS Church beyond what each question states, and
 we do not coach toward orthodox answers. This measures latent knowledge, not steerability.
 
+**[DECISION EXTENDED 2026-11]** The neutral prompt stays the only prompt behind the standings.
+A second, separate condition now exists beside it: the *framed* edition adds one sentence
+telling the model to answer according to the Church's teachings, and the gap between a model's
+framed and neutral scores is reported on its own. It never enters the standings. See
+[ADR-0015](docs/adr/0015-framed-prompt-condition.md).
+
 ### 4.2 Temperature / stochasticity
 The CLI does not expose a temperature flag; models run at their default sampling with reasoning on.
 Run-to-run variation is therefore real and is exactly what **repeat runs** are designed to capture.
@@ -184,6 +190,15 @@ We do not pretend determinism; we estimate each model's *accuracy distribution*.
 ### 4.3 Repeat runs (statistical certainty)
 - **MC:** `N_runs = 5` per (model, item).
 - **Open-ended:** `N_runs = 3` per (model, item), each scored by a multi-judge panel.
+
+**[DECISION REVISED 2026-11]** The counts above are the v0.1 counts, and they are history:
+the twenty-three v0.1 models ran 5 MC and 3 open-ended repeats. Every model added since
+(October and November 2026) ran 2 MC repeats, and `configs/run_config.yaml` now ships
+`multiple_choice: 2`. The config still ships `open_ended: 3`; of the later additions, the
+two Claude models ran 3 open-ended repeats and the hosted and local models ran 2
+(`--runs 2`). Scores are per-item means, so fewer repeats widen the confidence intervals
+without changing what is estimated. Reproducing the v0.1 numbers needs `--runs 5` on the
+MC phase.
 
 Aggregation and uncertainty: §7.
 
@@ -374,6 +389,7 @@ exist for runs from the audit onward.
 - **Item analysis:** difficulty (p-value), discrimination (item–total point-biserial), and
   **ceiling/floor/discrimination** checks across the cohort (runbook §4.3).
 - **Run-to-run variance:** within-model SD across the 5/3 runs, per item and aggregate.
+  (5/3 are the v0.1 repeat counts; later additions ran fewer, see §4.3.)
 - **Face validity:** does the model ranking make intuitive sense (Opus ≥ Sonnet ≥ Haiku;
   newer ≥ older within tier)? Reported, not assumed.
 

@@ -65,7 +65,7 @@ cohort:
   # — one model resident, strictly serial inference; pulled 2026-07-08).
   # Ordered smallest-first: the warm loop walks this order.
   # (gemma4's E-series is in the ollama library only as unquantized-class
-  # 7.2+ GB blobs — unusable on this 15 GB CPU host, so Gemma is represented
+  # 7.2+ GB blobs — unusable on the CPU-only host, so Gemma is represented
   # by the quantized gemma3 pair instead.)
   - id: qwen3:0.6b
     tier: qwen3
@@ -117,7 +117,7 @@ cohort:
   # taxes every existing comparison (C(17,2)=136 -> C(22,2)=231).
   # Each tag is pinned exactly — several of these families ship a `latest` that
   # resolves to something unusable here (nemotron-3-nano:latest is a 24 GB 30B;
-  # qwen3.5:latest is the 6.6 GB 9B, over this 6 GB card).
+  # qwen3.5:latest is the 6.6 GB 9B, too large for the card used).
   - id: granite4.1:3b
     tier: granite
     label: "Granite 4.1 3B"
@@ -145,7 +145,7 @@ cohort:
     label: "Nemotron 3 Nano 4B"
     generation: 4.0
     backend: ollama
-  # CAVEAT: the only gemma4 tag that fits 6 GB is the QAT build (4.3 GB); every
+  # CAVEAT: the only gemma4 tag that fit the card used is the QAT build (4.3 GB); every
   # q4_K_M variant is 7.2 GB+. So this single entry is quantization-aware-trained
   # while the rest of the local cohort is q4_K_M — a documented asymmetry, not an
   # oversight. "E2B" is an effective-parameter size, not a dense 2B.
@@ -155,7 +155,7 @@ cohort:
     generation: 2.0
     backend: ollama
 
-  # ---- Box cohort (RTX 3080 10 GB, Ollama 0.40.7; added 2026-11-08) ----
+  # ---- Box cohort (one consumer GPU, Ollama 0.40.7; added 2026-11-08) ----
   # Exact tags as pulled; quantization is the build Ollama reports. Fit is judged
   # at the configured num_ctx 20480 from the larger of on-disk and resident size.
   # think:false reliably stops reasoning only on granite4.2 of the families below;
@@ -208,9 +208,22 @@ cohort:
     generation: 12.0
     backend: ollama
     quantization: Q4_0
+  # Phi-4 14B does not fit the card at the shared num_ctx (20480: 12.7 GB
+  # resident). It runs here under its own 2048-token window, with 27 to 36 of
+  # its 41 layers on the card (it ran in two sessions) and the rest on CPU;
+  # every MC call fits (largest 799 tokens in and out).
+  # Multiple choice only. Its rows are marked wherever they are printed.
+  - id: phi4:14b
+    tier: phi
+    label: "Phi-4 14B"
+    generation: 14.7
+    backend: ollama
+    quantization: Q4_K_M
+    backend_opts:
+      ollama_num_ctx: 2048
   # Pulled, not in the cohort (probed 2026-11-08 at num_ctx 20480):
-  # not run: VRAM -- phi4:14b (12.7 GB resident), gpt-oss:20b (13.8 GB on disk),
-  #   gemma4:26b (18.7 GB on disk), muse-glimmer:30b (18.2 GB on disk).
+  # not run: VRAM -- gpt-oss:20b (13.8 GB on disk), gemma4:26b (18.7 GB on disk),
+  #   muse-glimmer:30b (18.2 GB on disk): the weights alone exceed the card.
   # not run: load failure -- rnj-1:8b (llama-server GGML_ASSERT hparams.is_swa_any
   #   on Ollama 0.40.7, twice).
 

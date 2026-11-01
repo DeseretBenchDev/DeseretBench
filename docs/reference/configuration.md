@@ -35,7 +35,7 @@ A list of model entries. Each entry has four required keys plus one optional:
 | `backend` *(optional)* | string | Pins this entry to a specific backend (e.g. `ollama`). Entries without it use `runner.backend` from `run_config.yaml`. The effective backend is part of the cache key ([ADR-0011](../adr/0011-local-open-weights-backend.md)). |
 | `quantization` *(optional)* | string | The quantization of a local build as Ollama reports it (e.g. `Q4_K_M`). Recorded for provenance; no code reads it. |
 
-The current cohort is thirty-eight models over three serving paths.
+The current cohort is thirty-nine models over three serving paths.
 
 Twelve are Claude models reached through the authenticated `claude` CLI: two `fable`,
 five `opus`, three `sonnet`, two `haiku`, spanning generations 4.5–5.5. Per the
@@ -55,9 +55,13 @@ per-tier report line reads as a within-family scaling curve
 ([ADR-0011](../adr/0011-local-open-weights-backend.md)).
 
 Eight more are larger local models (4B–12B), added 2026-11-08 and served by Ollama on a
-10 GB GPU: tiers `gemma4` (E4B, 12B), `granite` (8B), `olmo-3` and `olmo-3-think` (7B),
+single consumer GPU: tiers `gemma4` (E4B, 12B), `granite` (8B), `olmo-3` and `olmo-3-think` (7B),
 `falcon` (7B), `apertus` (8B) and `lfm` (8B). Each records its `quantization`. A comment
 beside them lists the pulled models that were not run, with the reason.
+
+One more, Phi-4 14B (tier `phi`, 14.7B), added 2026-11-11, runs multiple choice only under its
+own `backend_opts: {ollama_num_ctx: 2048}`; its rows carry the window
+([ADR-0014](../adr/0014-local-generation-caps.md)).
 
 Five are hosted models from other labs pinned with `backend: openai_compat` and reached
 through an OpenCode Go subscription: `kimi-k3`, `qwen3.8-max`, `glm-5.3`, and (with
@@ -79,6 +83,7 @@ judge model prompted as three personas, not three independent judge models.
 |---|---|---|
 | `primary_model` | `claude-sonnet-4-6` | The single judge model. Every open-ended response is scored three times by this model, once per persona. |
 | `crosscheck_model` | `claude-opus-4-8` | A second judge model used only when `run_benchmark.py open --judge-crosscheck` is passed: it re-judges a seeded subset to measure judge-model sensitivity. Implemented but not yet run for v0.1. Required (hard error) if `--judge-crosscheck` is set and the key is absent. |
+| `second` *(optional)* | — | A judge from another model family for `python -m deseretbench.second_judge`: `model`, `backend`, `backend_opts`. It re-scores stored answers in its own directory and never changes the standings. Must not share the primary judge's family. |
 | `personas` | `[seminary_teacher, byu_religion_professor, bishop]` | The three judging personas the primary model is prompted as. |
 | `crosscheck_fraction` | `0.25` | Fraction of (model, item, run) triples the crosscheck model re-judges. Default if absent: `0.25` (`run_benchmark.py:334`). The subset is selected with the seed from `stats.rng_seed` (default `0` if absent on that path). |
 

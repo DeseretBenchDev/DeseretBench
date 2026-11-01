@@ -478,7 +478,7 @@ Top-level keys:
 
 | Key | Meaning |
 |---|---|
-| `overall` | Per-model map: `label`, `tier`, `mean`, `lo`, `hi`, `n`, `sem` (bootstrap over per-item mean `composite_100`), `n_unscored_records`, `mean_must_include_coverage`, `mean_should_not_violations`, `judge_dimension_means` (item-weighted per-dimension means on the 1–5 scale) |
+| `overall` | Per-model map: `label`, `tier`, `mean`, `lo`, `hi`, `n`, `sem` (bootstrap over per-item mean `composite_100`), `mean_within_item_sd` (mean within-item SD of `composite_100` across scored repeats, in composite points; null when no item has two), `n_items_repeated`, `n_repeats` (most scored repeats on any item), `n_unscored_records`, `mean_must_include_coverage`, `mean_should_not_violations`, `judge_dimension_means` (item-weighted per-dimension means on the 1–5 scale) |
 | `by_dimension` | Bootstrap over per-item means per open dimension |
 | `pairwise` | `a`, `a_label`, `b`, `b_label`, `diff`, `lo`, `hi`, `p_bootstrap`, `p_holm`, `significant_holm` (no McNemar — that is MC-only) |
 | `judge_irr` | `krippendorff_alpha` (interval α over persona composites, primary judge rows only), `per_dimension_alpha`, `min_dimension_alpha`, `n_personas`, `n_units`; null when < 2 personas, no units, or no `open_judge_raw.jsonl` |

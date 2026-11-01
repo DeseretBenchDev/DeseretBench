@@ -77,3 +77,22 @@ def test_open_item_shows_first_run_text_and_mean_over_runs():
                                   "dims": {"doctrinal_accuracy": 4.0}, "cov": 0.5}
     assert o["cavg"] == 50.0
     assert tx == {"o1": {"big": "first"}}
+
+
+def test_options_carry_their_authored_letter_when_positions_were_shuffled():
+    # balance_positions moved the authored A to C, etc.; the notes still say "A"
+    pm = {"q1": {"order": [2, 0, 1], "answer_from": 0, "answer_to": 1}}
+    data, _ = build_data(
+        models=MODELS, mc_questions=[MCQ], open_questions=[OQ], mc_records=[_mc("big", "B")],
+        open_scores=[], open_responses=[],
+        summary=_summary({"big": 1.0, "small": 0.5, "mconly": 1.0}, {"big": 90.0}),
+        position_map=pm)
+    assert data["mc"][0]["au"] == ["C", "A", "B"]
+
+
+def test_unshuffled_or_unrecorded_items_carry_no_authored_letters():
+    from deseretbench.build_explorer import authored_letters
+    assert authored_letters({"q": {"order": [0, 1, 2]}}, "q", 3) is None
+    assert authored_letters({}, "q", 3) is None
+    data, _ = _build([_mc("big", "B")])          # no position map passed
+    assert data["mc"][0]["au"] is None

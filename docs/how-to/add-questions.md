@@ -57,6 +57,13 @@ pretty-printed blocks are handled), drops schema-invalid items, assigns
 question stem, and writes `data/candidates_mc.jsonl` and
 `data/candidates_open.jsonl`.
 
+That dedupe catches only the same stem. A reworded copy of a question survives it; the v0.1
+set has at least 8 such groups (DATASET_CARD.md). List the candidates for a person to judge:
+
+```bash
+.venv/bin/python -m deseretbench.near_duplicates data/candidates_mc.jsonl
+```
+
 ### 3. Validate with the reviewer panel
 
 ```bash

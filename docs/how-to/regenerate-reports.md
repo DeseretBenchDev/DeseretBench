@@ -93,11 +93,11 @@ the explorer's data alongside the reports:
 ```bash
 .venv/bin/python -m deseretbench.merge_runs --out runs/v0_1_plus \
     runs/v0_1 runs/claude_new_mc runs/claude_new_open runs/go_mc_r2 runs/go_open \
-    runs/go_open_qwen runs/box_mc runs/box_open
+    runs/go_open_qwen runs/box_mc runs/box_open runs/box_mc_phi4
 .venv/bin/python -m deseretbench.analyze --run runs/v0_1_plus --out results/summary.json
 .venv/bin/python -m deseretbench.report --summary results/summary.json
 .venv/bin/python -m deseretbench.build_onepager
-.venv/bin/python -m deseretbench.build_explorer --run runs/v0_1_plus --label "v0.1 + Oct 2026"
+.venv/bin/python -m deseretbench.build_explorer --run runs/v0_1_plus --label "v0.1 + Oct-Nov 2026"
 ```
 
 `merge_runs` refuses duplicate `(model, question, run)` records and keeps every source's

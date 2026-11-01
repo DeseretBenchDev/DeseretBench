@@ -95,17 +95,17 @@ open reports/leaderboard.html
 
 ### Current standings (v0.1 + October and November 2026 additions)
 
-The thirty-eight-model standings on the home page combine `runs/v0_1` with models run into their
+The thirty-nine-model standings on the home page combine `runs/v0_1` with models run into their
 own directories afterwards. Rebuild them with no model calls:
 
 ```bash
 .venv/bin/python -m deseretbench.merge_runs --out runs/v0_1_plus \
     runs/v0_1 runs/claude_new_mc runs/claude_new_open runs/go_mc_r2 runs/go_open \
-    runs/go_open_qwen runs/box_mc runs/box_open
+    runs/go_open_qwen runs/box_mc runs/box_open runs/box_mc_phi4
 .venv/bin/python -m deseretbench.analyze --run runs/v0_1_plus --out results/summary.json
 .venv/bin/python -m deseretbench.report  --summary results/summary.json
 .venv/bin/python -m deseretbench.build_onepager
-.venv/bin/python -m deseretbench.build_explorer --run runs/v0_1_plus --label "v0.1 + Oct 2026"
+.venv/bin/python -m deseretbench.build_explorer --run runs/v0_1_plus --label "v0.1 + Oct-Nov 2026"
 ```
 
 The section-4 commands above regenerate the twenty-three-model v0.1 analysis that

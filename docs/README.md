@@ -13,6 +13,9 @@ deepens understanding. Pick the quadrant that matches what you need right now.
 
 - [Add a model to the cohort](how-to/add-a-model.md)
 - [Run any hosted model (OpenAI/Grok/DeepSeek/…)](how-to/run-any-model.md)
+- [Run the framed edition](how-to/run-the-framed-edition.md)
+- [Run a human review round](how-to/run-a-human-review-round.md)
+- [Score stored answers with a second judge family](how-to/score-with-a-second-judge.md)
 - [Add a faith pack (a new tradition)](how-to/add-a-faith-pack.md)
 - [Add or revise questions](how-to/add-questions.md)
 - [Re-analyze without re-running models](how-to/rerun-analysis.md)

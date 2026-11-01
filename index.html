@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DeseretBench &mdash; a reproducible benchmark of LDS doctrine in language models</title>
-<meta name="description" content="Do large language models get Latter-day Saint doctrine, culture, and life-choice counsel right? DeseretBench measures it across 38 models with two tracks, a three-persona judge panel, and a fully seeded, reproducible pipeline.">
+<meta name="description" content="Do large language models get Latter-day Saint doctrine, culture, and life-choice counsel right? DeseretBench measures it across 39 models with two tracks, a three-persona judge panel, and a fully seeded, reproducible pipeline.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23f4ead6'/%3E%3Cg fill='%23c1852a' stroke='%232a2018' stroke-width='1.3'%3E%3Crect x='5.5' y='22' width='21' height='5' rx='2.5'/%3E%3Crect x='7.5' y='17.2' width='17' height='5' rx='2.5'/%3E%3Crect x='9.5' y='12.4' width='13' height='5' rx='2.5'/%3E%3Crect x='11.5' y='7.6' width='9' height='5' rx='2.5'/%3E%3Cellipse cx='16' cy='6.4' rx='3.3' ry='2.6'/%3E%3C/g%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="DeseretBench &mdash; a reproducible LDS-doctrine benchmark for language models">
-<meta property="og:description" content="Thirty-eight models, two tracks, a three-persona judge panel. Seeded and reproducible. Does the model get it right the way an informed Latter-day Saint would recognize?">
+<meta property="og:description" content="Thirty-nine models, two tracks, a three-persona judge panel. Seeded and reproducible. Does the model get it right the way an informed Latter-day Saint would recognize?">
 <meta property="og:url" content="https://deseretbenchdev.github.io/DeseretBench/">
 <meta property="og:image" content="https://deseretbenchdev.github.io/DeseretBench/reports/figures/open_overall_ci.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -277,7 +277,7 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
   carry with them swarms of bees.<cite>Ether 2:3 &middot; the meaning of &ldquo;Deseret&rdquo;</cite></blockquote>
   <dl class="meta">
     <div><dt>Version</dt><dd>v0.1 &middot; Nov additions</dd></div>
-    <div><dt>Cohort</dt><dd>38 models</dd></div>
+    <div><dt>Cohort</dt><dd>39 models</dd></div>
     <div><dt>Items</dt><dd>213 MC &middot; 40 open</dd></div>
     <div><dt>Judge &#945;</dt><dd>0.992</dd></div>
     <div><dt>Volume</dt><dd>30,885 MC &middot; 3,800 judged</dd></div>
@@ -350,7 +350,7 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
       <div class="update">
         <h3>New in November 2026</h3>
         <p class="small">Eight larger open-weights models joined, from 4B to 12B parameters. They
-        ran locally on one 10&nbsp;GB consumer GPU with the same prompts and the same judge panel.
+        ran locally on one consumer GPU with the same prompts and the same judge panel.
         No earlier score changed.</p>
         <ul class="small">
           <li><strong>Gemma 4 12B</strong> scores 0.991 on multiple choice, statistically level
@@ -366,11 +366,14 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
           OLMo 3 7B Instruct (15.7) land in the existing mid-band.</li>
         </ul>
         <p class="small"><strong>How these runs differ.</strong> Each new model had two
-        multiple-choice runs and two open-ended runs. Multiple choice is meant to run with
+        multiple-choice runs and two open-ended runs, so each open-ended score here rests on
+        80 judged answers where the v0.1 models have 120. Multiple choice is meant to run with
         reasoning off; Falcon-H1R, OLMo 3 Think and possibly LFM2.5 keep reasoning anyway, so
-        their multiple-choice scores are not clean no-reasoning measurements. Five pulled models
-        are missing from the table: Phi-4 14B, gpt-oss 20B, Gemma 4 26B and Muse Glimmer 30B do
-        not fit in 10&nbsp;GB at the configured context, and RNJ-1 8B failed to load. A larger
+        their multiple-choice scores are not clean no-reasoning measurements. Four pulled models
+        are missing from the table: gpt-oss 20B, Gemma 4 26B and Muse Glimmer 30B do not fit the
+        card at the configured context, and RNJ-1 8B failed to load. Phi-4 14B did not fit either;
+        it was measured later on multiple choice only, under its own smaller window, and its row
+        is marked. A larger
         field also means a larger correction: the open-ended comparison family grows from 351 to
         595, and Haiku 5.5 against Sonnet 4.6 no longer reaches significance (Holm
         <em>p</em> = 0.050).</p>
@@ -401,8 +404,8 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
         panel is a Claude model scoring their answers. Treat cross-lab comparisons on the
         open-ended track with that in mind.</p>
       </div>
-      <p>All thirty-eight models. The thirty-five with open-ended scores are ranked by that
-      composite, the score that still separates models at the very top; the three outside models still running appear unranked until their open-ended runs finish. Multiple-choice accuracy (the gold column) runs into a ceiling among
+      <p>All thirty-nine models. The thirty-five with open-ended scores are ranked by that
+      composite, the score that still separates models at the very top; the three outside models still running appear unranked until their open-ended runs finish, and so does Phi-4 14B, which was measured on multiple choice only. Multiple-choice accuracy (the gold column) runs into a ceiling among
       the frontier models, from every lab, and only spreads out further down the list. The two columns use different
       scales: the composite runs <strong>0&ndash;100</strong>, accuracy runs
       <strong>0&ndash;1</strong>.</p>
@@ -433,7 +436,7 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
 <tr><td class="rk">&ndash;</td><td class="mdl">GLM 5.3</td><td class="fam">Zhipu · GLM</td><td class="metric"><span class="pend">in progress</span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
 <tr><td class="rk">&ndash;</td><td class="mdl">Grok 4.6</td><td class="fam">xAI · Grok</td><td class="metric"><span class="pend">in progress</span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
 <tr><td class="rk">&ndash;</td><td class="mdl">GPT 5.6 Luna</td><td class="fam">OpenAI · GPT</td><td class="metric"><span class="pend">in progress</span></td><td class="metric"><span class="bar bar-mc"><i style="width:100.0%"></i><b>1.000</b></span></td></tr>
-<tr class="grouprow"><td colspan="5"><span class="gt">Open weights</span> <span class="gs">local models, 0.6&ndash;12B parameters, served by Ollama</span></td></tr>
+<tr class="grouprow"><td colspan="5"><span class="gt">Open weights</span> <span class="gs">local models, 0.6&ndash;15B parameters, served by Ollama</span></td></tr>
 <tr><td class="rk">15</td><td class="mdl">Granite 4.2 8B <sup>&#8225;</sup></td><td class="fam">IBM · Granite</td><td class="metric"><span class="bar bar-open"><i style="width:36.1%"></i><b>36.1</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:94.1%"></i><b>0.941</b></span></td></tr>
 <tr><td class="rk">16</td><td class="mdl">Gemma 4 12B <sup>&#8224;</sup></td><td class="fam">Google · Gemma</td><td class="metric"><span class="bar bar-open"><i style="width:33.5%"></i><b>33.5</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:99.1%"></i><b>0.991</b></span></td></tr>
 <tr><td class="rk">17</td><td class="mdl">Gemma 4 E4B</td><td class="fam">Google · Gemma</td><td class="metric"><span class="bar bar-open"><i style="width:29.2%"></i><b>29.2</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:95.1%"></i><b>0.951</b></span></td></tr>
@@ -455,13 +458,18 @@ footer .fhive{width:34px;height:34px;opacity:.7;margin-bottom:.4rem}
 <tr><td class="rk">33</td><td class="mdl">Gemma 3 1B</td><td class="fam">Google · Gemma</td><td class="metric"><span class="bar bar-open"><i style="width:4.5%"></i><b>4.5</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:54.8%"></i><b>0.548</b></span></td></tr>
 <tr><td class="rk">34</td><td class="mdl">Qwen3 0.6B</td><td class="fam">Alibaba · Qwen3</td><td class="metric"><span class="bar bar-open"><i style="width:2.0%"></i><b>2.0</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:53.6%"></i><b>0.536</b></span></td></tr>
 <tr><td class="rk">35</td><td class="mdl">R1-Distill 1.5B</td><td class="fam">DeepSeek · R1</td><td class="metric"><span class="bar bar-open"><i style="width:0.3%"></i><b>0.3</b></span></td><td class="metric"><span class="bar bar-mc"><i style="width:52.1%"></i><b>0.521</b></span></td></tr>
+<tr><td class="rk">&ndash;</td><td class="mdl">Phi-4 14B <sup>&sect;</sup></td><td class="fam">Microsoft · Phi</td><td class="metric"><span class="pend">multiple choice only</span></td><td class="metric"><span class="bar bar-mc"><i style="width:98.6%"></i><b>0.986</b></span></td></tr>
           </tbody>
         </table>
       </div>
       <p class="tnote"><sup>&dagger;</sup> Tops the open-weights field on multiple choice (0.991), level
       with the frontier models, yet scores 33.5 on open generation, where the recognition does
       not carry over into writing.
-      &nbsp; <sup>&Dagger;</sup> Tops the open-weights field on the open-ended composite.</p>
+      &nbsp; <sup>&Dagger;</sup> Tops the open-weights field on the open-ended composite.
+      &nbsp; <sup>&sect;</sup> Measured with its own 2,048-token context window, smaller than the
+      other local models&rsquo;, because at the shared window it does not fit the test card. Every
+      multiple-choice item fits that window whole. Part of the model ran on the CPU, which
+      changes speed and not the answers. Multiple choice only.</p>
       <p class="small">Composite is the mean of four judge dimensions, 0&ndash;100, with 95% bootstrap
       intervals. Per-dimension scores, pairwise significance (Holm-adjusted over the 595-comparison
       open-ended family), and item analysis live in the

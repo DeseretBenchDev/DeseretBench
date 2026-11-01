@@ -48,6 +48,10 @@ def merge_runs(sources, out, exclude_open=frozenset(), unpinned=frozenset()):
                 if not line.strip():
                     continue
                 r = json.loads(line)
+                if r.get("condition", "neutral") != "neutral":
+                    # merged runs feed the standings, which are neutral-only
+                    raise ValueError(f"{s / name} holds {r['condition']} records; "
+                                     "only neutral runs can be merged")
                 if name.startswith("open_") and r["model"] in exclude_open:
                     continue
                 k = _key(name, r)

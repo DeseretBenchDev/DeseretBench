@@ -42,7 +42,7 @@ Nemotron, Gemma 4 — with every tag pinned exactly:
 | `gemma4:e2b-it-qat` | 4.3 GB | Google | QAT build — see asymmetry below |
 
 Pinning is not pedantry here: three of these families ship a `latest` that is
-unusable on a 6 GB card. `nemotron-3-nano:latest` is a 24 GB 30B;
+unusable on the card used. `nemotron-3-nano:latest` is a 24 GB 30B;
 `qwen3.5:latest` is the 6.6 GB 9B. A bare `ollama pull` would fetch the wrong
 artifact silently.
 
@@ -67,7 +67,7 @@ live: a correct answer in 197 tokens at `effort=low`, fully GPU-resident.
 ## Consequences
 
 - **Gemma 4 carries a documented quantization asymmetry.** The only gemma4 tag
-  that fits 6 GB is the QAT build at 4.3 GB; every q4_K_M variant is 7.2 GB or
+  that fit the card used is the QAT build at 4.3 GB; every q4_K_M variant is 7.2 GB or
   larger. So this one entry is quantization-aware-trained while the rest of the
   local cohort is Q4_K_M. That is a real confound for any Gemma-4-vs-others
   comparison and is recorded here rather than buried — the alternative was

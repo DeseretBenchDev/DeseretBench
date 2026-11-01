@@ -96,6 +96,53 @@ def pick_crosscheck_keys(keys: list, fraction: float, seed: int) -> list:
     return sorted(rng.sample(sorted(keys), n))
 
 
+CONDITIONS = ("neutral", "framed")
+
+
+def condition_system(system: str, condition: str) -> str:
+    """The system prompt a condition runs under. `neutral` returns the configured
+    prompt untouched, so every neutral cache key stays what it was. `framed`
+    appends the active pack's one-sentence instruction; the system prompt is in
+    the cache key, so framed calls never collide with neutral ones."""
+    if condition == "neutral":
+        return system
+    if condition != "framed":
+        raise SystemExit(f"error: unknown condition {condition!r}; "
+                         f"expected one of {CONDITIONS}")
+    instruction = active_pack().framed_instruction
+    if not instruction:
+        raise SystemExit(f"error: pack {active_pack().key!r} defines no "
+                         "framed_instruction, so it has no framed edition")
+    return system.rstrip() + "\n\n" + instruction.strip() + "\n"
+
+
+def condition_fields(condition: str) -> dict:
+    """Fields stamped on every record of a non-neutral run. Neutral records carry
+    no `condition` key: a missing key means neutral, which keeps every shipped
+    record file valid and unchanged."""
+    return {} if condition == "neutral" else {"condition": condition}
+
+
+def guard_condition(out: Path, condition: str) -> None:
+    """Refuse to write one condition's records into a run directory that holds
+    another's. Mixed directories are how a framed score would reach the
+    standings unnoticed."""
+    path = Path(out) / "config_snapshot.json"
+    if not path.exists():
+        return
+    try:
+        snap = json.loads(path.read_text())
+    except json.JSONDecodeError:
+        return
+    for phase in ("mc", "open"):
+        if phase in snap:
+            have = snap[phase].get("condition", "neutral")
+            if have != condition:
+                raise SystemExit(
+                    f"error: {out} holds a {have} {phase} run; refusing to write "
+                    f"{condition} records beside it. Use a separate --out directory.")
+
+
 def write_config_snapshot(out: Path, phase: str, run_cfg: dict, cohort: list[dict],
                           extra: dict | None = None):
     """Record the exact config a phase ran under, inside the run directory, so
@@ -140,7 +187,8 @@ def run_mc(args):
     cohort = select_cohort(models, args.models)
     n_runs = args.runs or run_cfg["runs"]["multiple_choice"]
     effort = run_cfg["effort"]["multiple_choice"]
-    system = run_cfg["system_prompt"]
+    condition = getattr(args, "condition", "neutral")
+    system = condition_system(run_cfg["system_prompt"], condition)
     template = run_cfg["mc_prompt_template"]
 
     jobs, metas = [], []
@@ -157,6 +205,7 @@ def run_mc(args):
         raise SystemExit("error: zero jobs built — refusing to touch output files")
 
     out = Path(args.out)
+    guard_condition(out, condition)
     sink = JsonlSink(out / "mc_responses.jsonl")
     print(f"[MC] {len(cohort)} models x {len(items)} items x {n_runs} runs "
           f"= {len(jobs)} calls | effort={effort} parallel={rc.get('max_parallel')}")
@@ -182,7 +231,7 @@ def run_mc(args):
             "cost_usd": res.cost_usd, "input_tokens": res.input_tokens,
             "output_tokens": res.output_tokens, "duration_ms": res.duration_ms,
             "attempts": res.attempts, "cache_hit": res.cache_hit, "error": res.error,
-            "text": res.text,
+            "text": res.text, **condition_fields(condition),
         })
         with lock:
             done[0] += 1
@@ -195,7 +244,8 @@ def run_mc(args):
     # snapshot AFTER the phase commits, so provenance never describes a run
     # whose outputs were interrupted before landing
     write_config_snapshot(out, "mc", run_cfg, cohort,
-                          {"n_items": len(items), "n_runs": n_runs})
+                          {"n_items": len(items), "n_runs": n_runs,
+                           **condition_fields(condition)})
     print(f"[MC] wrote {sink.n} records to {sink.path} | live spend ${runner.total_spend_usd:.2f}")
     _quick_mc_summary(sink.path, cohort)
 
@@ -235,7 +285,8 @@ def run_open(args):
     cohort = select_cohort(models, args.models)
     n_runs = args.runs or run_cfg["runs"]["open_ended"]
     gen_effort = run_cfg["effort"]["open_ended"]
-    system = run_cfg["system_prompt"]
+    condition = getattr(args, "condition", "neutral")
+    system = condition_system(run_cfg["system_prompt"], condition)
     template = run_cfg["open_prompt_template"]
     jcfg = models["judges"]
     personas = jcfg["personas"]
@@ -246,6 +297,7 @@ def run_open(args):
                          "no judges.crosscheck_model")
 
     out = Path(args.out)
+    guard_condition(out, condition)
 
     # ---- Phase 1: generate responses ----
     gjobs, gmetas = [], []
@@ -285,7 +337,8 @@ def run_open(args):
                         "attempts": res.attempts, "cache_hit": res.cache_hit,
                         "text": text, "cost_usd": res.cost_usd,
                         "input_tokens": res.input_tokens,
-                        "output_tokens": res.output_tokens})
+                        "output_tokens": res.output_tokens,
+                        **condition_fields(condition)})
     gen_sink.close()
     n_gen_failed = sum(1 for *_x, res in responses if not res.ok)
     print(f"[OPEN gen] wrote {gen_sink.n} responses")
@@ -336,7 +389,8 @@ def run_open(args):
                           "call_ok": jr.ok, "parse_ok": parsed is not None,
                           "judge_served": jr.model_served,
                           "judge_served_all": jr.served_all, "error": jr.error,
-                          "called_at": jr.called_at, "scores": parsed})
+                          "called_at": jr.called_at, "scores": parsed,
+                          **condition_fields(condition)})
         panel.setdefault((m["id"], it["question_id"], r), {"meta": (m, it, r), "judges": {}})
         panel[(m["id"], it["question_id"], r)]["judges"][persona] = parsed
 
@@ -368,7 +422,8 @@ def run_open(args):
                               "call_ok": jr.ok, "parse_ok": parsed is not None,
                               "judge_served": jr.model_served,
                               "judge_served_all": jr.served_all, "error": jr.error,
-                              "called_at": jr.called_at, "scores": parsed})
+                              "called_at": jr.called_at, "scores": parsed,
+                          **condition_fields(condition)})
     judge_sink.close()
 
     if n_parse_failed:
@@ -388,12 +443,14 @@ def run_open(args):
                           "dim_means": agg["dim_means"],
                           "must_include_coverage": agg["must_include_coverage"],
                           "mean_should_not_violations": agg["mean_should_not_violations"],
-                          "n_judges": agg["n_judges"]})
+                          "n_judges": agg["n_judges"],
+                          **condition_fields(condition)})
     score_sink.close()
     # snapshot AFTER all open-phase outputs commit
     write_config_snapshot(out, "open", run_cfg, cohort,
                           {"n_items": len(items), "n_runs": n_runs,
-                           "judge_model": judge_model, "personas": personas})
+                           "judge_model": judge_model, "personas": personas,
+                           **condition_fields(condition)})
     print(f"[OPEN] wrote {score_sink.n} panel scores | live spend ${runner.total_spend_usd:.2f}")
     _quick_open_summary(score_sink.path, cohort)
 
@@ -423,6 +480,11 @@ def main():
         p.add_argument("--runs", type=int, default=0)
         p.add_argument("--limit", type=int, default=0)
         p.add_argument("--max-parallel", type=int, default=0)
+        p.add_argument("--condition", choices=CONDITIONS, default="neutral",
+                       help="neutral (the standings) or framed: the pack's "
+                            "one-sentence instruction is appended to the system "
+                            "prompt. Framed runs need their own --out directory "
+                            "and are compared with deseretbench.framing.")
         if name == "open":
             p.add_argument("--judge-crosscheck", action="store_true",
                            help="also run models.yaml judges.crosscheck_model on a "

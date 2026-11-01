@@ -22,7 +22,10 @@ observed behavior diverges from this specification, one of the two has a bug —
 artifacts and live in `reports/RESULTS.md` (see
 [docs/how-to/regenerate-reports.md](docs/how-to/regenerate-reports.md)); none are
 quoted here. Structural constants (item counts, run counts, seeds) come from the
-shipped configs and data files and are stable.
+shipped configs and data files and are stable, with one exception: the repeat-run
+counts. Where this document gives the v0.1 counts (5 multiple-choice, 3 open-ended)
+it marks them as v0.1 history; the current default and the counts later additions
+ran are in §3.1.
 
 **Version.** This spec describes `deseretbench` 0.1.0 (`pyproject.toml`), Python ≥ 3.12,
 as of 2026-07-03.
@@ -44,7 +47,7 @@ flowchart TD
         C -->|"data/questions_*.jsonl"| D["balance_positions.py<br/>seeded key-position randomization (MC only)"]
     end
     subgraph MEAS["Measurement"]
-        D -->|"balanced questions_mc.jsonl"| E["run_benchmark.py mc<br/>cohort x items x 5 runs, scored inline"]
+        D -->|"balanced questions_mc.jsonl"| E["run_benchmark.py mc<br/>cohort x items x repeat runs (5 in v0.1, 2 since), scored inline"]
         C -->|"questions_open.jsonl"| F["run_benchmark.py open<br/>generate -> judge personas -> aggregate"]
         R[("runner.py<br/>cache/ (content-addressed)")]
         E <--> R
@@ -247,9 +250,17 @@ Claude models reached through the `claude` CLI (tiers: 1 fable, 5 opus, 3 sonnet
 1 gemma4). Everything in `run_config.yaml` is held
 identical across all models: system prompt, prompt templates, effort per item class
 (`multiple_choice: low`, `open_ended: high`, `judge: medium`), repeat runs
-(`multiple_choice: 5`, `open_ended: 3` for v0.1; the shipped default is now
-`multiple_choice: 2`), no tools (`tools: ""`), timeout 1200 s,
+(see below), no tools (`tools: ""`), timeout 1200 s,
 `max_retries: 4`, linear backoff base 5 s, `max_parallel: 8`.
+
+**Repeat runs: the v0.1 counts are history.** The v0.1 cohort ran `multiple_choice: 5`
+and `open_ended: 3`, and those were the shipped values at v0.1. The shipped config is
+now `multiple_choice: 2`, `open_ended: 3`. Every model added after v0.1 ran 2
+multiple-choice repeats; their open-ended repeats were 3 for the two later Claude
+models and 2 (`--runs 2`) for the hosted and the later local models. The repeat count
+is the one constant not held identical across all models in the merged standings.
+Scores are per-item means (§5.2), so it changes the precision of an estimate and not
+what is estimated. Reproducing the v0.1 numbers needs `--runs 5` on the MC phase.
 
 Two constants are deliberately **outside** the cache key, because they govern how a call
 is made rather than what is asked: `timeout_seconds` (raised to 1200 for CPU-bound local
@@ -438,6 +449,18 @@ listing the valid cohort — never silently ignored. The MC phase builds
 cohort × items × runs jobs at `effort.multiple_choice` and scores inline with
 `score_mc.is_correct`. The open phase runs generate → judge → aggregate (§4.2).
 Full CLI reference: [docs/reference/cli.md](docs/reference/cli.md).
+
+**Conditions.** Both phases take `--condition`. `neutral` (the default) uses
+`system_prompt` as configured. `framed` uses `system_prompt.rstrip() + "\n\n" +
+pack.framed_instruction.strip() + "\n"`; because the system prompt is in the cache key,
+framed and neutral calls never share an entry. Framed records carry
+`"condition": "framed"`; a record with no `condition` key is neutral. A run directory
+holds one condition. `analyze` and `merge_runs` reject any non-neutral record, so
+`summary.json` is the neutral condition only. `deseretbench.framing` computes, per
+track and model, `gap = mean(framed) − mean(neutral)` over the per-item means of the
+items both runs scored, with the paired bootstrap of §5.3 seeded by
+`derive_seed(seed, "framing", track, model)` and Holm adjustment (§5.4) across the
+models of the track ([ADR-0015](docs/adr/0015-framed-prompt-condition.md)).
 
 ---
 
@@ -656,7 +679,13 @@ zero variance (ceiling items). The summary reports ceiling (> 0.95), floor (< 0.
 and low-discrimination (< 0.10) counts, and `mean_discrimination` summarizes only the
 items where it is defined — read it together with `n_items_with_discrimination`.
 `run_variance` reports the mean within-item SD (ddof=1) across repeat runs, skipping
-items with < 2 runs.
+items with < 2 runs. It is computed on both tracks and stored per model as
+`mean_within_item_sd`: over 0/1 correctness for MC, and over the 0–100 composite of
+the scored repeats for open-ended, where it is `null` when no item has two scored
+repeats. On the open-ended track each repeat is a fresh answer judged afresh, so the
+figure carries the judges' run-to-run spread together with the model's. The open
+record also stores `n_repeats` (the most scored repeats any item has) and
+`n_items_repeated` (items with at least two).
 
 ### 5.9 Analysis-time exclusions
 

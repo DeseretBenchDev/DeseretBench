@@ -81,14 +81,43 @@ def _classify_served_mismatch(mrecs: list[dict], mid: str) -> tuple[list[dict], 
     return keep, n_art, n_gen
 
 
+def require_neutral(recs: list[dict], path) -> None:
+    """The standings are the neutral condition and nothing else. A record from
+    another condition (the framed edition) in the analysed run would change
+    published scores without any visible sign, so this stops the analysis.
+    Records with no `condition` key are neutral."""
+    other = sorted({r["condition"] for r in recs
+                    if r.get("condition", "neutral") != "neutral"})
+    if other:
+        raise SystemExit(
+            f"error: {path} holds records from condition(s) {other}. The standings "
+            "analyse neutral runs only; compare conditions with "
+            "`python -m deseretbench.framing`.")
+
+
+def _context_override(cohort) -> dict:
+    """Model id -> its own Ollama context window, for the entries that override
+    the shared `runner.ollama_num_ctx`. A row measured under a different window
+    must say so wherever it is printed, so the value travels with the row. The
+    key is absent for every other model: their records do not change."""
+    out = {}
+    for m in cohort:
+        n = (m.get("backend_opts") or {}).get("ollama_num_ctx")
+        if n is not None:
+            out[m["id"]] = {"num_ctx": int(n)}
+    return out
+
+
 def analyze_mc(path: Path, cohort, seed, n_boot, ci):
     recs = load_jsonl(path)
+    require_neutral(recs, path)
     labels = {m["id"]: m["label"] for m in cohort}
     tiers = {m["id"]: m["tier"] for m in cohort}
     # For local families `generation` is the parameter count in billions; the
     # report needs it to draw scaling-by-size. Absent (e.g. closed models with
     # no published size) stays None — never inferred.
     generations = {m["id"]: m.get("generation") for m in cohort}
+    ctx = _context_override(cohort)
     known = set(labels)
     unknown_models = sorted({r["model"] for r in recs} - known)
     if unknown_models:
@@ -124,7 +153,7 @@ def analyze_mc(path: Path, cohort, seed, n_boot, ci):
         maj_k = sum(1 for i in ids if p_map[i] >= 0.5)
         cp_lo, cp_hi = stx.clopper_pearson(maj_k, len(ids), ci)
         overall[mid] = {"label": labels[mid], "tier": tiers[mid],
-                        "generation": generations.get(mid), **ci_o,
+                        "generation": generations.get(mid), **ctx.get(mid, {}), **ci_o,
                         "cp_lo": round(cp_lo, 4), "cp_hi": round(cp_hi, 4),
                         "parse_fail_rate": round(parse_fail, 4) if parse_fail is not None else None,
                         "mean_within_item_sd": round(rv["mean_within_item_sd"], 4),
@@ -200,26 +229,33 @@ def analyze_open(scores_path: Path, judge_raw_path: Path, cohort, seed, n_boot, 
     if not scores_path.exists():
         return None
     recs = load_jsonl(scores_path)
+    require_neutral(recs, scores_path)
     labels = {m["id"]: m["label"] for m in cohort}
     tiers = {m["id"]: m["tier"] for m in cohort}
     # For local families `generation` is the parameter count in billions; the
     # report needs it to draw scaling-by-size. Absent (e.g. closed models with
     # no published size) stays None — never inferred.
     generations = {m["id"]: m.get("generation") for m in cohort}
+    ctx = _context_override(cohort)
     model_ids = [m["id"] for m in cohort if any(r["model"] == m["id"] for r in recs)]
 
-    def per_item(mid):
+    def per_item_runs(mid):
         g = defaultdict(list)
         for r in recs:
             if r["model"] == mid and r["composite_100"] is not None:
                 g[r["question_id"]].append(r["composite_100"])
-        return {i: sum(v) / len(v) for i, v in g.items()}
+        return g
 
     overall, by_dim = {}, {}
     pip = {}
     for mid in model_ids:
-        p = per_item(mid)
+        runs = per_item_runs(mid)
+        p = {i: sum(v) / len(v) for i, v in runs.items()}
         pip[mid] = p
+        # Run-to-run spread, in composite points: the same statistic the MC
+        # track reports, over the scored repeats of each item. It mixes the
+        # model's sampling with the judges' (each repeat is judged afresh).
+        rv = stx.run_variance(list(runs.values()))
         ci_o = stx.bootstrap_mean_ci(list(p.values()), n_boot,
                                      stx.derive_seed(seed, "open-overall", mid), ci)
         mrecs = [r for r in recs if r["model"] == mid]
@@ -227,7 +263,11 @@ def analyze_open(scores_path: Path, judge_raw_path: Path, cohort, seed, n_boot, 
         cov = [r["must_include_coverage"] for r in mrecs if r["must_include_coverage"] is not None]
         viol = [r["mean_should_not_violations"] for r in mrecs if r["mean_should_not_violations"] is not None]
         overall[mid] = {"label": labels[mid], "tier": tiers[mid],
-                        "generation": generations.get(mid), **ci_o,
+                        "generation": generations.get(mid), **ctx.get(mid, {}), **ci_o,
+                        "mean_within_item_sd": (round(rv["mean_within_item_sd"], 2)
+                                                if rv["n_items_repeated"] else None),
+                        "n_items_repeated": rv["n_items_repeated"],
+                        "n_repeats": max((len(v) for v in runs.values()), default=0),
                         "n_unscored_records": n_missing,
                         "mean_must_include_coverage": round(sum(cov) / len(cov), 4) if cov else None,
                         "mean_should_not_violations": round(sum(viol) / len(viol), 4) if viol else None}

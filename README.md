@@ -42,7 +42,7 @@ power, and the limitations.
 
 ## Cohort evaluated (v0.1 + October and November 2026 additions)
 
-Thirty-eight models across seventeen vendors and three serving paths. The v0.1 release
+Thirty-nine models across seventeen vendors and three serving paths. The v0.1 release
 measured twenty-three; seven more were added in October 2026 and eight local models in
 November 2026 (see below).
 
@@ -74,11 +74,13 @@ Kimi K3 (Moonshot), Qwen3.8 Max (Alibaba), GLM 5.3 (Zhipu), Grok 4.6 (xAI) and G
 their open-ended runs are still in progress, paced by the subscription's usage cap. See
 [run-any-model](docs/how-to/run-any-model.md).
 
-**Eight larger local open-weights models** (added 2026-11-08, 4B–12B, RTX 3080 10 GB,
-Ollama): Gemma 4 E4B and 12B, Granite 4.2 8B, OLMo 3 7B Instruct and Think, Falcon-H1R 7B,
+**Eight larger local open-weights models** (added 2026-11-08, 4B–12B, one consumer
+graphics card, Ollama): Gemma 4 E4B and 12B, Granite 4.2 8B, OLMo 3 7B Instruct and Think, Falcon-H1R 7B,
 Apertus 8B Instruct and LFM2.5 8B, under the same prompts and judge panel, two MC and two
-open repeats. Not run: VRAM (too large for 10 GB at `num_ctx` 20480): Phi-4 14B, gpt-oss 20B,
-Gemma 4 26B, Muse Glimmer 30B. Not run: load failure: RNJ-1 8B. See the
+open repeats. **Phi-4 14B** (added 2026-11-11) ran multiple choice only, under its own
+2,048-token context window, because it does not fit the test card at the shared one; its row is
+marked. Not run: VRAM (too large for the card at `num_ctx` 20480): gpt-oss 20B, Gemma 4 26B,
+Muse Glimmer 30B. Not run: load failure: RNJ-1 8B. See the
 [November note](docs/explanation/2026-11-box-cohort.md).
 
 The halves answer different questions. The Claude cohort measures how frontier
@@ -111,17 +113,18 @@ and `reports/RESULTS.md`.
 
 ## Headline results
 
-Thirty-eight models, balanced MC + judge-panel open-ended, seed 19470417. The v0.1 cohort ran
+Thirty-nine models, balanced MC + judge-panel open-ended, seed 19470417. The v0.1 cohort ran
 5 MC / 3 open repeats; the October and November additions ran 2 MC repeats (frontier models barely
-vary run to run, and scores are per-item means). Analysis is over the merged run
+vary run to run, and scores are per-item means). On the open-ended track the two later Claude
+models ran 3 repeats, and the hosted models and the eight November local models rest on 2. Analysis is over the merged run
 `runs/v0_1_plus` (`python -m deseretbench.merge_runs`; the v0.1-only analysis still
 regenerates from `runs/v0_1`). Numbers regenerated from `reports/RESULTS.md` — never hand-typed.
 
 - **Multiple choice saturates at the frontier and discriminates below it.** All 136
   comparisons among the seventeen frontier models (twelve Claude, five from other labs) are
-  non-significant after correction. Across the full cohort, 465 of 703 are significant. Accuracy runs from 0.521 (R1-Distill 1.5B) through
+  non-significant after correction. Across the full cohort, 480 of 741 are significant. Accuracy runs from 0.521 (R1-Distill 1.5B) through
   0.703 (SmolLM2 1.7B) and 0.811–0.813 (Phi-4 Mini, Qwen3 1.7B, Gemma 3 4B) to 0.922
-  (Qwen3 4B) and 0.932 (Qwen3.5 4B), then 0.986–1.000 across the frontier. Gemma 4 12B reaches 0.991, level with the frontier models after correction, so a local model now shares the ceiling. All five models from other labs
+  (Qwen3 4B) and 0.932 (Qwen3.5 4B), then 0.986–1.000 across the frontier. Gemma 4 12B reaches 0.991 and Phi-4 14B 0.986, both level with the frontier models after correction, so local models now share the ceiling. All five models from other labs
   score 1.000. The items discriminate; a frontier-only cohort is too narrow to show it.
 - **The MC-to-open collapse.** Qwen3 4B scores 0.922 on MC, close to Claude's range, and
   **21.8** on open-ended, under half of Haiku 4.5 (48.5), the weakest Claude. MC asks a

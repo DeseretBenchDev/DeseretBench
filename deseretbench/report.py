@@ -115,6 +115,28 @@ def _ordered_models(overall):
                                      key=lambda kv: -(kv[1]["mean"] or 0))]
 
 
+CTX_MARK = "§"
+
+
+def row_label(o: dict) -> str:
+    """A model's label for a results table. A row measured under its own context
+    window carries the mark and the window size beside the name."""
+    if o.get("num_ctx"):
+        return f"{o['label']} {CTX_MARK} (context {o['num_ctx']:,})"
+    return o["label"]
+
+
+def ctx_note(overall: dict) -> str:
+    """The line under a table explaining the mark; empty when no row has it."""
+    if not any(o.get("num_ctx") for o in overall.values()):
+        return ""
+    return (f"\n_{CTX_MARK} Measured with its own context window (tokens, shown "
+            "beside the name), smaller than the window every other local model "
+            "ran with: the model does not fit the test card at the shared size. "
+            "Every item still fits the smaller window whole, and the window is "
+            "the only setting that differs._\n")
+
+
 def _fmt(v, spec=".3f", none="–"):
     return format(v, spec) if v is not None else none
 
@@ -415,11 +437,14 @@ def results_md(summary) -> str:
         L.append("|---|---|---|---|---|---|---|---|---|")
         for rank, (mid, o) in enumerate(sorted(mc["overall"].items(),
                                                key=lambda kv: -(kv[1]["mean"] or 0)), 1):
-            L.append(f"| {rank} | {o['label']} | {o['tier']} | {_fmt(o['mean'])} | "
+            L.append(f"| {rank} | {row_label(o)} | {o['tier']} | {_fmt(o['mean'])} | "
                      f"[{_fmt(o['lo'])}, {_fmt(o['hi'])}] | "
                      f"[{_fmt(o.get('cp_lo'))}, {_fmt(o.get('cp_hi'))}] | "
                      f"{_fmt(o['parse_fail_rate'])} | "
                      f"{_fmt(o['mean_within_item_sd'])} | {o['n']} |")
+        note = ctx_note(mc["overall"])
+        if note:
+            L.append(note)
         L.append("\n_At a 100% ceiling the bootstrap interval degenerates to zero "
                  "width; the exact (Clopper–Pearson) column is the honest one there._\n")
         n_art = sum(o.get("served_mismatch_artifact", 0) for o in mc["overall"].values())
@@ -467,13 +492,20 @@ def results_md(summary) -> str:
     op = summary.get("open")
     if op:
         L.append("\n## Open-ended (Life-Choice / Cultural) — judge-panel composite (0–100, 95% CI)\n")
-        L.append("| Rank | Model | Composite | 95% CI | Rubric coverage | should-not viol. |")
-        L.append("|---|---|---|---|---|---|")
+        L.append("| Rank | Model | Composite | 95% CI | Rubric coverage | should-not viol. "
+                 "| Repeats | Run SD |")
+        L.append("|---|---|---|---|---|---|---|---|")
         for rank, (mid, o) in enumerate(sorted(op["overall"].items(), key=lambda kv: -(kv[1]["mean"] or 0)), 1):
             cov = f"{o['mean_must_include_coverage']:.2f}" if o.get("mean_must_include_coverage") is not None else "–"
             vio = f"{o['mean_should_not_violations']:.2f}" if o.get("mean_should_not_violations") is not None else "–"
-            L.append(f"| {rank} | {o['label']} | {_fmt(o['mean'], '.1f')} | "
-                     f"[{_fmt(o['lo'], '.1f')}, {_fmt(o['hi'], '.1f')}] | {cov} | {vio} |")
+            L.append(f"| {rank} | {row_label(o)} | {_fmt(o['mean'], '.1f')} | "
+                     f"[{_fmt(o['lo'], '.1f')}, {_fmt(o['hi'], '.1f')}] | {cov} | {vio} | "
+                     f"{o.get('n_repeats') or '–'} | "
+                     f"{_fmt(o.get('mean_within_item_sd'), '.1f')} |")
+        L.append("\n_Repeats: scored answers per item. Run SD: mean within-item standard "
+                 "deviation of the composite across those repeats, in composite points; "
+                 "each repeat is a fresh answer judged afresh, so it carries both the "
+                 "model's and the judges' run-to-run spread._\n")
         if op.get("pairwise"):
             L.append("\n### Open-ended pairwise significance (paired bootstrap; Holm-adjusted)\n")
             L.append("| A | B | Δ (A−B) | 95% CI | p (bootstrap) | p (Holm) | significant (Holm) |")

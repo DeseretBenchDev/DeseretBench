@@ -154,16 +154,43 @@ def item_analysis(resp_by_item: dict[str, list[int]]) -> dict[str, dict]:
     return out
 
 
-def run_variance(per_item_runs: list[list[int]]) -> dict:
-    """per_item_runs: list over items of [0/1 per run]. Returns mean within-item
-    SD across runs (a stochasticity measure)."""
+def _ranks(xs: list[float]) -> list[float]:
+    order = sorted(range(len(xs)), key=lambda i: xs[i])
+    ranks = [0.0] * len(xs)
+    i = 0
+    while i < len(order):
+        j = i
+        while j + 1 < len(order) and xs[order[j + 1]] == xs[order[i]]:
+            j += 1
+        for k in range(i, j + 1):
+            ranks[order[k]] = (i + j) / 2 + 1     # ties share the mean rank
+        i = j + 1
+    return ranks
+
+
+def spearman(a: list[float], b: list[float]):
+    """Spearman rank correlation; None when it is undefined (under three pairs,
+    or one side constant)."""
+    if len(a) != len(b) or len(a) < 3:
+        return None
+    ra, rb = _ranks(a), _ranks(b)
+    ma, mb = sum(ra) / len(ra), sum(rb) / len(rb)
+    num = sum((x - ma) * (y - mb) for x, y in zip(ra, rb))
+    den = (sum((x - ma) ** 2 for x in ra) * sum((y - mb) ** 2 for y in rb)) ** 0.5
+    return num / den if den else None
+
+
+def run_variance(per_item_runs: list[list[float]]) -> dict:
+    """per_item_runs: list over items of one score per run (0/1 for MC, the
+    0-100 composite for open-ended). Returns mean within-item SD across runs (a
+    stochasticity measure) and how many items had the two runs it needs."""
     sds = []
     for runs in per_item_runs:
         a = np.asarray(runs, dtype=float)
         if len(a) > 1:
             sds.append(float(a.std(ddof=1)))
     return {"mean_within_item_sd": (float(np.mean(sds)) if sds else 0.0),
-            "n_items": len(per_item_runs)}
+            "n_items": len(per_item_runs), "n_items_repeated": len(sds)}
 
 
 # --------------------------------------------------------------------------- #
