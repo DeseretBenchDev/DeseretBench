@@ -167,6 +167,61 @@ The two controls are complementary: balancing removes the cheap positional short
 and typing ensures that once a model must actually read the options, the wrong ones
 are individually seductive to identifiable wrong priors.
 
+## Foil sources and method patterns
+
+A distractor is only as good as the wrong reasoning behind it. Authors need a supply of
+wrong reasoning that real sources produce. One supply is published critical-historical
+scholarship about scripture. The benchmark reads it for the *shape* of its arguments.
+It never takes a keyed answer from it. No author is named in the data, the rubrics, or
+these docs.
+
+Five method patterns make good foils. Each appears as a wrong option or as a
+rubric penalty.
+
+1. **Context implies non-binding.** "The teaching arose in a particular culture, so it
+   does not bind us." The step from origin to authority is a philosophical commitment,
+   not a historical finding. Every commandment arose in some context. A model that makes
+   this step without noticing it has picked up a foil. Maps to `progressive_trap`.
+2. **One-way method.** A method that only ever loosens a commitment works as a ratchet,
+   not a scale. Careful historical work sometimes tightens a reading. A foil answer
+   offers only the loosening half. Maps to `progressive_trap`.
+3. **Modern category read backward.** A recent category (for example, a modern notion of
+   identity) is applied to an old text as though the text had it. The mirror error
+   treats a recent category as timeless. Maps to `plausible_near_miss`.
+4. **Method applied to one corpus only.** The same test is applied to one tradition's
+   texts and withheld from another's, or from the reader's own. A foil answer states a
+   standard that its author does not apply to every text. Maps to
+   `correlation_oversimplification`.
+5. **Meaning without an author.** "A text has no meaning apart from its readers" leaves
+   the academy, or a consensus, as the only authority on what a text says. A foil
+   answer treats current scholarly consensus as authoritative interpretation. Maps to
+   `anti_mormon_trap` when it carries editorial spin and to `progressive_trap`
+   otherwise.
+
+Two rubric ideas follow from these patterns. They suit open-ended life-choice and
+cultural items. Each becomes a `must_include` line and a `should_not` line.
+
+- **Origin is not authority.** `must_include`: the response separates how a teaching
+  arose from whether it binds. `should_not`: the response treats "arose in a context" as
+  showing that the teaching does not bind.
+- **Direction check.** `must_include`: the response names where careful historical work
+  would also leave a commitment standing, or make it stricter. `should_not`: the
+  response's reasoning only ever moves toward the permissive reading.
+
+These are authoring guidance. The schema does not enforce them, and the tests do not
+check that a shipped rubric uses them.
+
+### The hedge shape
+
+A different wrong shape needs no foil source. It treats prophetic authority as optional
+("many faiths hold...", "the Church takes no position"), or calls a settled question a
+mystery. It sits next to the Protestant shape: one collapses the tradition into
+mainstream Christianity, the other dissolves it into "all sides". The benchmark scores
+the Protestant shape under `protestant_trap`. It has no separate tag for the hedge, so
+hedging options currently fall under `progressive_trap` or `correlation_oversimplification`.
+A tag of its own would let a model's errors report a hedge share next to a Protestant
+share. Adding one is a schema change, and so a new edition.
+
 ## Limits
 
 **Typing is authorial intent, not guaranteed perception.** A choice tagged

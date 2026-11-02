@@ -146,6 +146,22 @@ panel and thresholds as authored ones — hand-written does not mean
 hand-waved-through. Appending directly to the public `questions_*.jsonl` files
 skips validation and (for MC) position balancing, and is not supported.
 
+## Attribution hygiene
+
+Every item's `source` string and every quotation in a stem, key, or rubric must survive
+a check. Four habits keep them honest.
+
+- **Quote only what you checked.** Compare the wording with the primary text, not with a
+  later citation of it. If the wording is uncertain, paraphrase and say so.
+- **Mark the difference between a quote and a paraphrase.** Never put a paraphrase inside
+  quotation marks, and never attribute it to a named person.
+- **Leave out claims you cannot source.** A line that is commonly repeated but has no
+  traceable origin does not go into an item. An unverified attribution is a defect even
+  when the claim is true.
+- **Check dates, offices, and counts against the dated fact sheet.** Offices and
+  leadership change. `data/grounding_brief.md` carries the current facts and their
+  dates.
+
 ## After the set changes
 
 Re-run both benchmark phases on the new set (see

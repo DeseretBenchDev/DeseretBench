@@ -224,6 +224,13 @@ Every MC item records the *type* of each wrong option in `distractor_types`. Req
   doctrinal nuance (e.g., "we believe the Bible" without the Article-of-Faith qualifier).
 - **`plausible_near_miss`** — close-but-wrong on a technical detail (date, name, sequence).
 
+**Foil sources.** Wrong answers need a supply of realistic wrong reasoning. Published
+critical and revisionist scholarship is one such supply. It is read for the *shape* of its
+arguments, never as a source of keyed answers. The method patterns that make good foils,
+and the two rubric lines that grow out of them, are in
+[why typed distractors](docs/explanation/why-typed-distractors.md#foil-sources-and-method-patterns).
+The patterns map onto the palette above. They add no new `distractor_types` value.
+
 **[DECISION] Discrimination over trivia (runbook §8).** Items must test *understanding*, not
 photographic recall of section headings. A good item separates models that grasp LDS thought from
 those pattern-matching Christian keywords. Pure-trivia items are flagged and dropped in validation.
@@ -234,6 +241,7 @@ currency); (3) General Handbook; (4) Gospel Topics Essays; (5) BYU Religious Stu
 (6) Maxwell Institute / FARMS scholarship; (7) Roberts / Nibley / Talmage; (8) *Saints* and
 *Rough Stone Rolling*. **Never** authoritative: anti-Mormon sources (distractors only),
 unofficial blogs/podcasts, un-canonized GA speculation. Every item carries a `source` string.
+
 
 ---
 
