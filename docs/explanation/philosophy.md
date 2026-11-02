@@ -112,7 +112,9 @@ deliberately test whether a model's training data has kept up with recent change
 set as a whole *expects revision*: as practice evolves and as the pilot's known
 weaknesses get their planned successors ([VISION.md](../../VISION.md) — human expert
 validation, a genuinely private holdout, judge diversification), the questions will be
-updated, retired, and added to. Version numbers exist because the set is meant to grow;
+updated, retired, and added to. The planned rhythm is a review twice a year, after each
+General Conference, plus a pass when the General Handbook changes. Any item that has
+leaked into training data is retired and replaced in that pass. Version numbers exist because the set is meant to grow;
 a score is always a score *against a stated version of the benchmark*, not against a
 timeless answer key.
 

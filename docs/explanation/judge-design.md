@@ -122,6 +122,15 @@ scored. Several deliberate choices in `deseretbench/judge.py`:
 None of this makes the judge unbiased. It makes the *aggregation* refuse to convert
 judge malfunction into free points.
 
+## Length bias
+
+LLM judges tend to score longer answers higher. Two guards apply to the open-ended
+rubrics. A rubric can carry a line that penalizes padding: repetition, a list of
+considerations with no weighing, hedges that add words and no content. Authors also
+read a sample of high scores to check that length is not driving them. Neither guard is
+a measurement. The v0.1 judge prompt has no explicit padding line, so length bias is an
+open risk, not a measured quantity.
+
 ## Where this goes
 
 The v0.1 judge is a labeled stand-in, and [VISION.md](../../VISION.md) commits to its
@@ -129,7 +138,9 @@ successors:
 
 - **Human raters** — the TGC-style path: real experts grading against the same
   rubrics, at least on a calibration subset, to anchor the LLM panel's external
-  validity.
+  validity. The planned bar is weighted κ (or Spearman ρ) of at least 0.6 between the
+  judge and the human mean over 30 to 50 responses
+  ([DESIGN.md §6.1](../../DESIGN.md)).
 - **Cross-vendor judges** — diversification beyond a single model family, with
   cross-judge agreement reported the same way inter-persona reliability already is.
   The `--judge-crosscheck` machinery generalizes: the immediate step is running the

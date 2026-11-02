@@ -54,6 +54,15 @@ Consequences of that stance, baked into question design:
   it as unsettled / non-canonical — not a confident resolution.
 - We label the framing openly so scholars can recalibrate and the institution can recognize it.
 
+**Scoring stance for history and authority: honest about history, faithful about doctrine.**
+The stance for open-ended rubrics penalizes two opposite failures about equally. One is hedging that
+treats prophetic authority as one opinion among many. The other is brittle defensiveness
+that denies or dodges the Church's own published history. A model that denies the seer
+stone account is wrong, because the Church's published account includes it. A model that
+presents the same account as a gotcha is also wrong. The standard takes its name from
+the historian and General Authority B. H. Roberts, who wrote openly as a believer about
+hard historical questions.
+
 This is a **descriptive** benchmark ("what does the Church teach / how do members live") not a
 **prescriptive** or apologetic one. We are measuring model knowledge and fluency, not
 adjudicating truth claims.
@@ -242,6 +251,25 @@ currency); (3) General Handbook; (4) Gospel Topics Essays; (5) BYU Religious Stu
 *Rough Stone Rolling*. **Never** authoritative: anti-Mormon sources (distractors only),
 unofficial blogs/podcasts, un-canonized GA speculation. Every item carries a `source` string.
 
+**Weight by tier.** The priority list above says which source to reach for first. Each
+source also carries a weight, which says how far it settles a question:
+
+| Tier | Weight | Sources |
+|---|---|---|
+| 1, definitive | Settles the question | Standard works; Official Declarations; Articles of Faith; The Family: A Proclamation to the World; The Living Christ; General Handbook |
+| 2, authoritative | Settles it unless Tier 1 conflicts | First Presidency and Twelve conference talks; Gospel Topics essays; current manuals; *Saints*; Newsroom statements |
+| 3, informative | Gives context, not ground truth | Individual General Authority books; Maxwell Institute and BYU Religious Studies Center scholarship; faithful historians |
+| Excluded | Never ground truth | Unofficial blogs and podcasts; critical or revisionist material |
+
+Excluded sources and critical scholarship still serve as *foil sources*: authors read
+them to learn what the wrong answers sound like.
+
+**Contested items.** An item whose keyed answer cannot be anchored to a Tier 1 or Tier 2
+source is *contested*. Where Tier 1 and Tier 2 are silent, the benchmark says so. The
+rule is to score such an item apart from the main set, or to leave it out. The schema records a
+`source` string per item and has no tier or contested field, so this is an authoring and
+review rule today, not an enforced one.
+
 
 ---
 
@@ -257,6 +285,20 @@ independence. Each reviewer, *blind to the key*: 1. answers the item, 2. rates c
 3. counts how many options could be defended as correct (`n_defensible_options`), 4. flags
 ambiguity / unfairness / trivia. (A reviewer blind to the key cannot rate "the keyed answer's
 defensibility" directly; key agreement is measured from their independent answers instead.)
+
+**Plan for the human panel.** The first round of real reviewers is small: one for
+doctrine (a Religious Education faculty member), one for scholarly rigor (a Maxwell
+Institute scholar), one for methodology and technical fluency (an active-member computer
+science faculty member). Each reviewer is asked for a short working session, not a
+partnership. A second round widens the panel: a bishop or stake president, a convert, and
+a returned missionary who served outside the United States, who catches Anglo-centric
+items. Each reviewer, blind to the key, answers every MC item, rates clarity and how
+defensible the key is, and flags trivia, ambiguity, or a wrong tier. Targets: Fleiss' κ
+above 0.7 on MC and weighted κ above 0.6 on rubric scoring. An item where reviewers
+disagree with the key or with each other is dropped or rewritten. A smaller clean set
+beats a larger disputed one. The same humans calibrate the judge: they score 30 to 50
+open-ended responses, and the judge must reach weighted κ (or Spearman ρ) of at least 0.6
+against the human mean before its scores are read at scale. None of this has run yet.
 
 **[LIMITATION]** Automated personas are *not* a substitute for real Latter-day Saint reviewers —
 and because they share one underlying model, their unanimous agreement (κ = 1.0 in v0.1)

@@ -39,6 +39,8 @@ deepens understanding. Pick the quadrant that matches what you need right now.
 - [The statistics, justified](explanation/statistics.md)
 - [The holdout stance](explanation/holdout-stance.md)
 - [Project philosophy](explanation/philosophy.md) — FLOSS, licensing, AI authorship
+- [How the benchmark idea grew](explanation/history.md): the starting plan, the paths not
+  taken, and the open questions
 
 ## Decisions
 
