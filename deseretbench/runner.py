@@ -309,6 +309,16 @@ def _strip_think(text: str) -> str:
     return text.strip()
 
 
+def _ollama_host(rc: dict) -> str:
+    """OLLAMA_HOST (the server's own convention) wins over run_config, so one
+    box can serve a run from a second Ollama without editing a pinned config.
+    The host is transport, not stimulus: it stays out of the cache key."""
+    env = os.environ.get("OLLAMA_HOST", "").strip()
+    if not env:
+        return rc.get("ollama_host", "http://localhost:11434")
+    return env if "://" in env else f"http://{env}"
+
+
 def _call_ollama(model: str, system: str, prompt: str, effort: str,
                  timeout: int, opts: Optional[dict] = None) -> CallResult:
     import urllib.error
@@ -614,7 +624,7 @@ class Runner:
             "tools": rc.get("tools", ""),
             "no_session_persistence": bool(rc.get("no_session_persistence", True)),
             # ollama backend knobs (ignored by the other backends)
-            "ollama_host": rc.get("ollama_host", "http://localhost:11434"),
+            "ollama_host": _ollama_host(rc),
             "ollama_num_predict": int(rc.get("ollama_num_predict", 4096)),
             "ollama_num_ctx": int(rc.get("ollama_num_ctx", 8192)),
             # openai_compat backend knobs (ignored by the other backends)

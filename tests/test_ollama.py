@@ -307,3 +307,30 @@ def test_default_backend_unchanged_without_override(monkeypatch, tmp_path):
     r = _runner(tmp_path).call("claude-opus-4-8", "s", "p", "low")
     assert r.backend == "claude_cli"
     assert seen["cmd"][0] == "claude"
+
+
+# --------------------------------------------------------------------------- #
+# OLLAMA_HOST override
+# --------------------------------------------------------------------------- #
+
+
+@pytest.mark.parametrize("env,expected", [
+    ("127.0.0.1:11435", "http://127.0.0.1:11435/api/chat"),
+    ("http://127.0.0.1:11435", "http://127.0.0.1:11435/api/chat"),
+])
+def test_ollama_host_env_overrides_config(monkeypatch, tmp_path, env, expected):
+    monkeypatch.setenv("OLLAMA_HOST", env)
+    cap: dict = {}
+    _patch_http(monkeypatch, [_ollama_json()], capture=cap)
+    r = _runner(tmp_path, ollama_host="http://localhost:11434")
+    assert r.call("qwen3:0.6b", "s", "p", "low", backend="ollama").ok
+    assert cap["req"].full_url == expected
+
+
+def test_ollama_host_falls_back_to_config(monkeypatch, tmp_path):
+    monkeypatch.delenv("OLLAMA_HOST", raising=False)
+    cap: dict = {}
+    _patch_http(monkeypatch, [_ollama_json()], capture=cap)
+    r = _runner(tmp_path, ollama_host="http://localhost:9999")
+    assert r.call("qwen3:0.6b", "s", "p", "low", backend="ollama").ok
+    assert cap["req"].full_url == "http://localhost:9999/api/chat"
