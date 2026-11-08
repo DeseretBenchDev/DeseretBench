@@ -62,8 +62,11 @@ effort:
   judge: medium             # reasoning budget for the judge panel
 
 # Repeat runs for statistical certainty.
+# v0.1 ran 5 MC / 3 open; the October 2026 additions set the current practice of
+# 2 MC repeats (their open repeats: 3 for the two Claude models, 2 for the hosted
+# models). Reproducing the v0.1 numbers needs --runs 5 on the mc phase.
 runs:
-  multiple_choice: 5
+  multiple_choice: 2
   open_ended: 3
 
 # Neutral test-taker system prompt — identical for every model & item.
