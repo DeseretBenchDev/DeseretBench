@@ -289,7 +289,8 @@ def _call_api(model: str, system: str, prompt: str, effort: str,
 # exact about generation: "qwen3" also covers "qwen3.5:*" (same toggle), but the
 # Gemma entry MUST be "gemma4" — a bare "gemma" would also match the
 # non-thinking gemma3 builds, where sending the key 400s.
-_OLLAMA_THINK_FAMILIES = ("qwen3", "deepseek-r1", "nemotron", "gemma4")
+_OLLAMA_THINK_FAMILIES = ("qwen3", "deepseek-r1", "nemotron", "gemma4",
+                          "granite4.2", "lfm2.5", "Falcon-H1R", "olmo-3")
 
 
 def _wants_think_key(model: str) -> bool:

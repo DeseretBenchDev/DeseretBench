@@ -170,6 +170,17 @@ def test_ollama_separate_thinking_field_ignored(monkeypatch, tmp_path):
     ("nemotron-3-nano:4b", "high", True),
     ("gemma4:e2b-it-qat", "low", False),
     ("gemma4:e2b-it-qat", "high", True),
+    # Box-cohort additions: each advertises the thinking capability.
+    ("granite4.2:8b", "low", False),
+    ("granite4.2:8b", "high", True),
+    ("lfm2.5:8b", "low", False),
+    ("lfm2.5:8b", "high", True),
+    ("hf.co/tiiuae/Falcon-H1R-7B-GGUF:Q4_K_M", "low", False),
+    ("hf.co/tiiuae/Falcon-H1R-7B-GGUF:Q4_K_M", "high", True),
+    ("olmo-3:7b-think", "low", False),
+    ("olmo-3:7b-think", "high", True),
+    ("gemma4-12b:q4_0", "low", False),
+    ("gemma4:e4b-it-q4_K_M", "high", True),
 ])
 def test_ollama_think_toggle_for_think_families(monkeypatch, tmp_path,
                                                 model, effort, expected):
@@ -188,6 +199,8 @@ def test_ollama_think_toggle_for_think_families(monkeypatch, tmp_path,
     # capabilities and reasoning is not among them; Mistral ships reasoning as
     # a separate repo, so every ministral-3 tag is an instruct build.
     "granite4.1:3b", "ministral-3:3b",
+    # The non-thinking olmo-3 sibling, and Apertus (no thinking capability).
+    "olmo-3:7b-instruct", "hf.co/unsloth/Apertus-8B-Instruct-2509-GGUF:Q4_K_M",
 ])
 def test_ollama_no_think_key_for_non_think_models(monkeypatch, tmp_path, model):
     cap = {}
