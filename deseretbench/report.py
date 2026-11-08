@@ -86,6 +86,9 @@ TIER_COLOR = {"fable": "#7a4e6d", "opus": "#9a681c", "sonnet": "#33456b",
               # (teals) read as kin.
               "qwen3.5": "#c9663f", "gemma4": "#5a9e97", "granite": "#7d7a2c",
               "ministral": "#c07a1e", "nemotron": "#5f7d1f",
+              # Box cohort (2026-11-08).
+              "olmo-3": "#3f6f9e", "olmo-3-think": "#7fa3c7",
+              "falcon": "#9e4f8a", "apertus": "#b5894a", "lfm": "#4f8a4a",
               # Hosted cohort (2026-08-29, backend openai_compat via OpenCode).
               # tier = model family, generation = version (the Claude
               # convention — parameter counts aren't published). Hosted Qwen
@@ -96,6 +99,7 @@ TIER_COLOR = {"fable": "#7a4e6d", "opus": "#9a681c", "sonnet": "#33456b",
 TIER_ORDER = ("fable", "opus", "sonnet", "haiku",
               "qwen3", "qwen3.5", "gemma", "gemma4", "phi", "smollm",
               "deepseek", "granite", "ministral", "nemotron",
+              "olmo-3", "olmo-3-think", "falcon", "apertus", "lfm",
               "kimi", "qwen", "glm", "grok", "gpt", "gemini", "minimax")
 
 
@@ -233,7 +237,8 @@ def generational(summary):
 # Single-size families (granite, ministral, nemotron, gemma4) plot as one point
 # rather than a curve; that still locates them against the size axis.
 SIZED_TIERS = ("qwen3", "qwen3.5", "gemma", "gemma4", "phi", "smollm",
-               "deepseek", "granite", "ministral", "nemotron")
+               "deepseek", "granite", "ministral", "nemotron",
+               "olmo-3", "olmo-3-think", "falcon", "apertus", "lfm")
 
 
 def scaling_by_size(summary):

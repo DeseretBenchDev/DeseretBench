@@ -155,6 +155,65 @@ cohort:
     generation: 2.0
     backend: ollama
 
+  # ---- Box cohort (RTX 3080 10 GB, Ollama 0.40.7; added 2026-11-08) ----
+  # Exact tags as pulled; quantization is the build Ollama reports. Fit is judged
+  # at the configured num_ctx 20480 from the larger of on-disk and resident size.
+  # think:false reliably stops reasoning only on granite4.2 of the families below;
+  # Falcon-H1R, olmo-3:7b-think and lfm2.5 keep reasoning at MC's low effort.
+  - id: gemma4:e4b-it-q4_K_M
+    tier: gemma4
+    label: "Gemma 4 E4B"
+    generation: 4.0
+    backend: ollama
+    quantization: Q4_K_M
+  - id: olmo-3:7b-instruct
+    tier: olmo-3
+    label: "OLMo 3 7B Instruct"
+    generation: 7.0
+    backend: ollama
+    quantization: Q4_K_M
+  - id: olmo-3:7b-think
+    tier: olmo-3-think
+    label: "OLMo 3 7B Think"
+    generation: 7.0
+    backend: ollama
+    quantization: Q4_K_M
+  - id: hf.co/tiiuae/Falcon-H1R-7B-GGUF:Q4_K_M
+    tier: falcon
+    label: "Falcon-H1R 7B"
+    generation: 7.0
+    backend: ollama
+    quantization: Q4_K_M
+  - id: hf.co/unsloth/Apertus-8B-Instruct-2509-GGUF:Q4_K_M
+    tier: apertus
+    label: "Apertus 8B Instruct"
+    generation: 8.0
+    backend: ollama
+    quantization: Q4_K_M
+  - id: lfm2.5:8b
+    tier: lfm
+    label: "LFM2.5 8B"
+    generation: 8.0
+    backend: ollama
+    quantization: Q4_K_M
+  - id: granite4.2:8b
+    tier: granite
+    label: "Granite 4.2 8B"
+    generation: 8.0
+    backend: ollama
+    quantization: Q4_K_M
+  - id: gemma4-12b:q4_0
+    tier: gemma4
+    label: "Gemma 4 12B"
+    generation: 12.0
+    backend: ollama
+    quantization: Q4_0
+  # Pulled, not in the cohort (probed 2026-11-08 at num_ctx 20480):
+  # not run: VRAM -- phi4:14b (12.7 GB resident), gpt-oss:20b (13.8 GB on disk),
+  #   gemma4:26b (18.7 GB on disk), muse-glimmer:30b (18.2 GB on disk).
+  # not run: load failure -- rnj-1:8b (llama-server GGML_ASSERT hparams.is_swa_any
+  #   on Ollama 0.40.7, twice).
+
   # ---- Hosted open-weights cohort via OpenCode Go (backend: openai_compat) ----
   # One flat-rate key, base_url in run_config.yaml (openai_base_url). Probed
   # 2026-08-29: these ids answer on /chat/completions. grok-4.6 and
