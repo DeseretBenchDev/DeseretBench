@@ -40,10 +40,11 @@ power, and the limitations.
 - **Reproducible & provider-agnostic.** Seeded, content-addressed cache, pinned configs,
   a canonical Anthropic-API path, and an lm-evaluation-harness task config.
 
-## Cohort evaluated (v0.1 + October 2026 additions)
+## Cohort evaluated (v0.1 + October and November 2026 additions)
 
-Thirty models across thirteen vendors and three serving paths. The v0.1 release measured
-twenty-three; seven more were added in October 2026 (see below).
+Thirty-eight models across seventeen vendors and three serving paths. The v0.1 release
+measured twenty-three; seven more were added in October 2026 and eight local models in
+November 2026 (see below).
 
 **Ten current-generation Claude models** served by the local `claude` CLI (probed
 2026-06-05, expanded 2026-07-03 and 2026-07-24): `claude-fable-5`, `claude-opus-5`, `claude-opus-4-8`,
@@ -72,6 +73,13 @@ Kimi K3 (Moonshot), Qwen3.8 Max (Alibaba), GLM 5.3 (Zhipu), Grok 4.6 (xAI) and G
 (OpenAI). Their reasoning effort is the provider default rather than a pinned budget, and
 their open-ended runs are still in progress, paced by the subscription's usage cap. See
 [run-any-model](docs/how-to/run-any-model.md).
+
+**Eight larger local open-weights models** (added 2026-11-08, 4B–12B, RTX 3080 10 GB,
+Ollama): Gemma 4 E4B and 12B, Granite 4.2 8B, OLMo 3 7B Instruct and Think, Falcon-H1R 7B,
+Apertus 8B Instruct and LFM2.5 8B, under the same prompts and judge panel, two MC and two
+open repeats. Not run: VRAM (too large for 10 GB at `num_ctx` 20480): Phi-4 14B, gpt-oss 20B,
+Gemma 4 26B, Muse Glimmer 30B. Not run: load failure: RNJ-1 8B. See the
+[November note](docs/explanation/2026-11-box-cohort.md).
 
 The halves answer different questions. The Claude cohort measures how frontier
 models differ from each other. The local cohort measures the benchmark against models
@@ -103,24 +111,24 @@ and `reports/RESULTS.md`.
 
 ## Headline results
 
-Thirty models, balanced MC + judge-panel open-ended, seed 19470417. The v0.1 cohort ran
-5 MC / 3 open repeats; the October additions ran 2 MC repeats (frontier models barely
+Thirty-eight models, balanced MC + judge-panel open-ended, seed 19470417. The v0.1 cohort ran
+5 MC / 3 open repeats; the October and November additions ran 2 MC repeats (frontier models barely
 vary run to run, and scores are per-item means). Analysis is over the merged run
 `runs/v0_1_plus` (`python -m deseretbench.merge_runs`; the v0.1-only analysis still
 regenerates from `runs/v0_1`). Numbers regenerated from `reports/RESULTS.md` — never hand-typed.
 
 - **Multiple choice saturates at the frontier and discriminates below it.** All 136
   comparisons among the seventeen frontier models (twelve Claude, five from other labs) are
-  non-significant after correction. Across the full cohort, 277 of 435 are significant. Accuracy runs from 0.521 (R1-Distill 1.5B) through
+  non-significant after correction. Across the full cohort, 465 of 703 are significant. Accuracy runs from 0.521 (R1-Distill 1.5B) through
   0.703 (SmolLM2 1.7B) and 0.811–0.813 (Phi-4 Mini, Qwen3 1.7B, Gemma 3 4B) to 0.922
-  (Qwen3 4B) and 0.932 (Qwen3.5 4B), then 0.986–1.000 across the frontier. All five models from other labs
+  (Qwen3 4B) and 0.932 (Qwen3.5 4B), then 0.986–1.000 across the frontier. Gemma 4 12B reaches 0.991, level with the frontier models after correction, so a local model now shares the ceiling. All five models from other labs
   score 1.000. The items discriminate; a frontier-only cohort is too narrow to show it.
 - **The MC-to-open collapse.** Qwen3 4B scores 0.922 on MC, close to Claude's range, and
   **21.8** on open-ended, under half of Haiku 4.5 (48.5), the weakest Claude. MC asks a
   model to recognize an answer among four options; the open track asks it to write counsel
   with no options in view.
-- **Open-ended discriminates sharply** (judge Krippendorff's α = 0.993, 3,160 scored
-  units; 310 of 351 pairwise comparisons significant), composite 0–100:
+- **Open-ended discriminates sharply** (judge Krippendorff's α = 0.992, 3,800 scored
+  units; 519 of 595 pairwise comparisons significant), composite 0–100:
 
   | Model | Composite (95% CI) | MC accuracy |
   |---|---|---|
@@ -138,12 +146,20 @@ regenerates from `runs/v0_1`). Numbers regenerated from `reports/RESULTS.md` —
   | Qwen3.8 Max | **79.2** [73.9, 83.9] | 1.000 |
   | Sonnet 4.5 | **69.7** [64.9, 74.2] | 1.000 |
   | Haiku 4.5 | **48.5** [44.2, 52.7] | 0.994 |
+  | Granite 4.2 8B | **36.1** [31.8, 40.3] | 0.941 |
+  | Gemma 4 12B | **33.5** [30.0, 36.7] | 0.991 |
+  | Gemma 4 E4B | **29.2** [26.4, 32.0] | 0.951 |
+  | Falcon-H1R 7B | **28.0** [24.8, 30.9] | 0.887 |
   | Qwen3 4B | **21.8** [18.8, 24.5] | 0.922 |
+  | OLMo 3 7B Think | **19.3** [16.8, 21.7] | 0.883 |
+  | LFM2.5 8B | **18.8** [16.1, 21.5] | 0.871 |
   | Gemma 4 E2B | **18.7** [15.9, 21.4] | 0.813 |
   | Granite 4.1 3B | **18.4** [16.2, 20.6] | 0.905 |
   | Ministral 3 3B | **17.7** [15.2, 20.1] | 0.892 |
   | Gemma 3 4B | **17.7** [14.8, 20.5] | 0.813 |
   | Qwen3.5 4B | **17.6** [15.5, 19.5] | 0.932 |
+  | Apertus 8B Instruct | **17.3** [15.5, 19.0] | 0.915 |
+  | OLMo 3 7B Instruct | **15.7** [12.8, 18.6] | 0.906 |
   | SmolLM2 1.7B | **11.7** [10.0, 13.3] | 0.703 |
   | Qwen3 1.7B | **9.9** [8.3, 11.5] | 0.811 |
   | Nemotron 3 Nano 4B | **8.4** [6.5, 10.4] | 0.820 |
@@ -156,19 +172,21 @@ regenerates from `runs/v0_1`). Numbers regenerated from `reports/RESULTS.md` —
   | GPT 5.6 Luna | *in progress* | 1.000 |
 
 <!--outside:start-->
-  Kimi K3 scores 95.3 [91.0–98.3] on the open-ended track, 5th of 27, statistically level with every model above it, and significantly above Sonnet 5. Qwen3.8 Max scores 79.2 [73.9–83.9] on the open-ended track, 12th of 27, statistically level with Sonnet 5, Opus 4.5 and Haiku 5.5, and significantly above Sonnet 4.5. The open-ended runs for GLM 5.3, Grok 4.6 and GPT 5.6 Luna are under way, paced by a subscription usage cap.
+  Kimi K3 scores 95.3 [91.0–98.3] on the open-ended track, 5th of 35, statistically level with every model above it, and significantly above Sonnet 5. Qwen3.8 Max scores 79.2 [73.9–83.9] on the open-ended track, 12th of 35, statistically level with Sonnet 5, Opus 4.5 and Haiku 5.5, and significantly above Sonnet 4.5. The open-ended runs for GLM 5.3, Grok 4.6 and GPT 5.6 Luna are under way, paced by a subscription usage cap.
 <!--outside:end-->
 
 - **Parameter count does not predict open score in the mid band.** Phi-4 Mini (3.8B)
   matches Qwen3 1.7B on MC (0.811 each) at more than twice the size, but scores lower on
-  open (7.6 vs 9.9). And the best local MC model is not the best on open: Qwen3.5 4B tops
-  the local cohort on MC (0.932) yet lands mid-pack on open (17.6), below Qwen3 4B (0.922
-  MC, 21.8 open) — heavy reasoning that does not transfer to open-ended counsel. Plotted
+  open (7.6 vs 9.9). And the best local MC model is not the top local open scorer: Gemma 4 12B
+  leads the local cohort on MC (0.991), while Granite 4.2 8B has the highest local open
+  score (36.1 vs 33.5; the gap is not significant). Qwen3.5 4B scores 0.932 on MC yet lands
+  mid-pack on open (17.6), below Qwen3 4B (0.922 MC, 21.8 open). Plotted
   in `reports/figures/scaling_by_size.png`.
 - **Within-family open scaling is clean.** Qwen3 0.6B, 1.7B and 4B score 2.0, 9.9 and 21.8;
-  Gemma 1B and 4B score 4.5 and 17.7. Across families at the same size, scores diverge.
-- **Reasoning training did not transfer.** R1-Distill 1.5B is last on both tracks (0.521 MC,
-  0.3 open), and is the only reasoning-distilled model in the cohort. Its answers are not
+  Gemma 1B and 4B score 4.5 and 17.7; Gemma 4 E2B, E4B and 12B score 18.7, 29.2 and 33.5. Across families at the same size, scores diverge.
+- **Reasoning distillation did not transfer at 1.5B.** R1-Distill 1.5B is last on both tracks
+  (0.521 MC, 0.3 open). Larger reasoning models do not share that result: Falcon-H1R 7B scores
+  28.0, and OLMo 3 7B Think 19.3 against its Instruct sibling's 15.7 (not significant). Its answers are not
   truncated or empty: all 120 terminate normally at a median of ~1,100 characters, and they
   score 0.02 on rubric coverage.
 - **Fable 5.1 posts the highest composite yet** (98.6), statistically tied with
@@ -176,18 +194,19 @@ regenerates from `runs/v0_1`). Numbers regenerated from `reports/RESULTS.md` —
 - **Haiku 5.5 makes the largest jump between successive models of one tier** (4.5 → 5.5,
   one full version step). It scores 80.9
   against Haiku 4.5's 48.5 (Δ = +32.4), tied with Opus 4.5 and Sonnet 5,
-  above Sonnet 4.5 (Δ = +11.2) and still below Sonnet 4.6 (Δ = −8.7).
+  above Sonnet 4.5 (Δ = +11.2) and numerically below Sonnet 4.6 (Δ = −8.7), a gap that
+  narrowly misses significance over the 595-comparison family (Holm *p* = 0.050).
 - **Fable 5 debuted at the top in v0.1,** statistically tied with Opus 4.7 for first (Δ = −0.3, not
   significant), and significantly ahead of Opus 4.8.
 - **Newer is not automatically more faithful.** Within Anthropic's Opus line the ordering
   zig-zags rather than climbing. Opus 4.8 scores significantly below Opus 4.7 (Δ = −6.8,
-  Holm-corrected over 351 pairwise comparisons), and then the newest model, Opus 5, recovers:
+  Holm-corrected over 595 pairwise comparisons), and then the newest model, Opus 5, recovers:
   significantly above 4.8 (Δ = +6.2) and statistically tied with 4.7 at the top. Sonnet 5, for
   its part, does not improve on Sonnet 4.6, and Fable 5 reaches the top of the board. A model's
   generation number does not predict its within-tradition fidelity.
 - **A wider cohort costs statistical power.** The Opus 4.8 vs 4.6 gap (Δ = −3.6) was
   significant when Holm-corrected over the nine-model family's 36 comparisons
-  (*p* = 0.041) and is not over the 27-model open family's 351 (*p* = 0.273, raw *p* = 0.008).
+  (*p* = 0.041) and is not over the 35-model open family's 595 (*p* = 0.521, raw *p* = 0.008).
   The estimate is unchanged; only the size of the correction family grew.
 
 ## Repository layout

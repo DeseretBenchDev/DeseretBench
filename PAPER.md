@@ -45,7 +45,7 @@ posts the highest open-ended composite measured (98.6), statistically tied with 
 Haiku 5.5 rises 32.4 points over Haiku 4.5 to 80.9 across one full version step,
 the largest gap between successive models of one tier in the data.
 <!--abstract-outside:start-->
-Of the outside models whose open-ended runs are complete, Kimi K3 scores 95.3 (5th of 27) and Qwen3.8 Max scores 79.2 (12th of 27); the rest are still running.
+Of the outside models whose open-ended runs are complete, Kimi K3 scores 95.3 (5th of 35) and Qwen3.8 Max scores 79.2 (12th of 35); the rest are still running.
 <!--abstract-outside:end-->
 
 ## 1. Motivation
@@ -143,6 +143,13 @@ HuggingFace), so a cross-vendor finding cannot be an artifact of one lab's recip
 original CPU-served cohort was extended with the five 2026 families on a single consumer
 GPU ([ADR-0013](docs/adr/0013-2026-cohort-expansion-and-gpu-inference.md)).
 
+**Later additions.** Seven models joined in October 2026 (§4.6). Eight larger local models
+followed in November 2026 on an RTX 3080 with 10 GB (§4.7): Gemma 4 E4B and 12B, Granite 4.2
+8B, OLMo 3 7B Instruct and Think, Falcon-H1R 7B, Apertus 8B Instruct and LFM2.5 8B, adding the
+Allen Institute, the Swiss AI Initiative, TII and Liquid AI as vendors. Four pulled models
+were not run because they do not fit 10 GB at the configured context (Phi-4 14B, gpt-oss 20B,
+Gemma 4 26B, Muse Glimmer 30B), and one, RNJ-1 8B, failed to load.
+
 The two halves answer different questions. The Claude cohort asks how frontier models differ
 from each other. The local cohort asks what the instrument looks like when it is *not*
 measuring the frontier — which, as §4.1 shows, is the only way the item set's discriminative
@@ -162,7 +169,7 @@ per-item means, so the repeat count changes precision, not the estimand.
 All numbers are from `runs/v0_1` (seed 19470417, 100,000 bootstrap resamples; MC = 5 runs,
 open = 3 runs; 23 models × 213 public MC items and × 40 public open items — 24,495 MC
 responses and 2,760 open responses scored by a 3-persona judge panel). Full tables and
-figures for the current thirty-model cohort are in `reports/RESULTS.md` and
+figures for the current thirty-eight-model cohort are in `reports/RESULTS.md` and
 `reports/leaderboard.html`; §4.1–§4.5 report the twenty-three-model v0.1 analysis, which
 regenerates exactly with `python -m deseretbench.analyze --run runs/v0_1`. §4.6 covers the
 October 2026 additions, analyzed over the merged run `runs/v0_1_plus`.
@@ -330,6 +337,9 @@ for it. A benchmark scoring only structure would rank this model far higher than
 deserves.
 
 ### 4.6 October 2026 additions
+Figures in this subsection come from the thirty-model analysis; §4.7 gives what the larger
+comparison family changes.
+
 Merging the additions into the v0.1 records gives 27,477 MC responses from thirty models
 and 3,160 judged open-ended units from the twenty-seven whose open-ended runs are complete.
 The judge panel stays reliable at this size (Krippendorff's α = 0.993; lowest
@@ -368,8 +378,45 @@ Among Claude models 52 of 66 open-ended pairs now differ significantly, and 310 
 351 across the cohort.
 
 <!--outside:start-->
-**Outside models on the open track.** Kimi K3 scores 95.3 [91.0–98.3] on the open-ended track, 5th of 27, statistically level with every model above it, and significantly above Sonnet 5. Qwen3.8 Max scores 79.2 [73.9–83.9] on the open-ended track, 12th of 27, statistically level with Sonnet 5, Opus 4.5 and Haiku 5.5, and significantly above Sonnet 4.5. The open-ended runs for GLM 5.3, Grok 4.6 and GPT 5.6 Luna are under way, paced by a subscription usage cap. These rows carry three qualifications the Claude rows do not: two open-ended runs rather than three, unpinned reasoning effort, and a Claude-family judge scoring other labs' answers.
+**Outside models on the open track.** Kimi K3 scores 95.3 [91.0–98.3] on the open-ended track, 5th of 35, statistically level with every model above it, and significantly above Sonnet 5. Qwen3.8 Max scores 79.2 [73.9–83.9] on the open-ended track, 12th of 35, statistically level with Sonnet 5, Opus 4.5 and Haiku 5.5, and significantly above Sonnet 4.5. The open-ended runs for GLM 5.3, Grok 4.6 and GPT 5.6 Luna are under way, paced by a subscription usage cap. These rows carry three qualifications the Claude rows do not: two open-ended runs rather than three, unpinned reasoning effort, and a Claude-family judge scoring other labs' answers.
 <!--outside:end-->
+
+### 4.7 November 2026 additions
+Eight local models were added in November 2026, each with 2 MC and 2 open repeats on the shipped
+items, judged by the same panel. The merged analysis has 30,885 MC responses from
+thirty-eight models and 3,800 judged units from thirty-five. Judge reliability holds
+(Krippendorff's α = 0.992; lowest dimension
+0.976). No score from an earlier model changed.
+
+| Model | Open-ended (95% CI) | MC (95% CI) |
+|---|---|---|
+| Granite 4.2 8B | 36.1 [31.8, 40.3] | 0.941 [0.913, 0.967] |
+| Gemma 4 12B | 33.5 [30.0, 36.7] | 0.991 [0.981, 0.998] |
+| Gemma 4 E4B | 29.2 [26.4, 32.0] | 0.951 [0.923, 0.974] |
+| Falcon-H1R 7B | 28.0 [24.8, 30.9] | 0.887 [0.847, 0.923] |
+| OLMo 3 7B Think | 19.3 [16.8, 21.7] | 0.883 [0.843, 0.918] |
+| LFM2.5 8B | 18.8 [16.1, 21.5] | 0.871 [0.831, 0.908] |
+| Apertus 8B Instruct | 17.3 [15.5, 19.0] | 0.915 [0.880, 0.946] |
+| OLMo 3 7B Instruct | 15.7 [12.8, 18.6] | 0.906 [0.871, 0.939] |
+
+**The gap between local and frontier narrows but stays large.** Granite 4.2 8B (36.1) and Gemma 4
+12B (33.5) are the highest local composites measured, significantly above Qwen3 4B, the previous
+local leader, and Granite 4.2 remains significantly below the weakest Claude model, Haiku 4.5
+(Δ = −12.4). Gemma 4 12B's MC score (0.991) is level with the frontier models after correction, so
+the MC-to-open collapse now appears in a model at the ceiling: a local model can recognize nearly
+every keyed answer and still score about a third of the frontier on written counsel.
+
+**Larger families cost power again.** The open family grows from 351 to 595 comparisons, and 519
+are significant; the MC family grows from 435 to 703, with 465 significant. The Holm floor for the
+open family is 0.012. Two findings shift only in their corrected *p*: Haiku 5.5 against Sonnet 4.6
+(Δ = −8.7) moves to *p* = 0.050 and no longer reaches significance, and Opus 4.8 against 4.6
+(Δ = −3.6) moves to *p* = 0.521.
+
+**Qualifications.** Local scores here use 2 repeats of each item. `think: false` clearly disables
+reasoning only on Granite 4.2 among the new thinking families, so Falcon-H1R, OLMo 3 Think and
+possibly LFM2.5 reason on MC at low effort. OLMo 3 Instruct and Granite 4.2 ran with about 8–9% of
+layers on CPU. See `docs/explanation/2026-11-box-cohort.md`. MC item statistics drift further toward the ceiling (mean
+difficulty *p* = 0.888; 67 items above 0.95).
 
 ## 5. Discussion
 
