@@ -247,7 +247,8 @@ Claude models reached through the `claude` CLI (tiers: 1 fable, 5 opus, 3 sonnet
 1 gemma4). Everything in `run_config.yaml` is held
 identical across all models: system prompt, prompt templates, effort per item class
 (`multiple_choice: low`, `open_ended: high`, `judge: medium`), repeat runs
-(`multiple_choice: 5`, `open_ended: 3`), no tools (`tools: ""`), timeout 1200 s,
+(`multiple_choice: 5`, `open_ended: 3` for v0.1; the shipped default is now
+`multiple_choice: 2`), no tools (`tools: ""`), timeout 1200 s,
 `max_retries: 4`, linear backoff base 5 s, `max_parallel: 8`.
 
 Two constants are deliberately **outside** the cache key, because they govern how a call

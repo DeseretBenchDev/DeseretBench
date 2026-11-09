@@ -124,7 +124,7 @@ These are the *only* scoping flags `run_benchmark` has (from its argparse; run
 | `--questions PATH` | Question JSONL to run (required). Relative paths resolve from your current directory. |
 | `--out DIR` | Run directory; output JSONL files land here (required). |
 | `--models a,b` | Comma-separated model ids from `configs/models.yaml`. Empty = the full cohort. An unknown id is a hard error that lists the valid ids. | full cohort |
-| `--runs N` | Repeats per (model, item). `0` = the config default (`runs.multiple_choice: 5` for mc). | `0` |
+| `--runs N` | Repeats per (model, item). `0` = the config default (`runs.multiple_choice: 2` for mc). | `0` |
 | `--limit K` | Use only the first K items of the questions file. `0` = all. | `0` |
 | `--max-parallel P` | Override `runner.max_parallel` (config default 8). `0` = use config. | `0` |
 

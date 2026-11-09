@@ -132,7 +132,7 @@ by `run_benchmark.py:139,231`; the `--runs` CLI flag overrides either value.
 
 | Key | Current value | Default if absent |
 |---|---|---|
-| `multiple_choice` | `5` | required |
+| `multiple_choice` | `2` (v0.1 ran `5`; pass `--runs 5` to reproduce it) | required |
 | `open_ended` | `3` | required |
 
 ### `system_prompt`
