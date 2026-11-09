@@ -48,6 +48,12 @@ the largest gap between successive models of one tier in the data.
 Of the outside models whose open-ended runs are complete, Kimi K3 scores 95.3 (5th of 35) and Qwen3.8 Max scores 79.2 (12th of 35); the rest are still running.
 <!--abstract-outside:end-->
 
+*November 2026 addendum (§4.7).* Eight larger local open-weights models (4B–12B) were added on
+a 10 GB consumer GPU, bringing the cohort to thirty-eight. Gemma 4 12B scores 0.991 on multiple
+choice, statistically level with every frontier model, and 33.5 open-ended. Granite 4.2 8B
+posts the highest local open-ended composite, 36.1, still significantly below Haiku 4.5 (48.5).
+The capability gap that MC alone conceals therefore persists in a local model at the MC ceiling.
+
 ## 1. Motivation
 
 Religious knowledge is an underexplored axis of LLM evaluation. General benchmarks (MMLU and
@@ -172,7 +178,8 @@ responses and 2,760 open responses scored by a 3-persona judge panel). Full tabl
 figures for the current thirty-eight-model cohort are in `reports/RESULTS.md` and
 `reports/leaderboard.html`; §4.1–§4.5 report the twenty-three-model v0.1 analysis, which
 regenerates exactly with `python -m deseretbench.analyze --run runs/v0_1`. §4.6 covers the
-October 2026 additions, analyzed over the merged run `runs/v0_1_plus`.
+October 2026 additions, analyzed over the merged run `runs/v0_1_plus`. §4.7 covers the
+November 2026 additions over the same merged run.
 
 ### 4.1 Multiple choice saturates at the frontier and discriminates below it
 Among Claude models the set is saturated: Opus 4.5/4.6/4.7/4.8/5 and Sonnet 4.5/4.6 all score a
@@ -491,6 +498,8 @@ frontier. The October 2026 additions bring two
 more: the five outside models were measured at provider-default reasoning effort through a
 subscription endpoint rather than a pinned budget, and their open-ended answers will be scored
 by a Claude-family judge, so cross-lab open-ended comparisons should be read with both in mind.
+The November 2026 additions ran two repeats per item, and three of them keep reasoning on
+multiple choice where the configuration asks for none (§4.7).
 Each is a concrete avenue for v1.0.
 
 **Judge-harness settings inheritance.** During the 17-model run we found that the `claude`

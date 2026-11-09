@@ -33,8 +33,9 @@ A list of model entries. Each entry has four required keys plus one optional:
 | `label` | string | Human-readable name used in tables and figure legends (e.g. `"Opus 4.8"`). |
 | `generation` | number | Model generation (e.g. `4.6`, `5.0`), used to order models within a tier. For local families this is the parameter count in billions, so per-tier report lines read as scaling curves. |
 | `backend` *(optional)* | string | Pins this entry to a specific backend (e.g. `ollama`). Entries without it use `runner.backend` from `run_config.yaml`. The effective backend is part of the cache key ([ADR-0011](../adr/0011-local-open-weights-backend.md)). |
+| `quantization` *(optional)* | string | The quantization of a local build as Ollama reports it (e.g. `Q4_K_M`). Recorded for provenance; no code reads it. |
 
-The current cohort is thirty models over three serving paths.
+The current cohort is thirty-eight models over three serving paths.
 
 Twelve are Claude models reached through the authenticated `claude` CLI: two `fable`,
 five `opus`, three `sonnet`, two `haiku`, spanning generations 4.5–5.5. Per the
@@ -52,6 +53,11 @@ served by a user-space Ollama (CPU for the original cohort; a single consumer GP
 is the model family and `generation` is the parameter count in billions, so each
 per-tier report line reads as a within-family scaling curve
 ([ADR-0011](../adr/0011-local-open-weights-backend.md)).
+
+Eight more are larger local models (4B–12B), added 2026-11-08 and served by Ollama on a
+10 GB GPU: tiers `gemma4` (E4B, 12B), `granite` (8B), `olmo-3` and `olmo-3-think` (7B),
+`falcon` (7B), `apertus` (8B) and `lfm` (8B). Each records its `quantization`. A comment
+beside them lists the pulled models that were not run, with the reason.
 
 Five are hosted models from other labs pinned with `backend: openai_compat` and reached
 through an OpenCode Go subscription: `kimi-k3`, `qwen3.8-max`, `glm-5.3`, and (with
